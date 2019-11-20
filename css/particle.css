@@ -1,0 +1,26 @@
+body {
+    margin: 0;
+    font: normal 75% Arial, Helvetica, sans-serif;
+    overflow: hidden;
+}
+
+canvas {
+    display: block;
+    min-height: 100%;
+    margin-top: -15%;
+    align-content: bottom;
+}
+
+/* ---- particles.js container ---- */
+
+#particles-js {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: #ff9d09;
+    background-image: url("");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 50% 50%;
+    align-items: center;
+}

@@ -1,0 +1,88 @@
+.app-bar-menu > li.active {
+  background-color: #484743;
+  color: white;
+}
+
+.app-bar-menu > li.active a:hover {
+  background-color: #484743;
+  color: white;
+}
+.app-bar-menu > li {
+  border-right-color: white;
+  border-right-width: 1px;
+  border-right-style: solid;
+}
+
+.warn {
+  background-color: #fd6e72;
+  border-color: #ac090d;
+  border-style: solid;
+  border-width: 1px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.heading {
+  color: #a20025;
+}
+
+.patchnote {
+  background-color: #8ac6f4;
+  border-color: #0f87e4;
+  border-style: solid;
+  border-width: 1px;
+}
+
+.spanpatch {
+  margin-left: 3%;
+}
+
+.quote {
+  font-weight: 1;
+}
+
+.nut {
+  width: 20px;
+  height: auto;
+}
+
+.login-form {
+  width: 350px;
+  height: auto;
+  top: 37%;
+  margin-top: -160px;
+}
+
+.co {
+  right: 0;
+  position: relative;
+  height: 33px;
+  /* width: 50px; */
+}
+
+a {
+  color: #500014;
+}
+
+a:hover {
+  color: black;
+}
+
+.description h2,
+h1 {
+  font-size: 15px;
+  text-align: center;
+}
+
+.description h1 img {
+  width: 100px;
+}
+
+.icon h1 img {
+  margin-top: 20px;
+  width: 60px;
+}
+
+.login-form{
+  opacity: 1;
+}
