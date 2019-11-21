@@ -25,78 +25,14 @@ switch (nom) {
         break;
 }
 
-let arrayMoisLine = ['Septembre', 'Octobre', 'Novembre', 'Décembre', 'Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Aout'];
+let arrayMoisLine = ['Octobre', 'Novembre', 'Décembre', 'Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Aout', 'Septembre'];
 let arrayPartLine = new Array;
-let arrayColorLine = new Array;
-let arrayBorderColorLine = new Array();
 $.post("../../chartRequests/getPartMois.php", {
     idPromo: idPromo
 }, function (tabInfos) {
     var allJson = JSON.parse(tabInfos);
     for (i = 0; i < allJson.length; i++) {
-        if (allJson[i]['mois'] == 9) {
-            arrayPartLine[0] = allJson[i]['participants'];
-        } else {
-            arrayPartLine[0] = 0;
-        }
-        if (allJson[i]['mois'] == 10) {
-            arrayPartLine[1] = allJson[i]['participants'];
-        } else {
-            arrayPartLine[1] = 0;
-        }
-        if (allJson[i]['mois'] == 11) {
-            arrayPartLine[2] = allJson[i]['participants'];
-        } else {
-            arrayPartLine[2] = 0;
-        }
-        if (allJson[i]['mois'] == 12) {
-            arrayPartLine[3] = allJson[i]['participants'];
-        } else {
-            arrayPartLine[3] = 0;
-        }
-        if (allJson[i]['mois'] == 1) {
-            arrayPartLine[4] = allJson[i]['participants'];
-        } else {
-            arrayPartLine[4] = 0;
-        }
-        if (allJson[i]['mois'] == 2) {
-            arrayPartLine[5] = allJson[i]['participants'];
-        } else {
-            arrayPartLine[5] = 0;
-        }
-        if (allJson[i]['mois'] == 3) {
-            arrayPartLine[6] = allJson[i]['participants'];
-        } else {
-            arrayPartLine[6] = 0;
-        }
-        if (allJson[i]['mois'] == 4) {
-            arrayPartLine[7] = allJson[i]['participants'];
-        } else {
-            arrayPartLine[7] = 0;
-        }
-        if (allJson[i]['mois'] == 5) {
-            arrayPartLine[8] = allJson[i]['participants'];
-        } else {
-            arrayPartLine[8] = 0;
-        }
-        if (allJson[i]['mois'] == 6) {
-            arrayPartLine[9] = allJson[i]['participants'];
-        } else {
-            arrayPartLine[9] = 0;
-        }
-        if (allJson[i]['mois'] == 7) {
-            arrayPartLine[10] = allJson[i]['participants'];
-        } else {
-            arrayPartLine[10] = 0;
-        }
-        if (allJson[i]['mois'] == 8) {
-            arrayPartLine[11] = allJson[i]['participants'];
-        } else {
-            arrayPartLine[11] = 0;
-        }
-        // arrayPartLine.push(allJson[i]['participants']);
-        arrayColorLine.push('rgba(' + Math.floor(Math.random() * 256) + ', ' + Math.floor(Math.random() * 256) + ', ' + Math.floor(Math.random() * 256) + ', 0.2)');
-        arrayBorderColorLine.push('rgba(0, 0, 0)');
+        arrayPartLine[i] = allJson[i]['participants'];
     }
 }).done(function () {
     var ctx = document.getElementById('partMois').getContext('2d');
@@ -107,9 +43,12 @@ $.post("../../chartRequests/getPartMois.php", {
             datasets: [{
                 label: 'Participation / Mois (' + nomPromo + ')',
                 data: arrayPartLine,
-                backgroundColor: arrayColorLine,
-                borderColor: arrayBorderColorLine,
-                borderWidth: 0.2
+                backgroundColor: 'rgba(255, 0, 0, 1)',
+                borderColor: 'rgba(128, 0, 0, 1)',
+                borderWidth: 0.6,
+                showLine: true,
+                fill: false
+                // pointBorderWidth: 0.3
             }]
         },
         options: {

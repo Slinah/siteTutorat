@@ -11,7 +11,6 @@ include_once '../../commons/date.php';
 <?php
 
 include_once '../../bases/head.php';
-include_once '../../requests/select.php';
 
 if (!isset($_SESSION["role"]) || $_SESSION["role"] != 1) {
 

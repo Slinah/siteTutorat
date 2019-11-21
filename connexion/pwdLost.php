@@ -18,7 +18,6 @@
     <link rel="stylesheet" href="../css/particle.css">
     <title>ScratchOverflow</title>
 </head>
-<!-- <body class="h-vh-100 bg-darkCrimson"> -->
 <div id="particles-js">
 
     <?php
@@ -45,7 +44,6 @@
                 <button class="button pos-center" onclick="location.href = mailPwd.php">Recevoir le mail</button>
             </div>
         </form>
-        <!-- <button class="button pos-bottom-center register" href="registration.php?regis=co">S'enregistrer</button> -->
 </div>
 </body>
 <script src="../js/particle.js"></script>
