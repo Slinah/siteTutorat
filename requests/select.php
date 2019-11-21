@@ -118,6 +118,9 @@ function selectCoursStatus()
     $cours = $GLOBALS['db']->prepare('SELECT c.id_cours AS id_cours, c.intitule AS intitule, c.date AS date, c.heure AS heure, c.secu AS secu, m.intitule AS matiere, p.promo AS promo FROM cours c JOIN matiere m ON m.id_matiere=c.id_matiere JOIN cours_promo cp ON c.id_cours=cp.id_cours JOIN promo p ON p.id_promo=cp.id_promo WHERE c.status = 0');
     $cours->execute();
     $cour = $cours->fetchAll();
+    if (empty($cour)) {
+        $cour = 'none';
+    }
     return $cour;
 }
 
