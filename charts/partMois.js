@@ -32,7 +32,7 @@ $.post("../../chartRequests/getPartMois.php", {
 }, function (tabInfos) {
     var allJson = JSON.parse(tabInfos);
     for (i = 0; i < allJson.length; i++) {
-        arrayPartLine[i] = allJson[i]['participants'];
+        arrayPartLine.push(allJson[i]['participants']);
     }
 }).done(function () {
     var ctx = document.getElementById('partMois').getContext('2d');
@@ -48,7 +48,6 @@ $.post("../../chartRequests/getPartMois.php", {
                 borderWidth: 0.6,
                 showLine: true,
                 fill: false
-                // pointBorderWidth: 0.3
             }]
         },
         options: {

@@ -543,3 +543,13 @@ function verifExistMail($mailPersonne)
     }
     return $m;
 }
+
+function selectCountCoursByPromo($promo)
+{
+    $countCours = $GLOBALS['db']->prepare('SELECT COUNT(*) FROM cours c JOIN cours_promo cp ON c.id_cours=cp.id_cours JOIN promo p ON cp.id_promo=p.id_promo WHERE p.promo = :promo AND c.status = 1');
+    $countCours->bindParam(":promo", $promo);
+    $countCours->execute();
+    $count = $countCours->fetchAll();
+    $c = $count[0][0];
+    return $c;
+}

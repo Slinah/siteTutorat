@@ -7,6 +7,11 @@ include_once '../../requests/select.php';
 
 <?php
 include_once '../../bases/head.php';
+
+if (!isset($_SESSION["role"]) || $_SESSION["role"] != 1) {
+
+    header("location: ../../connexion/co.php?co=newco");
+}
 ?>
 
 <body>

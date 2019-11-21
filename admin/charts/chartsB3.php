@@ -7,13 +7,21 @@ include_once '../../requests/select.php';
 
 <?php
 include_once '../../bases/head.php';
+
+if (!isset($_SESSION["role"]) || $_SESSION["role"] != 1) {
+
+    header("location: ../../connexion/co.php?co=newco");
+}
 ?>
 
 <body>
     <?php include_once '../../bases/menu.php'; ?>
     <div class="container">
         <h3>Graphiques Globaux B3 2019-2020</h3>
-        <div class="row">
+
+        <?php
+        if (selectCountCoursByPromo('B3') != 0) {
+            echo '<div class="row">
             <div class="cell-5">
                 <div><canvas id="heuresMat" width="100" height="100"></canvas></div>
             </div>
@@ -28,7 +36,11 @@ include_once '../../bases/head.php';
             <div class="cell-5 offset-2">
                 <div><canvas id="partPercent" width="100" height="100"></canvas></div>
             </div>
-        </div>
+        </div>';
+        } else {
+            echo 'Aucune data a afficher pour cette promo';
+        }
+        ?>
     </div>
 </body>
 <script src="../../js/activeMenu.js"></script>
