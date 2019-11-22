@@ -28,7 +28,7 @@ if (!isset($_SESSION["role"]) || $_SESSION["role"] != 1) {
         </div>
         <h3>Aperçu Heures par Personnes</h3>
         <?php
-        echo '<table class="table striped table-border mt-2" data-role="table" data-show-search="false" data-show-table-info="false" data-show-rows-steps="false" data-pagination-short-mode="false" data-show-pagination="false" data-rows="5">';
+        echo '<table class="table striped row-hover table-border">';
         echo '<thead>';
         echo '<tr>';
         echo '<th data-sortable="false"></th>';
