@@ -1,30 +1,3 @@
-switch (nom) {
-    case 'chartsB1':
-        idPromo = 1;
-        nomPromo = 'B1';
-        break;
-
-    case 'chartsB2':
-        idPromo = 2;
-        nomPromo = 'B2';
-        break;
-
-    case 'chartsB3':
-        idPromo = 3;
-        nomPromo = 'B3';
-        break;
-
-    case 'chartsI1':
-        idPromo = 4;
-        nomPromo = 'I1'
-        break;
-
-    case 'chartsI2':
-        idPromo = 5;
-        nomPromo = 'I2'
-        break;
-}
-
 let arrayInsc = new Array;
 let arrayPart = new Array;
 let arrayDate = new Array;

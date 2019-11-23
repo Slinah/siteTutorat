@@ -18,7 +18,9 @@ if (!isset($_SESSION["role"]) || $_SESSION["role"] != 1) {
     <?php include_once '../../bases/menu.php'; ?>
     <div class="container">
         <h3>Graphiques Globaux I1 2019-2020</h3>
-        <div class="row">
+        <?php
+        if (selectCountCoursByPromo('I1') != 0) {
+            echo '<div class="row">
             <div class="cell-5">
                 <div><canvas id="heuresMat" width="100" height="100"></canvas></div>
             </div>
@@ -33,7 +35,11 @@ if (!isset($_SESSION["role"]) || $_SESSION["role"] != 1) {
             <div class="cell-5 offset-2">
                 <div><canvas id="partPercent" width="100" height="100"></canvas></div>
             </div>
-        </div>
+        </div>';
+        } else {
+            echo 'Aucune data a afficher pour cette promo.';
+        }
+        ?>
     </div>
 </body>
 <script src="../../js/activeMenu.js"></script>
