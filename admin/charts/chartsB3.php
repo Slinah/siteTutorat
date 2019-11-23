@@ -38,7 +38,7 @@ if (!isset($_SESSION["role"]) || $_SESSION["role"] != 1) {
             </div>
         </div>';
         } else {
-            echo 'Aucune data a afficher pour cette promo';
+            echo 'Aucune data a afficher pour cette promo.';
         }
         ?>
     </div>
