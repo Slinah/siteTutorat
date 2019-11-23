@@ -44,6 +44,12 @@ $.post("../../chartRequests/getPartInsc.php", {
             xAxes: [{
                 barPercentage: 1,
                 categoryPercentage: 0.6
+            }],
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true,
+                    stepSize: 5
+                }
             }]
         }
     };
