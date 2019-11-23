@@ -14,7 +14,7 @@ $.post("../../chartRequests/getPartInsc.php", {
             arrayPart.push(jsonPartInsc[i]['participants']);
         }
         let dt = new Date(jsonPartInsc[i]['date']);
-        arrayDate.push(jsonPartInsc[i]['matiere'] + ' (' + dt.getDay() + ' ' + arrayMois[dt.getMonth()] + ')');
+        arrayDate.push(jsonPartInsc[i]['matiere'] + ' (' + dt.getDate() + ' ' + arrayMois[dt.getMonth()] + ')');
     }
 }).done(function () {
     var chartInsc = document.getElementById("partInsc");
