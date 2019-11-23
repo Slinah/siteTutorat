@@ -559,7 +559,7 @@ function selectCountCoursByPromo($promo)
 
 function selectInscritParticipantsCours($promo)
 {
-    $inscPart = $GLOBALS['db']->prepare('SELECT c.date AS date, m.intitule AS matiere, c.nbInscrits AS inscrits, c.nbParticipants AS participants, p.promo AS niveau FROM cours c JOIN matiere m ON c.id_matiere=m.id_matiere JOIN cours_promo cp ON c.id_cours=cp.id_cours JOIN promo p ON cp.id_promo=p.id_promo WHERE p.id_promo = :promo AND c.status > 0');
+    $inscPart = $GLOBALS['db']->prepare('SELECT c.date AS date, m.intitule AS matiere, c.nbInscrits AS inscrits, c.nbParticipants AS participants, p.promo AS niveau FROM cours c JOIN matiere m ON c.id_matiere=m.id_matiere JOIN cours_promo cp ON c.id_cours=cp.id_cours JOIN promo p ON cp.id_promo=p.id_promo WHERE p.id_promo = :promo AND c.status > 0 ORDER BY c.date ASC');
     $inscPart->bindParam(":promo", $promo);
     $inscPart->execute();
     $insc = $inscPart->fetchAll();
