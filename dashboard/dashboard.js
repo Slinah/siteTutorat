@@ -1,3 +1,46 @@
+function heuresMat(promo) {
+    let arrayMatBar = new Array;
+    let arrayHeureBar = new Array;
+    let arrayColorBar = new Array;
+    let arrayBorderColorBar = new Array();
+    $.post("chartRequests/getHeuresMat.php", {
+        idPromo: promo
+    }, function (tabInfos) {
+        var allJson = JSON.parse(tabInfos);
+        for (i = 0; i < allJson.length; i++) {
+            arrayMatBar.push(allJson[i]['matiere']);
+            arrayHeureBar.push(allJson[i]['duree']);
+            arrayColorBar.push('rgba(' + Math.floor(Math.random() * 256) + ', ' + Math.floor(Math.random() * 256) + ', ' + Math.floor(Math.random() * 256) + ', 0.2)');
+            arrayBorderColorBar.push('rgba(0, 0, 0)');
+        }
+    }).done(function () {
+        var ctx = document.getElementById('heuresMat').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: arrayMatBar,
+                datasets: [{
+                    label: 'Heures / Matières',
+                    data: arrayHeureBar,
+                    backgroundColor: arrayColorBar,
+                    borderColor: arrayBorderColorBar,
+                    borderWidth: 0.2
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true,
+                            stepSize: 1
+                        }
+                    }]
+                }
+            }
+        });
+    })
+}
+
 function callJs(promo) {
     if (promo == 0) {
         let arrayMatiereSum = new Array;
@@ -39,6 +82,7 @@ function callJs(promo) {
                     }
                 });
             })
+        $('#globalMat').text('Graphique global des tuteurs');
         let arrayTuteurPart = new Array;
         let arrayHeurePart = new Array;
         let arrayColorPart = new Array;
@@ -78,7 +122,12 @@ function callJs(promo) {
                     }
                 });
             })
-
-        $('#content').text('Graphique global des matières');
+        $('#globalPart').text('Graphique global des matières');
+    } else if (promo == 1) {
+        $('#globalMat').text('');
+        $('#globalPart').text('');
+        $('#globalChartMatiereDiv').text('');
+        $('#globalChartParticipationDiv').text('');
+        heuresMat(promo);
     }
 }

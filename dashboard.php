@@ -35,12 +35,32 @@
     </div>
     <div class="row">
         <div class="cell-5">
+            <div id="globalPart"></div>
+            <div id="globalChartParticipationDiv"><canvas id="globalChartParticipation"></canvas></div>
+        </div>
+        <div class="cell-5 offset-2">
+            <div id="globalMat"></div>
+            <div id="globalChartMatiereDiv"><canvas id="globalChartMatiere"></canvas></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="cell-5">
             <div id="content"></div>
-            <canvas id="globalChartParticipation"></canvas>
+            <canvas id="heuresMat"></canvas>
         </div>
         <div class="cell-5 offset-2">
             <div id="content"></div>
-            <canvas id="globalChartMatiere"></canvas>
+            <canvas id="partMois"></canvas>
+        </div>
+    </div>
+    <div class="row">
+        <div class="cell-5">
+            <div id="content"></div>
+            <canvas id="partInsc"></canvas>
+        </div>
+        <div class="cell-5 offset-2">
+            <div id="content"></div>
+            <canvas id="partPercent"></canvas>
         </div>
     </div>
 </body>
