@@ -21,21 +21,25 @@ if (!isset($_SESSION["role"]) || $_SESSION["role"] != 1) {
         <?php
         if (selectCountCoursByPromo('I2') != 0) {
             echo '<div class="row">
-            <div class="cell-5">
-                <div><canvas id="heuresMat" width="100" height="100"></canvas></div>
-            </div>
-            <div class="cell-5 offset-2">
-                <div><canvas id="partMois" width="100" height="100"></canvas></div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="cell-5">
-                <div><canvas id="partInsc" width="100" height="100"></canvas></div>
-            </div>
-            <div class="cell-5 offset-2">
-                <div><canvas id="partPercent" width="100" height="100"></canvas></div>
-            </div>
-        </div>';
+                    <div class="cell-5">
+                        Heures de tutorats par matières (I2)
+                        <div><canvas id="heuresMat" width="100" height="100"></canvas></div>
+                    </div>
+                    <div class="cell-5 offset-2">
+                        Participants par mois (I2)
+                        <div><canvas id="partMois" width="100" height="100"></canvas></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="cell-5">
+                        Nombre de participants par rapport au nombre d\'inscrits (I2)
+                        <div><canvas id="partInsc" width="100" height="100"></canvas></div>
+                    </div>
+                    <div class="cell-5 offset-2">
+                        Nombre de participants par matières (I2)
+                        <div><canvas id="partPercent" width="100" height="100"></canvas></div>
+                    </div>
+                </div>';
         } else {
             echo 'Aucune data a afficher pour cette promo.';
         }

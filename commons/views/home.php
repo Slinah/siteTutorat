@@ -26,7 +26,7 @@ include_once '../../bases/head.php';
         <h1>
             <img src="../../medias/squirelMascot.png" alt="allo">
         </h1>
-        <h2>Ce site web a été créé pour faciliter le tutorat et l'aide entre les promos de l'EPSI. <br>Ici vous pouvez retrouver les patchnotes de mises à jours du site, ainsi que sa description et les quelques règles du tutorat.</h2>
+        <h2>Ce site web a été créé pour faciliter le tutorat et l'aide entre les promos de l'EPSI & de WIS. <br>Ici vous pouvez retrouver la description du site et les quelques règles du tutorat.</h2>
     </div>
     <br><br><br>
     <div class='grid'>
@@ -61,7 +61,7 @@ include_once '../../bases/head.php';
             </div>
         </div>
     </div><br><br>
-    <h5>Patchnotes</h5>
+    <!-- <h5>Patchnotes</h5>
     <div class="remark info">
         <div class="spanpatch">
             <b>Patchnote - BETA v0.5 - 06/10/2019</b><br><br>
@@ -108,7 +108,7 @@ include_once '../../bases/head.php';
             <span class="mif-bug"></span><i> Bug connu sur la création d'un cours à partir d'une proposition.</i><br>
         </div>
     </div>
-    <i>Merci à Anaïs Tatibouët pour son aide sur ce projet, et à Pierre Nègre pour son soutien moral.</i>
+    <i>Merci à Anaïs Tatibouët pour son aide sur ce projet, et à Pierre Nègre pour son soutien moral.</i> -->
 </body>
 <script src="../../js/activeMenu.js"></script>
 
