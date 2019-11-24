@@ -367,7 +367,7 @@ function selectTuteurCoursClosHeures()
     return $tutHeure;
 }
 
-function selectHeuresMatièresCoursClos()
+function selectHeuresMatieresCoursClos()
 {
     $heureMatiere = $GLOBALS['db']->prepare('SELECT m.id_matiere AS id_matiere, m.intitule AS matiere, SUM(c.duree) AS duree FROM cours c INNER JOIN matiere m ON c.id_matiere=m.id_matiere WHERE c.status=1 GROUP BY m.id_matiere, m.intitule ORDER BY SUM(c.duree) DESC');
     $heureMatiere->execute();

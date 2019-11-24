@@ -32,7 +32,7 @@ if (!isset($_SESSION["role"]) || $_SESSION["role"] != 1) {
         echo '<thead>';
         echo '<tr>';
         echo '<th data-sortable="false"></th>';
-        foreach (selectHeuresMatièresCoursClos() as $m) {
+        foreach (selectHeuresMatieresCoursClos() as $m) {
             echo '<th data-sortable="false">' . $m['matiere'] . '</th>';
         }
         echo '<th data-sortable="false"><i>Total / Personnes<i></th>';
@@ -41,7 +41,7 @@ if (!isset($_SESSION["role"]) || $_SESSION["role"] != 1) {
         echo '<tbody>';
         foreach (selectTuteurCoursClosHeures() as $tuteur) {
             echo '<tr><td>' . $tuteur['prenom'] . ' ' .  $tuteur['nom'] . ' (' . $tuteur['promo'] . ')</td>';
-            foreach (selectHeuresMatièresCoursClos() as $matiere) {
+            foreach (selectHeuresMatieresCoursClos() as $matiere) {
                 if (selectHeuresByIdMatiereIdTuteur($tuteur['id_personne'], $matiere['id_matiere']) != 'none') {
                     echo '<td>' . selectHeuresByIdMatiereIdTuteur($tuteur['id_personne'], $matiere['id_matiere']) . '</td>';
                 } else {
@@ -51,7 +51,7 @@ if (!isset($_SESSION["role"]) || $_SESSION["role"] != 1) {
             echo '<td><b><i>' . $tuteur['duree'] . '<i><b></td></tr>';
         }
         echo '<tr><td><b><i>Total<i><b></td>';
-        foreach (selectHeuresMatièresCoursClos() as $matiere) {
+        foreach (selectHeuresMatieresCoursClos() as $matiere) {
             echo '<td><b><i>' . selectHeureByMatiere($matiere['id_matiere']) . '<i><b></td>';
         }
         echo '<td><b><i>' . selectHeuresTotal() . '<i><b></td></tr></tbody></table>';
