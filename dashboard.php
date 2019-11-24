@@ -36,31 +36,31 @@
     <div class="row">
         <div class="cell-5">
             <div id="globalPart"></div>
-            <div id="globalChartParticipationDiv"><canvas id="globalChartParticipation"></canvas></div>
+            <div id="globalChartParticipationDiv"><canvas id="globalChartParticipation" width="100" height="100"></canvas></div>
         </div>
         <div class="cell-5 offset-2">
             <div id="globalMat"></div>
-            <div id="globalChartMatiereDiv"><canvas id="globalChartMatiere"></canvas></div>
+            <div id="globalChartMatiereDiv"><canvas id="globalChartMatiere" width="100" height="100"></canvas></div>
         </div>
     </div>
     <div class="row">
         <div class="cell-5">
-            <div id="content"></div>
-            <canvas id="heuresMat"></canvas>
+            <div id="heuresM"></div>
+            <canvas id="heuresMat" width="100" height="100"></canvas>
         </div>
         <div class="cell-5 offset-2">
-            <div id="content"></div>
-            <canvas id="partMois"></canvas>
+            <div id="partM"></div>
+            <canvas id="partMois" width="100" height="100"></canvas>
         </div>
     </div>
     <div class="row">
         <div class="cell-5">
-            <div id="content"></div>
-            <canvas id="partInsc"></canvas>
+            <div id="partI"></div>
+            <canvas id="partInsc" width="100" height="100"></canvas>
         </div>
         <div class="cell-5 offset-2">
-            <div id="content"></div>
-            <canvas id="partPercent"></canvas>
+            <div id="partP"></div>
+            <canvas id="partPercent" width="100" height="100"></canvas>
         </div>
     </div>
 </body>
