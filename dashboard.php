@@ -34,11 +34,11 @@
         </div>
     </div>
     <div class="row">
-        <div class="cell-5 offset-2">
+        <div class="cell-5">
             <div id="content"></div>
             <canvas id="globalChartParticipation"></canvas>
         </div>
-        <div class="cell-5">
+        <div class="cell-5 offset-2">
             <div id="content"></div>
             <canvas id="globalChartMatiere"></canvas>
         </div>
