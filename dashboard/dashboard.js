@@ -209,6 +209,16 @@ function heuresMat(promo) {
 
 function callJs(promo) {
     if (promo == 0) {
+        $('#heuresM').text('');
+        $('#partM').text('');
+        $('#partI').text('');
+        $('#partP').text('');
+        $('#heureMatDiv').text('');
+        $('#partMoisDiv').text('');
+        $('#partInscDiv').text('');
+        $('#partPercentDiv').text('');
+        $('#globalMat').text('Graphique global des tuteurs');
+        $('#globalPart').text('Graphique global des matières');
         let arrayMatiereSum = new Array;
         let arrayHeureSum = new Array;
         let arrayColorSum = new Array;
@@ -248,7 +258,6 @@ function callJs(promo) {
                     }
                 });
             })
-        $('#globalMat').text('Graphique global des tuteurs');
         let arrayTuteurPart = new Array;
         let arrayHeurePart = new Array;
         let arrayColorPart = new Array;
@@ -288,7 +297,6 @@ function callJs(promo) {
                     }
                 });
             })
-        $('#globalPart').text('Graphique global des matières');
     } else {
         $('#globalMat').text('');
         $('#globalPart').text('');
@@ -298,6 +306,10 @@ function callJs(promo) {
         $('#partM').text('Participants par mois');
         $('#partI').text('Nombre de participants par rapport au nombre d\'inscrits');
         $('#partP').text('Nombre de participants par matières');
+        $('#heureMatDiv').text('');
+        $('#partMoisDiv').text('');
+        $('#partInscDiv').text('');
+        $('#partPercentDiv').text('');
         heuresMat(promo);
         partMois(promo);
         partInsc(promo);

@@ -46,21 +46,21 @@
     <div class="row">
         <div class="cell-5">
             <div id="heuresM"></div>
-            <canvas id="heuresMat" width="100" height="100"></canvas>
+            <div id="heureMatDiv"><canvas id="heuresMat" width="100" height="100"></canvas></div>
         </div>
         <div class="cell-5 offset-2">
             <div id="partM"></div>
-            <canvas id="partMois" width="100" height="100"></canvas>
+            <div id="partMoisDiv"><canvas id="partMois" width="100" height="100"></canvas></div>
         </div>
     </div>
     <div class="row">
         <div class="cell-5">
             <div id="partI"></div>
-            <canvas id="partInsc" width="100" height="100"></canvas>
+            <div id="partInscDiv"><canvas id="partInsc" width="100" height="100"></canvas></div>
         </div>
         <div class="cell-5 offset-2">
             <div id="partP"></div>
-            <canvas id="partPercent" width="100" height="100"></canvas>
+            <div id="partPercentDiv"><canvas id="partPercent" width="100" height="100"></canvas></div>
         </div>
     </div>
 </body>
