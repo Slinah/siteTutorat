@@ -14,8 +14,8 @@ function partPercent(promo) {
             arrayBorderColorPie.push('rgba(0, 0, 0)');
         }
     }).done(function () {
-        var ctx = document.getElementById('partPercent').getContext('2d');
-        var myChart = new Chart(ctx, {
+        var a = document.getElementById('partPercent').getContext('2d');
+        var myChart = new Chart(a, {
             type: 'pie',
             data: {
                 labels: arrayMatPie,
@@ -118,7 +118,7 @@ function partMois(promo) {
             arrayPartLine.push(allJson[i]['participants']);
         }
     }).done(function () {
-        var ctx = document.getElementById('partMois').getContext('2d');
+        var b = document.getElementById('partMois').getContext('2d');
 
         var recapData = {
             label: 'Année passée',
@@ -156,7 +156,7 @@ function partMois(promo) {
             }
         }
 
-        var chart = new Chart(ctx, {
+        var chart = new Chart(b, {
             type: 'line',
             data: mixedData,
             chartOptions: chartOptions
@@ -180,8 +180,8 @@ function heuresMat(promo) {
             arrayBorderColorBar.push('rgba(0, 0, 0)');
         }
     }).done(function () {
-        var ctx = document.getElementById('heuresMat').getContext('2d');
-        var myChart = new Chart(ctx, {
+        var c = document.getElementById('heuresMat').getContext('2d');
+        var myChart = new Chart(c, {
             type: 'bar',
             data: {
                 labels: arrayMatBar,
@@ -213,10 +213,14 @@ function callJs(promo) {
         $('#partM').text('');
         $('#partI').text('');
         $('#partP').text('');
-        $('#heureMatDiv').text('');
-        $('#partMoisDiv').text('');
-        $('#partInscDiv').text('');
-        $('#partPercentDiv').text('');
+        // $('#heureMatDiv').text('');
+        $('#heuresMat').restore();
+        // $('#partMoisDiv').text('');
+        $('#partMois').restore();
+        // $('#partInscDiv').text('');
+        $('#partInsc').restore();
+        // $('#partPercentDiv').text('');
+        $('#partPercent').restore();
         $('#globalMat').text('Graphique global des tuteurs');
         $('#globalPart').text('Graphique global des matières');
         let arrayMatiereSum = new Array;
@@ -233,8 +237,8 @@ function callJs(promo) {
                     arrayBorderColorSum.push('rgba(0, 0, 0)');
                 }
             }).done(function () {
-                var ctx = document.getElementById('globalChartMatiere').getContext('2d');
-                var myChart = new Chart(ctx, {
+                var d = document.getElementById('globalChartMatiere').getContext('2d');
+                var myChart = new Chart(d, {
                     type: 'horizontalBar',
                     data: {
                         labels: arrayMatiereSum,
@@ -272,8 +276,8 @@ function callJs(promo) {
                     arrayBorderColorPart.push('rgba(0, 0, 0)');
                 }
             }).done(function () {
-                var ctx = document.getElementById('globalChartParticipation').getContext('2d');
-                var myChart = new Chart(ctx, {
+                var e = document.getElementById('globalChartParticipation').getContext('2d');
+                var myChart = new Chart(e, {
                     type: 'bar',
                     data: {
                         labels: arrayTuteurPart,
@@ -306,10 +310,18 @@ function callJs(promo) {
         $('#partM').text('Participants par mois');
         $('#partI').text('Nombre de participants par rapport au nombre d\'inscrits');
         $('#partP').text('Nombre de participants par matières');
-        $('#heureMatDiv').text('');
-        $('#partMoisDiv').text('');
-        $('#partInscDiv').text('');
-        $('#partPercentDiv').text('');
+        // $('#heureMatDiv').text('');
+        // $('#heuresMat').restore();
+        document.getElementById('#heuresMat').getContext('2d').restore();
+        // $('#partMoisDiv').text('');
+        // $('#partMois').restore();
+        document.getElementById('#partMois').getContext('2d').restore();
+        // $('#partInscDiv').text('');
+        // $('#partInsc').restore();
+        document.getElementById('#partInsc').getContext('2d').restore();
+        // $('#partPercentDiv').text('');
+        // $('#partPercent').restore();
+        document.getElementById('#partPercent').getContext('2d').restore();
         heuresMat(promo);
         partMois(promo);
         partInsc(promo);
