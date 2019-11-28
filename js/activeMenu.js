@@ -49,6 +49,12 @@ switch (nom) {
         nomPromo = 'I2'
         break;
 
+    case 'chartsWis1':
+        $('#stats').addClass('active');
+        idPromo = 6;
+        nomPromo = 'WIS 1'
+        break;
+
     case 'administration':
         $('#admin').addClass('active');
         break;
