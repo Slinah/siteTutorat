@@ -17,6 +17,7 @@
                     <li><a href="../../admin/charts/chartsB3.php">Recap B3</a></li>
                     <li><a href="../../admin/charts/chartsI1.php">Recap I1</a></li>
                     <li><a href="../../admin/charts/chartsI2.php">Recap I2</a></li>
+                    <li><a href="../../admin/charts/chartsWis1.php">Recap WIS 1</a></li>
                 </ul>
             </li>';
             }
