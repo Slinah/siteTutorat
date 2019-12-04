@@ -50,7 +50,7 @@ include_once '../../bases/head.php';
         <h3>Les propositions actuelles : </h3>
         <?php
         if (verifExistProposition() != 0) {
-            echo '<table class="table striped table-border mt-2" data-role="table" data-show-search="false" data-show-table-info="false" data-show-rows-steps="true" data-pagination-short-mode="true" data-show-pagination="true" data-rows="5">
+            echo '<table class="table striped table-border mt-2" data-role="table" data-show-search="false" data-show-table-info="false" data-show-rows-steps="true" data-pagination-short-mode="false" data-show-pagination="true" data-rows="5">
             <thead>
             <tr>
                 <th data-sortable="false">Matière</th>
