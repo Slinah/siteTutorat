@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="../css/particle.css">
     <title>ScratchOverflow</title>
+    <meta name="google-site-verification" content="-FAkp5XQbDa-zN4Kl3UrlzR5WHeu-sbGdiroRytUeWU" />
 </head>
 <!-- <body class="h-vh-100 bg-darkCrimson"> -->
 <div id="particles-js">
