@@ -60,7 +60,7 @@ include_once '../../bases/head.php';
     ?>
         <div class="container">
             <div class="icon">
-                <h1><img src="../../medias/chipmunk.png" alt=""></h1>
+                <h1><img src="../../medias/scratchOverflow.png" alt=""></h1>
             </div>
             <h3>Les cours à venir : </h3>
             <?php

@@ -24,7 +24,7 @@ include_once '../../bases/head.php';
     </div><br><br>
     <div class="description">
         <h1>
-            <img src="../../medias/squirelMascot.png" alt="allo">
+            <img src="../../medias/scratchOverflow.png" alt="allo">
         </h1>
         <h2>Ce site web a été créé pour faciliter le tutorat et l'aide entre les promos de l'EPSI & de WIS. <br>Ici vous pouvez retrouver la description du site et les quelques règles du tutorat.</h2>
     </div>

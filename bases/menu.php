@@ -1,5 +1,5 @@
-<div data-role="appbar" data-expand-point="md" class="fg-grey bg-orange">
-    <a href="../../commons/views/home.php" class="brand no-hover fg-orange bg-grayWhite"><b>ScratchOverflow</b></a>
+<div data-role="appbar" data-expand-point="md" class="fg-grey menuColor">
+    <a href="../../commons/views/home.php" class="brand brandColor no-hover bg-grayWhite"><b>ScratchOverflow</b></a>
     <ul class="app-bar-menu">
         <?php
         if (isset($_SESSION)) {

@@ -3,7 +3,7 @@
 class Config {
     const SERVERNAME="localhost";
     const DBNAME="tutorat";
-    const USER="adminBddTutorat";
-    const PASSWORD="tutorat2020";
+    const USER="root";
+    const PASSWORD="";
 }
  ?>

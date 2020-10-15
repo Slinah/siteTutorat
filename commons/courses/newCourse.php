@@ -41,7 +41,7 @@ include_once '../../bases/head.php';
     ?>
     <div class="container">
         <div class="icon">
-            <h1><img src="../../medias/nuts.png" alt=""></h1>
+            <h1><img src="../../medias/scratchOverflow.png" alt=""></h1>
         </div>
         <h3>Les propositions actuelles : </h3>
         <?php

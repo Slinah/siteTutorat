@@ -15,7 +15,7 @@ include_once '../requests/select.php';
     <script src="https://cdnjs.cloudflare.com/ajax/libs/metro/4.2.49/js/metro.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js"></script>
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-    <link rel="shortcut icon" type="image/x-icon" href="../medias/squirelMascot.png">
+    <link rel="shortcut icon" type="image/x-icon" href="../medias/scratchOverflow.png">
     <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="../css/particle.css">
     <title>ScratchOverflow</title>

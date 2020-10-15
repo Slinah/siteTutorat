@@ -13,7 +13,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/metro/4.2.49/js/metro.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js"></script>
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-    <link rel="shortcut icon" type="image/x-icon" href="../medias/squirelMascot.png">
+    <link rel="shortcut icon" type="image/x-icon" href="../medias/scratchOverflow.png">
     <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="../css/particle.css">
     <title>ScratchOverflow</title>
@@ -45,7 +45,7 @@
     ?>
 
         <form class="login-form bg-white p-6 mx-auto border bd-default win-shadow" data-role="validator" action="verifCo.php" data-clear-invalid="2000" data-on-error-form="invalidForm" data-on-validate-form="validateForm" method="post">
-            <span style="margin-top: -10px;" class="place-right"><img class="co" src="../medias/squirelMascot.png"></span>
+            <span style="margin-top: -10px;" class="place-right"><img class="co" src="../medias/scratchOverflow.png"></span>
             <h2 class="text-light">Bienvenue sur ScratchOverflow</h2>
             <hr class="thin mt-4 mb-4 bg-white">
             <div class="form-group">
