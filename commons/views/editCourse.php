@@ -24,7 +24,6 @@ include_once '../../bases/head.php';
             echo '<form action="updateCourseMdf.php?course=' . $c['id_cours'] . '" method="post">';
             echo '<input data-role="input" name="intitule" placeholder="' . $c['intitule'] . '" data-prepend="Intitule">';
             echo '<br><input name="date" data-role="datepicker" data-year="false" data-value="' . $c['date'] . '">';
-            echo '<br><input name="heure" data-role="timepicker" data-seconds="false" data-value="' . $c['heure'] . '">';
             echo '<br><select name="matiere" data-role="select" data-filter="false" data-prepend="Matière">';
             echo '<option value="' . $c['id_matiere'] . '">' . $c['matiere'] . '</option>';
             foreach (selectMatieres() as $matieres) {
@@ -37,7 +36,7 @@ include_once '../../bases/head.php';
             echo '</select>';
             echo '<br><select name="classe" data-role="select" data-filter="false" data-prepend="Niveau concerné">';
             echo '<option value="' . $c['id_promo'] . '">' . $c['niveau'] . '</option>';
-            foreach (selectPromos() as $promo) {
+            foreach (selectClassesPromoEcoles() as $promo) {
                 if ($c['id_promo'] != $promo['id_promo'] && $c['niveau'] != $promo['promo']) {
                     echo '<option value="' . $promo['id_promo'] . '">' . $promo['promo'] . '</option>';
                 } else {

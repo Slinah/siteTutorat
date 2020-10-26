@@ -45,7 +45,6 @@ if ($mdp == $mdp_conf) {
         $tkn = substr(base_convert(sha1(uniqid(mt_rand())), 16, 36), 0, 32);
         insertPersonne($n, $p, $mdpCrypt, $m, $c, $tkn);
         header("location: ../connexion/co.php?co=success");
-        var_dump($tkn);
     } else {
         header("location: registration.php?regis=already");
     }

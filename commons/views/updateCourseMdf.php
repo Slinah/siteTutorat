@@ -21,12 +21,6 @@ if (isset($userTkn) && $userTkn != null) {
             $newDate = $_POST['date'];
         }
 
-        if ($cours['heure'] == $_POST['heure'] || $_POST['heure'] ==  null) {
-            $newHeure = '';
-        } else {
-            $newHeure = $_POST['heure'];
-        }
-
         if ($cours['id_matiere'] == $_POST['matiere'] || $_POST['matiere'] ==  null) {
             $newMatiere = '';
         } else {
@@ -39,8 +33,8 @@ if (isset($userTkn) && $userTkn != null) {
             $newPromo = $_POST['classe'];
         }
         $tkn = substr(base_convert(sha1(uniqid(mt_rand())), 16, 36), 0, 32);
-        if ($newIntitule != '' || $newDate != '' || $newHeure != '' || $newMatiere != '') {
-            updateCoursMdf($newIntitule, $newDate, $newHeure, $newMatiere, $idCours);
+        if ($newIntitule != '' || $newDate != '' ||  $newMatiere != '') {
+            updateCoursMdf($newIntitule, $newDate, $newMatiere, $idCours);
             if ($newPromo != '') {
                 updateCoursPromo($newPromo, $idCours);
                 updateToken($tkn, $_SESSION['id_personne']);

@@ -6,6 +6,7 @@ include_once dirname(__DIR__) . '/conf/conf.php';
 // Connexion à la base
 $GLOBALS['db'] = new PDO("mysql:host=" . Config::SERVERNAME . ";dbname=" . Config::DBNAME, Config::USER, Config::PASSWORD);
 
+// Mis a jour V2.0
 // Sélection d'une personne en fonction d'un mail
 function selectPersonneByMail($mailPersonne)
 {
@@ -16,10 +17,11 @@ function selectPersonneByMail($mailPersonne)
     return $resultat;
 }
 
+// Mis a jour V2.0
 // Sélection du mot de passe hashé en fonction du mail d'une personne
 function selectHashPasswordPersonneByMail($mailPersonne)
 {
-    $hashPersonne = $GLOBALS['db']->prepare('SELECT mdp FROM personne WHERE mail = :mail');
+    $hashPersonne = $GLOBALS['db']->prepare('SELECT password FROM personne WHERE mail = :mail');
     $hashPersonne->bindParam(":mail", $mailPersonne);
     $hashPersonne->execute();
     $hashP = $hashPersonne->fetchAll();
@@ -27,20 +29,23 @@ function selectHashPasswordPersonneByMail($mailPersonne)
     return $hashP;
 }
 
+// Mis a jour V2.0
 // Sélection des classes d'une promo donnée
-function selectClassesPromo($promo)
+function selectClassesPromoEcoles($promo, $ecole)
 {
-    $classes = $GLOBALS['db']->prepare('SELECT c.id_classe, c.classe, p.id_promo FROM classe c JOIN promo p ON c.id_promo=p.id_promo WHERE promo = :promo');
+    $classes = $GLOBALS['db']->prepare('SELECT c.id_classe, c.intitule AS classe, p.id_promo FROM classe c JOIN promo p ON c.id_promo=p.id_promo JOIN ecole e ON p.id_ecole=e.id_ecole WHERE p.intitule = :promo AND e.intitule = :ecole');
     $classes->bindParam(':promo', $promo);
+    $classes->bindParam(':ecole', $ecole);
     $classes->execute();
     $classe = $classes->fetchAll();
     return $classe;
 }
 
+// Mis a jour V2.0
 // Sélection des promos
 function selectPromos()
 {
-    $promos = $GLOBALS['db']->prepare('SELECT id_promo, promo FROM promo');
+    $promos = $GLOBALS['db']->prepare('SELECT id_promo, intitule AS promo FROM promo');
     $promos->execute();
     $promo = $promos->fetchAll();
     return $promo;
@@ -57,10 +62,12 @@ function selectPromoByIdPromo($idPromo)
     return $promo;
 }
 
+// Mis a jour V2.0
 // Sélection des matières
-function selectMatieres()
+function selectMatieresByValidation($bool)
 {
-    $matieres = $GLOBALS['db']->prepare('SELECT id_matiere, intitule FROM matiere');
+    $matieres = $GLOBALS['db']->prepare('SELECT id_matiere, intitule FROM matiere WHERE validationAdmin = :vaa');
+    $matieres->bindParam(":vaa", $bool);
     $matieres->execute();
     $matiere = $matieres->fetchAll();
     return $matiere;
@@ -91,6 +98,7 @@ function selectIdCoursByIntitule($intituleCours)
     return $cours;
 }
 
+// Mis a jour V2.0
 // Vérification de l'existence de la corélation prof / cours en fonction de l'ID d'une personne
 function verifExistsProfPersonneByIdPersonne($idPersonne)
 {
@@ -102,20 +110,22 @@ function verifExistsProfPersonneByIdPersonne($idPersonne)
     return $count;
 }
 
+// Mis a jour V2.0
 // Sélection des cours ayant un status particulier
 function selectCoursByStatus($valueStatus)
 {
-    $cours = $GLOBALS['db']->prepare('SELECT c.id_cours AS id_cours, c.intitule AS intitule, c.date AS date, c.heure AS heure, c.secu AS secu, m.intitule AS matiere, p.promo AS promo FROM cours c JOIN matiere m ON m.id_matiere=c.id_matiere JOIN cours_promo cp ON c.id_cours=cp.id_cours JOIN promo p ON p.id_promo=cp.id_promo WHERE c.status = :status');
+    $cours = $GLOBALS['db']->prepare('SELECT c.id_cours AS id_cours, c.intitule AS intitule, c.date AS date, c.secu AS secu, m.intitule AS matiere, p.intitule AS promo FROM cours c JOIN matiere m ON m.id_matiere=c.id_matiere JOIN cours_promo cp ON c.id_cours=cp.id_cours JOIN promo p ON p.id_promo=cp.id_promo WHERE c.status = :status');
     $cours->bindParam(":status", $valueStatus);
     $cours->execute();
     $cour = $cours->fetchAll();
     return $cour;
 }
 
+// Mis a jour V2.0
 // Sélection des cours ayant le status 0
 function selectCoursStatus()
 {
-    $cours = $GLOBALS['db']->prepare('SELECT c.id_cours AS id_cours, c.intitule AS intitule, c.date AS date, c.heure AS heure, c.secu AS secu, m.intitule AS matiere, p.promo AS promo FROM cours c JOIN matiere m ON m.id_matiere=c.id_matiere JOIN cours_promo cp ON c.id_cours=cp.id_cours JOIN promo p ON p.id_promo=cp.id_promo WHERE c.status = 0');
+    $cours = $GLOBALS['db']->prepare('SELECT c.id_cours AS id_cours, c.intitule AS intitule, c.date AS date, c.secu AS secu, m.intitule AS matiere, p.intitule AS promo FROM cours c JOIN matiere m ON m.id_matiere=c.id_matiere JOIN cours_promo cp ON c.id_cours=cp.id_cours JOIN promo p ON p.id_promo=cp.id_promo WHERE c.status = 0');
     $cours->execute();
     $cour = $cours->fetchAll();
     if (empty($cour)) {
@@ -124,10 +134,11 @@ function selectCoursStatus()
     return $cour;
 }
 
+// Mis a jour V2.0
 // Sélection des infos personne et promo en fonction de l'id d'un cours et du rang de la personne
 function selectPersonnePromoByIdCoursRangPersonne($idCours, $rangPersonne)
 {
-    $prof = $GLOBALS['db']->prepare('SELECT p.id_personne AS id_personne, p.nom AS nom, p.prenom AS prenom, cl.classe AS classe, po.promo AS promo FROM personne p JOIN personne_cours pc ON p.id_personne=pc.id_personne JOIN classe cl ON p.id_classe=cl.id_classe JOIN promo po ON cl.id_promo=po.id_promo WHERE pc.id_cours = :idc AND rang_personne = :rang');
+    $prof = $GLOBALS['db']->prepare('SELECT p.id_personne AS id_personne, p.nom AS nom, p.prenom AS prenom, cl.intitule AS classe, po.intitule AS promo FROM personne p JOIN personne_cours pc ON p.id_personne=pc.id_personne JOIN classe cl ON p.id_classe=cl.id_classe JOIN promo po ON cl.id_promo=po.id_promo WHERE pc.id_cours = :idc AND rang_personne = :rang');
     $prof->bindParam(":idc", $idCours);
     $prof->bindParam(":rang", $rangPersonne);
     $prof->execute();
@@ -135,6 +146,7 @@ function selectPersonnePromoByIdCoursRangPersonne($idCours, $rangPersonne)
     return $p;
 }
 
+// Mis a jour V2.0
 // Vérification de l'existence d'une liaison cours PROF a partir de l'id de la personne et de l'id du cours
 function verifExistProfCoursByIdPersonneIdCours($idPersonne, $idCours)
 {
@@ -147,6 +159,7 @@ function verifExistProfCoursByIdPersonneIdCours($idPersonne, $idCours)
     return $pc;
 }
 
+// Mis a jour V2.0
 // Vérification de l'existence d'une liaison cours ELEVE a partir de l'id de la personne et de l'id du cours
 function verifExistEleveCoursByIdPersonneIdCours($idPersonne, $idCours)
 {
@@ -159,10 +172,11 @@ function verifExistEleveCoursByIdPersonneIdCours($idPersonne, $idCours)
     return $pc;
 }
 
+// Mis a jour V2.0
 // Sélectionne les infos cours, matière, niveau en fonction du status du cours, de l'id de la personne et de son rang
 function selectCoursMatiereNiveauByStatusIdPersonneRang($valueStatus, $idPersonne, $rangPersonne)
 {
-    $cours = $GLOBALS['db']->prepare('SELECT c.id_cours AS id_cours, c.intitule AS intitule, c.heure AS heure, c.date AS date, c.secu AS secu,c.date AS date, c.duree AS duree, c.commentaires AS commentaires, c.nbInscrits AS inscrits, c.nbParticipants AS participants, m.intitule AS matiere, p.promo AS niveau FROM cours c JOIN matiere m ON c.id_matiere=m.id_matiere JOIN cours_promo cp ON c.id_cours=cp.id_cours JOIN promo p ON p.id_promo=cp.id_promo JOIN personne_cours pco ON c.id_cours=pco.id_cours WHERE c.status = :status AND pco.id_personne = :idp AND pco.rang_personne = :rang');
+    $cours = $GLOBALS['db']->prepare('SELECT c.id_cours AS id_cours, c.intitule AS intitule, c.date AS date, c.secu AS secu, c.duree AS duree, c.commentaires AS commentaires, c.nbParticipants AS participants, m.intitule AS matiere, p.intitule AS niveau FROM cours c JOIN matiere m ON c.id_matiere=m.id_matiere JOIN cours_promo cp ON c.id_cours=cp.id_cours JOIN promo p ON p.id_promo=cp.id_promo JOIN personne_cours pco ON c.id_cours=pco.id_cours WHERE c.status = :status AND pco.id_personne = :idp AND pco.rang_personne = :rang');
     $cours->bindParam(":status", $valueStatus);
     $cours->bindParam(":idp", $idPersonne);
     $cours->bindParam(":rang", $rangPersonne);
@@ -171,10 +185,11 @@ function selectCoursMatiereNiveauByStatusIdPersonneRang($valueStatus, $idPersonn
     return $cour;
 }
 
+// Mis a jour V2.0
 // Sélectionne le cours la matière le niveau par le code de sécu, l'id de la personne et son rang
 function selectCoursMatiereNiveauBySecuIdPersonneRang($secuCode, $idPersonne, $rangPersonne)
 {
-    $cours = $GLOBALS['db']->prepare('SELECT c.id_cours AS id_cours, c.intitule AS intitule, c.heure AS heure, c.date AS date, m.intitule AS matiere, m.id_matiere AS id_matiere, p.promo AS niveau, p.id_promo AS id_promo FROM cours c JOIN matiere m ON c.id_matiere=m.id_matiere JOIN cours_promo cp ON c.id_cours=cp.id_cours JOIN promo p ON p.id_promo=cp.id_promo JOIN personne_cours pco ON c.id_cours=pco.id_cours WHERE c.secu = :secu AND pco.id_personne = :idp AND pco.rang_personne = :rang');
+    $cours = $GLOBALS['db']->prepare('SELECT c.id_cours AS id_cours, c.intitule AS intitule, c.date AS date, m.intitule AS matiere, m.id_matiere AS id_matiere, p.intitule AS niveau, p.id_promo AS id_promo FROM cours c JOIN matiere m ON c.id_matiere=m.id_matiere JOIN cours_promo cp ON c.id_cours=cp.id_cours JOIN promo p ON p.id_promo=cp.id_promo JOIN personne_cours pco ON c.id_cours=pco.id_cours WHERE c.secu = :secu AND pco.id_personne = :idp AND pco.rang_personne = :rang');
     $cours->bindParam(":secu", $secuCode);
     $cours->bindParam(":idp", $idPersonne);
     $cours->bindParam(":rang", $rangPersonne);
@@ -183,16 +198,18 @@ function selectCoursMatiereNiveauBySecuIdPersonneRang($secuCode, $idPersonne, $r
     return $cour;
 }
 
+// Mis a jour V2.0
 // Sélectionne le cours la matière et le niveau d'un cours en fontion de son ID
 function selectCoursMatiereNiveauByIdCours($idCours)
 {
-    $cours = $GLOBALS['db']->prepare('SELECT c.intitule AS intitule, c.heure AS heure, c.date AS date, c.secu AS secu, m.id_matiere AS id_matiere, p.id_promo AS promo FROM cours c JOIN matiere m ON c.id_matiere=m.id_matiere JOIN cours_promo cp ON c.id_cours=cp.id_cours JOIN promo p ON cp.id_promo=p.id_promo WHERE c.id_cours = :idc');
+    $cours = $GLOBALS['db']->prepare('SELECT c.intitule AS intitule, c.date AS date, c.secu AS secu, m.id_matiere AS id_matiere, p.id_promo AS promo FROM cours c JOIN matiere m ON c.id_matiere=m.id_matiere JOIN cours_promo cp ON c.id_cours=cp.id_cours JOIN promo p ON cp.id_promo=p.id_promo WHERE c.id_cours = :idc');
     $cours->bindParam(":idc", $idCours);
     $cours->execute();
     $cour = $cours->fetchAll();
     return $cour;
 }
 
+// Mis a jour V2.0
 // Sélectionne le nombre de participants a un cours en fonction de son ID
 function selectCountParticipantsByIdCours($idCours)
 {
@@ -228,6 +245,7 @@ function verifExistCoursByIdPersonneRangStatus($idPersonne, $rangPersonne, $valu
     return $existCour;
 }
 
+// Mis a jour V2.0
 // Sélectionne la matière a partir de son intitulé
 function selectMatiereByIntitule($intituleMatiere)
 {
@@ -243,20 +261,24 @@ function selectMatiereByIntitule($intituleMatiere)
     return $mat;
 }
 
+// Mis a jour V2.0
 // Sélectionne la dernière proposition insert dans la base 
-function selectLastProposition()
+function selectIdLastPropositionByMatiereNiveau($matiere, $niveau)
 {
-    $proposition = $GLOBALS['db']->prepare('SELECT id_proposition FROM proposition ORDER BY id_proposition DESC LIMIT 1');
+    $proposition = $GLOBALS['db']->prepare('SELECT p.id_proposition FROM proposition p JOIN matiere m ON p.id_matiere=m.id_matiere JOIN proposition_promo pp ON p.id_proposition=pp.id_proposition JOIN promo po ON pp.id_promo=po.id_promo WHERE m.id_matiere = :idm AND po.id_promo = :idp');
+    $proposition->bindParam(":idm", $matiere);
+    $proposition->bindParam(":idp", $niveau);
     $proposition->execute();
     $prop = $proposition->fetchAll();
     $prop = $prop[0][0];
     return $prop;
 }
 
+// Mis a jour V2.0
 // Vérification de l'existance d'une proposition en fonction de l'id de la matière et de l'id de la promo
 function verifExistPropositionByIdMatiereIdPromo($idMatiere, $idPromo)
 {
-    $proposition = $GLOBALS['db']->prepare('SELECT id_proposition FROM proposition WHERE id_matiere = :idm AND id_promo = :idp');
+    $proposition = $GLOBALS['db']->prepare('SELECT id_proposition FROM proposition p JOIN proposition_promo pp ON p.id_proposition=pp.id_proposition JOIN promo po ON pp.id_promo=po.id_promo WHERE id_matiere = :idm AND po.id_promo = :idp');
     $proposition->bindParam(':idm', $idMatiere);
     $proposition->bindParam(':idp', $idPromo);
     $proposition->execute();
@@ -269,6 +291,7 @@ function verifExistPropositionByIdMatiereIdPromo($idMatiere, $idPromo)
     return $prop;
 }
 
+// Mis a jour V2.0
 // Vérification de l'existance de propositions
 function verifExistProposition()
 {
@@ -279,10 +302,11 @@ function verifExistProposition()
     return $prop;
 }
 
+// Mis a jour V2.0
 // Sélectionne les propositions matières et promos
 function selectPropositionMatierePromo()
 {
-    $proposition = $GLOBALS['db']->prepare('SELECT p.id_proposition AS id_proposition, p.secu AS secu, po.promo AS promo, m.intitule AS matiere from proposition p JOIN promo po ON p.id_promo=po.id_promo JOIN matiere m ON p.id_matiere=m.id_matiere');
+    $proposition = $GLOBALS['db']->prepare('SELECT p.id_proposition AS id_proposition, p.secu AS secu, po.intitule AS promo, m.intitule AS matiere from proposition p JOIN proposition_promo ppo ON p.id_proposition=ppo.id_proposition JOIN promo po ON ppo.id_promo=po.id_promo JOIN matiere m ON p.id_matiere=m.id_matiere');
     $proposition->execute();
     $prop = $proposition->fetchAll();
     return $prop;
@@ -300,6 +324,7 @@ function verifExistPersonneProposition($idPersonne, $idProposition)
     return $verif;
 }
 
+// Mis a jour V2.0
 // Compte le nombre de personne inscrites a une proposition en fonction de l'ID proposition
 function selectCountPersonnePropositionByIdProposition($idProposition)
 {
@@ -311,6 +336,7 @@ function selectCountPersonnePropositionByIdProposition($idProposition)
     return $prop;
 }
 
+// Mis a jour V2.0
 // Sélectionne l'ID d'une proposition en fonction de son code de sécurité
 function selectIdPropositionBySecu($secuCode)
 {
@@ -322,10 +348,11 @@ function selectIdPropositionBySecu($secuCode)
     return $id;
 }
 
+// Mis a jour V2.0
 // Sélectonne la proposition, matiere promo en fonction de l'ID proposition
 function selectPropositionMatierePromoByIdProposition($idProposition)
 {
-    $proposition = $GLOBALS['db']->prepare('SELECT p.secu AS secu, p.id_matiere AS id_matiere, p.id_promo AS id_promo, po.promo AS promo, m.intitule AS matiere from proposition p JOIN promo po ON p.id_promo=po.id_promo JOIN matiere m ON p.id_matiere=m.id_matiere WHERE id_proposition = :idp');
+    $proposition = $GLOBALS['db']->prepare('SELECT p.secu AS secu, p.id_matiere AS id_matiere, po.id_promo AS id_promo, po.intitule AS promo, m.intitule AS matiere from proposition p JOIN proposition_promo ppo ON p.id_proposition=ppo.id_proposition JOIN promo po ON ppo.id_promo=po.id_promo JOIN matiere m ON p.id_matiere=m.id_matiere WHERE p.id_proposition = :idp');
     $proposition->bindParam(':idp', $idProposition);
     $proposition->execute();
     $prop = $proposition->fetchAll();
@@ -342,7 +369,8 @@ function selectPersonnePropositionByIdProposition($idProposition)
     return $personnes;
 }
 
-// Compte le nombre d'incrits
+// Mis a jour V2.0
+// Compte le nombre d'incrits a une proposition
 function selectCountPersonnePropositionByIdPersonneIdProposition($idPersonne, $idProposition)
 {
     $personneProposition = $GLOBALS['db']->prepare('SELECT COUNT(*) FROM personne_proposition WHERE id_proposition = :idpo AND id_personne = :idpe');
@@ -489,6 +517,8 @@ function selectMatiereById($idMat)
     return $mati;
 }
 
+// Mis a jour V2.0
+// Select le token d'une personne a l'aide de son ID
 function selectTokenByIdPersonne($idPersonne)
 {
     $token = $GLOBALS['db']->prepare('SELECT token FROM personne WHERE id_personne = :idp');
@@ -533,6 +563,7 @@ function selectPersonneByIdPersonne($idPersonne)
     return $per;
 }
 
+// Mis a jour V2.0
 function verifExistMail($mailPersonne)
 {
     $mail = $GLOBALS['db']->prepare('SELECT id_personne FROM personne where mail = :mail');

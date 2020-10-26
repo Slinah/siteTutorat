@@ -11,13 +11,13 @@ if (isset($userTkn) && $userTkn != null) {
         header('location: proposeCourse.php?proposal=error');
         die;
     }
-
+    var_dump($matiere);
     if (selectMatiereByIntitule($matiere) == 'aucune matiere avec cet intitule') {
-        insertMatiere($matiere);
+        // insertMatiere($matiere);
     }
     $tkn = substr(base_convert(sha1(uniqid(mt_rand())), 16, 36), 0, 32);
     updateToken($tkn, $_SESSION['id_personne']);
-    header("location: proposeCourse.php?proposal=mat");
+    // header("location: proposeCourse.php?proposal=mat");
 } else {
     echo 'Bien essayé';
 }

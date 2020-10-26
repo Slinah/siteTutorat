@@ -74,56 +74,56 @@ include_once '../requests/select.php';
             <div class="form-group"><select name="classe" data-role="select" data-filter="false" data-prepend="Classe">
                     <optgroup label="Première année EPSI">
                         <?php
-                        foreach (selectClassesPromo("B1") as $classe) {
+                        foreach (selectClassesPromoEcoles("B1", "EPSI") as $classe) {
                             echo '<option value="' . $classe['id_classe'] . '">B1 ' . $classe['classe'] . '</option>';
                         }
                         ?>
                     </optgroup>
                     <optgroup label="Deuxième année EPSI">
                         <?php
-                        foreach (selectClassesPromo("B2") as $classe) {
+                        foreach (selectClassesPromoEcoles("B2", "EPSI") as $classe) {
                             echo '<option value="' . $classe['id_classe'] . '">B2 ' . $classe['classe'] . '</option>';
                         }
                         ?>
                     </optgroup>
                     <optgroup label="Troisième année EPSI">
                         <?php
-                        foreach (selectClassesPromo("B3") as $classe) {
+                        foreach (selectClassesPromoEcoles("B3", "EPSI") as $classe) {
                             echo '<option value="' . $classe['id_classe'] . '">B3 ' . $classe['classe'] . '</option>';
                         }
                         ?>
                     </optgroup>
                     <optgroup label="Quatrième année EPSI">
                         <?php
-                        foreach (selectClassesPromo("I1") as $classe) {
+                        foreach (selectClassesPromoEcoles("I1", "EPSI") as $classe) {
                             echo '<option value="' . $classe['id_classe'] . '">I1 ' . $classe['classe'] . '</option>';
                         }
                         ?>
                     </optgroup>
                     <optgroup label="Cinquième année EPSI">
                         <?php
-                        foreach (selectClassesPromo("I2") as $classe) {
+                        foreach (selectClassesPromoEcoles("I2", "EPSI") as $classe) {
                             echo '<option value="' . $classe['id_classe'] . '">I2 ' . $classe['classe'] . '</option>';
                         }
                         ?>
                     </optgroup>
                     <optgroup label="Première année WIS">
                         <?php
-                        foreach (selectClassesPromo("WIS 1") as $classe) {
+                        foreach (selectClassesPromoEcoles("Wis1", "WIS") as $classe) {
                             echo '<option value="' . $classe['id_classe'] . '">WIS 1 ' . $classe['classe'] . '</option>';
                         }
                         ?>
                     </optgroup>
                     <optgroup label="Deuxième année WIS">
                         <?php
-                        foreach (selectClassesPromo("WIS 2") as $classe) {
+                        foreach (selectClassesPromoEcoles("Wis2", "WIS") as $classe) {
                             echo '<option value="' . $classe['id_classe'] . '">WIS 2 ' . $classe['classe'] . '</option>';
                         }
                         ?>
                     </optgroup>
                     <optgroup label="Troisième année WIS">
                         <?php
-                        foreach (selectClassesPromo("WIS 3") as $classe) {
+                        foreach (selectClassesPromoEcoles("Wis3", "WIS") as $classe) {
                             echo '<option value="' . $classe['id_classe'] . '">WIS 3 ' . $classe['classe'] . '</option>';
                         }
                         ?>

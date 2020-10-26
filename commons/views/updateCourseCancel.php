@@ -13,10 +13,9 @@ if (isset($userTkn) && $userTkn != null) {
         $reason = 'Personne venu';
     }
 
-    $nbInscrits = selectCountParticipantsByIdCours($idCours);
     $tkn = substr(base_convert(sha1(uniqid(mt_rand())), 16, 36), 0, 32);
 
-    updateCoursCancel($reason, $nbInscrits, $idCours);
+    updateCoursCancel($reason, $idCours);
     updateToken($tkn, $_SESSION['id_personne']);
     header('location: courses.php?course=cancel');
 } else {

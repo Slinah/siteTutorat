@@ -3,6 +3,8 @@ session_start();
 require_once '../../requests/select.php';
 require_once '../../requests/insert.php';
 require_once '../../requests/update.php';
+require_once '../../requests/delete.php';
+require_once '../../requests/UUID.php';
 
 $userTkn = selectTokenByIdPersonne($_SESSION['id_personne']);
 if (isset($userTkn) && $userTkn != null) {
@@ -22,10 +24,14 @@ if (isset($userTkn) && $userTkn != null) {
     }
     $localDate = strtotime('+2 hours');
 
+    $idProposition = strtoupper(UUID::v4());
+    
     if (verifExistPropositionByIdMatiereIdPromo($idMatiere, $niveau) == 'aucune proposition avec ces id') {
-        insertProposition($idMatiere, $niveau, secuStg());
-        insertPersonneProposition($_SESSION['id_personne'], selectLastProposition());
-        insertLogProposition(selectLastProposition(), date("Y-m-d H:i:s", $localDate));
+        insertProposition($idProposition, $idMatiere, secuStg());
+        insertPropositionPromo($idProposition, $niveau);
+        insertPersonneProposition($_SESSION['id_personne'], $idProposition);
+        insertLogProposition($idProposition, date("Y-m-d H:i:s", $localDate));
+        deletePropositionWithNullMatiere();
         updateToken($tkn, $_SESSION['id_personne']);
         header("location: proposeCourse.php?proposal=success");
     } else {

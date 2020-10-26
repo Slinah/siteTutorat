@@ -93,7 +93,7 @@ include_once '../../bases/head.php';
                 <?php echo '<form action="insertProposal.php" method="post">'; ?>
                 <select name="matiere" data-role="select" data-filter="false" data-prepend="La matière que tu veux : ">
                     <?php
-                    foreach (selectMatieres() as $matiere) {
+                    foreach (selectMatieresByValidation(1) as $matiere) {
                         echo '<option value="' . $matiere['id_matiere'] . '">' . $matiere['intitule'] . '</option>';
                     }
                     ?>

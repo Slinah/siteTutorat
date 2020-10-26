@@ -3,7 +3,9 @@ include_once dirname(__DIR__) . '/conf/conf.php';
 
 $GLOBALS['db'] = new PDO("mysql:host=" . Config::SERVERNAME . ";dbname=" . Config::DBNAME, Config::USER, Config::PASSWORD);
 
-function updateCoursMdf($newIntitule, $newDate, $newHeure, $newMatiere, $idCours)
+// Mis a jour V2.0
+// Modification d'un cours
+function updateCoursMdf($newIntitule, $newDate, $newMatiere, $idCours)
 {
     if ($newIntitule != '') {
         $updateIntitule = $GLOBALS['db']->prepare('UPDATE cours SET intitule = :intitule WHERE id_cours = :idc');
@@ -17,12 +19,6 @@ function updateCoursMdf($newIntitule, $newDate, $newHeure, $newMatiere, $idCours
         $updateDate->bindParam(":idc", $idCours);
         $updateDate->execute();
     }
-    if ($newHeure != '') {
-        $updateDate = $GLOBALS['db']->prepare('UPDATE cours SET heure = :heure WHERE id_cours = :idc');
-        $updateDate->bindParam(":heure", $newHeure);
-        $updateDate->bindParam(":idc", $idCours);
-        $updateDate->execute();
-    }
     if ($newMatiere != '') {
         $updateDate = $GLOBALS['db']->prepare('UPDATE cours SET id_matiere = :idm WHERE id_cours = :idc');
         $updateDate->bindParam(":idm", $newMatiere);
@@ -31,6 +27,8 @@ function updateCoursMdf($newIntitule, $newDate, $newHeure, $newMatiere, $idCours
     }
 }
 
+// Mis a jour V2.0
+// Modification du niveau d'un cours
 function updateCoursPromo($idPromo, $idCours)
 {
     $updateCoursPromo = $GLOBALS['db']->prepare('UPDATE cours_promo SET id_promo = :idp WHERE id_cours = :idc');
@@ -50,11 +48,12 @@ function updateCoursClose($courseComment, $nbInscrits, $nbParticipants, $nbHeure
     $updateCours->execute();
 }
 
-function updateCoursCancel($raison, $nbInscrits, $idCours)
+// Mis a jour V2.0
+// Met a jours un cours ou le cours est annulé
+function updateCoursCancel($raison, $idCours)
 {
-    $updateCours =  $GLOBALS['db']->prepare('UPDATE cours SET commentaires = :comm, nbInscrits = :ins, status = 2 WHERE id_cours = :idc');
+    $updateCours =  $GLOBALS['db']->prepare('UPDATE cours SET commentaires = :comm status = 2 WHERE id_cours = :idc');
     $updateCours->bindParam(":comm", $raison);
-    $updateCours->bindParam(":ins", $nbInscrits);
     $updateCours->bindParam(":idc", $idCours);
     $updateCours->execute();
 }
@@ -81,6 +80,8 @@ function updateMatiereMdf($intituleMatiere, $idMatiere)
     $updateMatiere->execute();
 }
 
+// Mis a jour V2.0
+// Update le token des personnes
 function updateToken($token, $idPersonne)
 {
     $updateToken = $GLOBALS['db']->prepare('UPDATE personne SET token = :tk WHERE id_personne = :idp');
@@ -89,9 +90,11 @@ function updateToken($token, $idPersonne)
     $updateToken->execute();
 }
 
+// Mis a jour V2.0
+// Update le mot de passe d'une personne
 function updatePassPersonneByMail($mail, $pass)
 {
-    $passPersonne = $GLOBALS['db']->prepare('UPDATE personne SET mdp = :mdp WHERE mail = :mail');
+    $passPersonne = $GLOBALS['db']->prepare('UPDATE personne SET password = :mdp WHERE mail = :mail');
     $passPersonne->bindParam(':mdp', $pass);
     $passPersonne->bindParam(':mail', $mail);
     $passPersonne->execute();
