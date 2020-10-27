@@ -57,10 +57,13 @@ function deleteMatiere($idMatiere)
     $deleteMatiere->execute();
 }
 
+// Mis a jour V2.0
+// Permet de régler un bug d'insert qui insert une proposition avec une matière a null
 function deletePropositionWithNullMatiere(){
     $selectPropositionWithNull = $GLOBALS['db']->prepare('SELECT id_proposition FROM proposition WHERE isNull(id_matiere)');
     $selectPropositionWithNull->execute();
-    foreach($selectPropositionWithNull as $prop){
+    $propsWithNull = $selectPropositionWithNull->fetchAll();
+    foreach($propsWithNull as $prop){
         $deleteLogProposition = $GLOBALS['db']->prepare('DELETE FROM logs_proposition WHERE id_proposition = :idprop');
         $deleteLogProposition->bindParam(":idprop", $p['id_proposition']);
         $deleteLogProposition->execute();
