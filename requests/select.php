@@ -114,7 +114,7 @@ function verifExistsProfPersonneByIdPersonne($idPersonne)
 // Sélection des cours ayant un status particulier
 function selectCoursByStatus($valueStatus)
 {
-    $cours = $GLOBALS['db']->prepare('SELECT c.id_cours AS id_cours, c.intitule AS intitule, c.date AS date, c.secu AS secu, m.intitule AS matiere, p.intitule AS promo FROM cours c JOIN matiere m ON m.id_matiere=c.id_matiere JOIN cours_promo cp ON c.id_cours=cp.id_cours JOIN promo p ON p.id_promo=cp.id_promo WHERE c.status = :status');
+    $cours = $GLOBALS['db']->prepare('SELECT c.id_cours AS id_cours, c.intitule AS intitule, c.date AS date, c.secu AS secu, m.intitule AS matiere, p.intitule AS promo FROM cours c JOIN matiere m ON m.id_matiere=c.id_matiere JOIN promo p ON p.id_promo=c.id_promo WHERE c.status = :status');
     $cours->bindParam(":status", $valueStatus);
     $cours->execute();
     $cour = $cours->fetchAll();
@@ -125,7 +125,7 @@ function selectCoursByStatus($valueStatus)
 // Sélection des cours ayant le status 0
 function selectCoursStatus()
 {
-    $cours = $GLOBALS['db']->prepare('SELECT c.id_cours AS id_cours, c.intitule AS intitule, c.date AS date, c.secu AS secu, m.intitule AS matiere, p.intitule AS promo FROM cours c JOIN matiere m ON m.id_matiere=c.id_matiere JOIN cours_promo cp ON c.id_cours=cp.id_cours JOIN promo p ON p.id_promo=cp.id_promo WHERE c.status = 0');
+    $cours = $GLOBALS['db']->prepare('SELECT c.id_cours AS id_cours, c.intitule AS intitule, c.date AS date, c.secu AS secu, m.intitule AS matiere, p.intitule AS promo FROM cours c JOIN matiere m ON m.id_matiere=c.id_matiere  JOIN promo p ON p.id_promo=c.id_promo WHERE c.status = 0');
     $cours->execute();
     $cour = $cours->fetchAll();
     if (empty($cour)) {
@@ -595,4 +595,13 @@ function selectInscritParticipantsCours($promo)
     $inscPart->execute();
     $insc = $inscPart->fetchAll();
     return $insc;
+}
+
+function verifExistPersonneInscrits($idCours){
+    $inscrits = $GLOBALS['db']->prepare('SELECT count(*) from personne_cours WHERE id_cours = :idc AND rang_personne = 0');
+    $inscrits->bindParam(":idc", $idCours);
+    $inscrits->execute();
+    $count = $inscrits->fetchAll();
+    $c = $count[0][0];
+    return $c;
 }
