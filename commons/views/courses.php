@@ -98,8 +98,12 @@ include_once '../../bases/head.php';
                 } else {
                     echo 'Personne n\'est encore inscrit à ce cours.</br></br>';
                 }
-                if (verifExistProfCoursByIdPersonneIdCours($_SESSION['id_personne'], $c['id_cours']) == 0) {
-                    echo '</tbody></table><button class="button bg-darkViolet fg-white" onclick="location.href = `insertStudent.php?course=' . $c['id_cours'] . '&student=' . $_SESSION['id_personne'] . '`;"><span class="mif-add"></span> S\'inscrire au cours</button>';
+                if (verifExistProfCoursByIdPersonneIdCours($_SESSION['id_personne'], $c['id_cours'], 1) == 0) {
+                    if(verifExistProfCoursByIdPersonneIdCours($_SESSION['id_personne'], $c['id_cours'], 0) == 0){
+                        echo '</tbody></table><button class="button bg-darkViolet fg-white" onclick="location.href = `insertStudent.php?course=' . $c['id_cours'] . '&student=' . $_SESSION['id_personne'] . '`;"><span class="mif-add"></span> S\'inscrire au cours</button>';
+                    } else {
+                        echo '</tbody></table>';
+                    }
                 } else {
                     echo '</tbody></table><div class="row"><div class="cell-2"><button class="button bg info" onclick="location.href = `editCourse.php?course=' . $c['secu'] . '&error=none`;"><span class="mif-file-text"></span> Modifier le cours</button></div><div class="cell-2"><button class="button bg success" onclick="location.href = `closeCourse.php?course=' . $c['secu'] . '&error=none`;"><span class="mif-done_all"></span> Clore le cours</button></div><div class="cell-2"><button class="button bg alert" onclick="Metro.dialog.open(`#' . $c['secu'] . '`)"><span class="mif-cross"></span> Annuler le cours</button></div></div>';
                 }

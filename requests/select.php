@@ -148,11 +148,12 @@ function selectPersonnePromoByIdCoursRangPersonne($idCours, $rangPersonne)
 
 // Mis a jour V2.0
 // Vérification de l'existence d'une liaison cours PROF a partir de l'id de la personne et de l'id du cours
-function verifExistProfCoursByIdPersonneIdCours($idPersonne, $idCours)
+function verifExistProfCoursByIdPersonneIdCours($idPersonne, $idCours, $rang)
 {
-    $personneCours = $GLOBALS['db']->prepare('SELECT COUNT(*) FROM personne_cours WHERE id_personne = :idp AND id_cours = :idc AND rang_personne = 1');
+    $personneCours = $GLOBALS['db']->prepare('SELECT COUNT(*) FROM personne_cours WHERE id_personne = :idp AND id_cours = :idc AND rang_personne = :rang');
     $personneCours->bindParam(":idp", $idPersonne);
     $personneCours->bindParam(":idc", $idCours);
+    $personneCours->bindParam(":rang", $rang);
     $personneCours->execute();
     $pc = $personneCours->fetchAll();
     $pc = $pc[0][0];
@@ -597,6 +598,9 @@ function selectInscritParticipantsCours($promo)
     return $insc;
 }
 
+
+// Mis a jour V2.0
+// Permet de vérifier si des gens sont inscrits au cours
 function verifExistPersonneInscrits($idCours){
     $inscrits = $GLOBALS['db']->prepare('SELECT count(*) from personne_cours WHERE id_cours = :idc AND rang_personne = 0');
     $inscrits->bindParam(":idc", $idCours);
@@ -604,4 +608,9 @@ function verifExistPersonneInscrits($idCours){
     $count = $inscrits->fetchAll();
     $c = $count[0][0];
     return $c;
+}
+
+
+function verifExistPersonneFroCours($idCours){
+
 }
