@@ -177,7 +177,7 @@ function verifExistEleveCoursByIdPersonneIdCours($idPersonne, $idCours)
 // Sélectionne les infos cours, matière, niveau en fonction du status du cours, de l'id de la personne et de son rang
 function selectCoursMatiereNiveauByStatusIdPersonneRang($valueStatus, $idPersonne, $rangPersonne)
 {
-    $cours = $GLOBALS['db']->prepare('SELECT c.id_cours AS id_cours, c.intitule AS intitule, c.date AS date, c.secu AS secu, c.duree AS duree, c.commentaires AS commentaires, c.nbParticipants AS participants, m.intitule AS matiere, p.intitule AS niveau FROM cours c JOIN matiere m ON c.id_matiere=m.id_matiere JOIN cours_promo cp ON c.id_cours=cp.id_cours JOIN promo p ON p.id_promo=cp.id_promo JOIN personne_cours pco ON c.id_cours=pco.id_cours WHERE c.status = :status AND pco.id_personne = :idp AND pco.rang_personne = :rang');
+    $cours = $GLOBALS['db']->prepare('SELECT c.id_cours AS id_cours, c.intitule AS intitule, c.date AS date, c.secu AS secu, c.duree AS duree, c.commentaires AS commentaires, c.nbParticipants AS participants, m.intitule AS matiere, p.intitule AS niveau FROM cours c JOIN matiere m ON c.id_matiere=m.id_matiere JOIN promo p ON p.id_promo=c.id_promo JOIN personne_cours pco ON c.id_cours=pco.id_cours WHERE c.status = :status AND pco.id_personne = :idp AND pco.rang_personne = :rang');
     $cours->bindParam(":status", $valueStatus);
     $cours->bindParam(":idp", $idPersonne);
     $cours->bindParam(":rang", $rangPersonne);

@@ -66,7 +66,7 @@ include_once '../../bases/head.php';
         <?php
         if (selectCoursStatus() != 'none') {
             foreach (selectCoursByStatus(0) as $c) {
-                echo '<div class="card"><div class="card-header"><b>Intitule :</b> <i><span class="fg-crimson">' . $c['intitule'] . '</span></i><br><b>Matière :</b> <i><span class="fg-crimson">' . $c['matiere'] . '</span></i><br><b>Le ' . date("d", strtotime($c['date'])) . ' ' . getMois($c['date']) . '.</b><br><b>Tuteur :</b> ';
+                echo '<div class="card"><div class="card-header"><b>Intitule :</b> <i><span class="fg-crimson">' . $c['intitule'] . '</span></i><br><b>Matière :</b> <i><span class="fg-crimson">' . $c['matiere'] . '</span></i><br><b>A ' . date('H', strtotime($c['date'])) . 'h' . date('m', strtotime($c['date'])) . ' le ' . date("d", strtotime($c['date'])) . ' ' . getMois($c['date']) . '.</b><br><b>Tuteur :</b> ';
                 foreach (selectPersonnePromoByIdCoursRangPersonne($c['id_cours'], 1) as $p) {
                     echo '<i><span class="fg-crimson">' . $p['nom'] . ' ' . $p['prenom']  . ' ' . $p['promo'] . '</span></i>';
                 }
