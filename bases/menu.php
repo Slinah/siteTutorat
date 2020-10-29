@@ -9,22 +9,23 @@
             if ($_SESSION["role"] == 1) {
                 echo '<li id="admin"><a href="../../admin/pannel/administration.php?action=none">Pannel admin</a></li>';
                 echo '<li>
-                <a href="#" class="dropdown-toggle"><span class="mif-chart-dots"></span> Stats</a>
+                <a href="#" class="dropdown-toggle">Stats</a>
                 <ul class="d-menu" data-role="dropdown">
-                    <li><a href="../../admin/charts/globalCharts.php">Global</a></li>
-                    <li><a href="../../admin/charts/chartsB1.php">Recap B1</a></li>
-                    <li><a href="../../admin/charts/chartsB2.php">Recap B2</a></li>
-                    <li><a href="../../admin/charts/chartsB3.php">Recap B3</a></li>
-                    <li><a href="../../admin/charts/chartsI1.php">Recap I1</a></li>
-                    <li><a href="../../admin/charts/chartsI2.php">Recap I2</a></li>
-                    <li><a href="../../admin/charts/chartsWis1.php">Recap WIS 1</a></li>
+                    <li><a href="../../admin/charts/globalCharts.php">STATS Global</a></li>
+                    <li><a href="../../admin/charts/chartsB1.php">STATS B1</a></li>
+                    <li><a href="../../admin/charts/chartsB2.php">STATS B2</a></li>
+                    <li><a href="../../admin/charts/chartsB3.php">STATS B3</a></li>
+                    <li><a href="../../admin/charts/chartsI1.php">STATS I1</a></li>
+                    <li><a href="../../admin/charts/chartsI2.php">STATS I2</a></li>
+                    <li><a href="../../admin/charts/chartsWis1.php">STATS WIS 1</a></li>
                 </ul>
             </li>';
             }
             echo '<li>
-                <a href="#" class="dropdown-toggle">Compte</a>
+                <a href="#" class="dropdown-toggle">' . selectPrenomById($_SESSION['id_personne']) . ' ' . selectNomById($_SESSION['id_personne']) . '</a>
                 <ul class="d-menu" data-role="dropdown">
-                    <li><a href="../../commons/users/profileView.php">Aperçu</a></li>
+                    <li><a href="../../commons/users/profileView.php">Mon compte</a></li>
+                    <li><a href="../../commons/users/coursView.php">Visu des cours</a></li>
                     <li class="divider"></li>
                     <li><a href="../../connexion/deco.php">Déconnexion</a></li>
                 </ul>

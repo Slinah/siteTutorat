@@ -19,7 +19,7 @@ include_once '../../bases/head.php';
     <?php include_once '../../bases/menu.php'; ?>
 
     <div class="warn">
-        <span class="mif-warning ani-bounce"></span> WORK IN PROGRESS - BETA v0.5 <span class="mif-warning ani-bounce"></span><br>
+        <span class="mif-warning ani-bounce"></span> PHASE DE TEST - RELEASE - ScratchOverflow V2.0 <span class="mif-warning ani-bounce"></span><br>
         Ceci est un site toujours en développement, certains bugs peuvent subsister. Si vous en rencontrez un, n'hésitez pas à me faire vos retours sur Discord ou par mail.
     </div><br><br>
     <div class="description">
