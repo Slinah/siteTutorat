@@ -16,9 +16,12 @@ if (isset($userTkn) && $userTkn != null) {
     }
 
     $d = $_POST["date"];
-    if ($d == "") {
+    $h = $_POST["heure"];
+    if ($d == "" || $h == "") {
         header("location: newCourse.php?newc=error");
         die;
+    } else {
+        $datetime = $d . ' ' . $h;
     }
 
     $h = $_POST["heure"];
@@ -49,11 +52,11 @@ if (isset($userTkn) && $userTkn != null) {
         return $string;
     }
     $localDate = strtotime('+2 hours');
+    $idCours = strtoupper(UUID::v4());
     if (selectIdCoursByIntitule($i) == "none") {
-        insertCours($i, $h, $d, $m, secuStg());
-        insertPersonneCoursProf(selectIdLastCours(), $_SESSION['id_personne']);
-        insertCoursPromo(selectIdLastCours(), $c);
-        insertLog(selectIdLastCours(), date("Y-m-d H:i:s", $localDate));
+        insertCours($idCours, $i, $datetime, $m, secuStg(), $c);
+        insertPersonneCoursProf($idCours, $_SESSION['id_personne']);
+        insertLog($idCours, date("Y-m-d H:i:s", $localDate));
         if (selectMailByIdPersonne($_SESSION['id_personne']) != "cedric.menanteau@epsi.fr") {
             $mailToSend = 'Pouvez-vous envoyer un mail au tuteur de ce cours (<b>' . selectMailByIdPersonne($_SESSION['id_personne']) . '</b> ou à <b>cedric.menanteau@epsi.fr</b>) ';
         } else {

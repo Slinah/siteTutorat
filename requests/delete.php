@@ -65,11 +65,11 @@ function deletePropositionWithNullMatiere(){
     $propsWithNull = $selectPropositionWithNull->fetchAll();
     foreach($propsWithNull as $prop){
         $deleteLogProposition = $GLOBALS['db']->prepare('DELETE FROM logs_proposition WHERE id_proposition = :idprop');
-        $deleteLogProposition->bindParam(":idprop", $p['id_proposition']);
+        $deleteLogProposition->bindParam(":idprop", $prop['id_proposition']);
         $deleteLogProposition->execute();
 
         $deleteProposition = $GLOBALS['db']->prepare('DELETE FROM proposition WHERE id_proposition = :idp');
-        $deleteProposition->bindParam(":idp", $p['id_proposition']);
+        $deleteProposition->bindParam(":idp", $prop['id_proposition']);
         $deleteProposition->execute();
     }
 }

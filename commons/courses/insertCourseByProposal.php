@@ -19,14 +19,14 @@ if (isset($userTkn) && $userTkn != null) {
     $localDate = strtotime('+2 hours');
     $tkn = substr(base_convert(sha1(uniqid(mt_rand())), 16, 36), 0, 32);
 
+    $idCours = strtoupper(UUID::v4());
     foreach (selectPropositionMatierePromoByIdProposition($idProposition) as $p) {
         $intitule = $p['matiere'] . ' ' . $p['promo'];
-        insertCours($intitule, $datetime, $p['id_matiere'], $_GET['proposal'], $p['id_promo']);
-        $coursInserted = selectIdLastCours();
+        insertCours($idCours, $intitule, $datetime, $p['id_matiere'], $_GET['proposal'], $p['id_promo']);
         insertLog($coursInserted, date("Y-m-d H:i:s", $localDate));
-        insertPersonneCoursProf($coursInserted, $idPersonne);
+        insertPersonneCoursProf($idCours, $idPersonne);
         foreach (selectPersonnePropositionByIdProposition($idProposition) as $pp) {
-            insertPersonneCoursEleve($coursInserted, $pp['id_personne']);
+            insertPersonneCoursEleve($idCours, $pp['id_personne']);
         }
         deletePropositionByIdProposition($idProposition);
         if (selectMailByIdPersonne($idPersonne) != "cedric.menanteau@epsi.fr") {

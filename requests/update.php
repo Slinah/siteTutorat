@@ -5,7 +5,7 @@ $GLOBALS['db'] = new PDO("mysql:host=" . Config::SERVERNAME . ";dbname=" . Confi
 
 // Mis a jour V2.0
 // Modification d'un cours
-function updateCoursMdf($newIntitule, $newDate, $newMatiere, $idCours)
+function updateCoursMdf($newIntitule, $newDate, $newMatiere, $idCours, $newPromo)
 {
     if ($newIntitule != '') {
         $updateIntitule = $GLOBALS['db']->prepare('UPDATE cours SET intitule = :intitule WHERE id_cours = :idc');
@@ -20,28 +20,36 @@ function updateCoursMdf($newIntitule, $newDate, $newMatiere, $idCours)
         $updateDate->execute();
     }
     if ($newMatiere != '') {
-        $updateDate = $GLOBALS['db']->prepare('UPDATE cours SET id_matiere = :idm WHERE id_cours = :idc');
-        $updateDate->bindParam(":idm", $newMatiere);
-        $updateDate->bindParam(":idc", $idCours);
-        $updateDate->execute();
+        $updateMatiere = $GLOBALS['db']->prepare('UPDATE cours SET id_matiere = :idm WHERE id_cours = :idc');
+        $updateMatiere->bindParam(":idm", $newMatiere);
+        $updateMatiere->bindParam(":idc", $idCours);
+        $updateMatiere->execute();
+    }
+    if ($newPromo != ''){
+        $updatePromo = $GLOBALS['db']->prepare('UPDATE cours SET id_promo = :idp WHERE id_cours = :idc');
+        $updatePromo->bindParam(":idp", $newPromo);
+        $updatePromo->bindParam(":idc", $idCours);
+        $updatePromo->execute();
     }
 }
 
 // Mis a jour V2.0
 // Modification du niveau d'un cours
-function updateCoursPromo($idPromo, $idCours)
-{
-    $updateCoursPromo = $GLOBALS['db']->prepare('UPDATE cours_promo SET id_promo = :idp WHERE id_cours = :idc');
-    $updateCoursPromo->bindParam(":idp", $idPromo);
-    $updateCoursPromo->bindParam(":idc", $idCours);
-    $updateCoursPromo->execute();
-}
+// function updateCoursPromo($idPromo, $idCours)
+// {
+//     $updateCoursPromo = $GLOBALS['db']->prepare('UPDATE cours_promo SET id_promo = :idp WHERE id_cours = :idc');
+//     $updateCoursPromo->bindParam(":idp", $idPromo);
+//     $updateCoursPromo->bindParam(":idc", $idCours);
+//     $updateCoursPromo->execute();
+// }
 
-function updateCoursClose($courseComment, $nbInscrits, $nbParticipants, $nbHeure, $idCours)
+
+// Mis a jour V2.0
+// Fermeture d'un cours aporès sa réalisation
+function updateCoursClose($courseComment, $nbParticipants, $nbHeure, $idCours)
 {
-    $updateCours =  $GLOBALS['db']->prepare('UPDATE cours SET commentaires = :comm, nbInscrits = :ins, nbParticipants = :part, duree = :time, status = 1 WHERE id_cours = :idc');
+    $updateCours =  $GLOBALS['db']->prepare('UPDATE cours SET commentaires = :comm, nbParticipants = :part, duree = :time, status = 1 WHERE id_cours = :idc');
     $updateCours->bindParam(":comm", $courseComment);
-    $updateCours->bindParam(":ins", $nbInscrits);
     $updateCours->bindParam(":part", $nbParticipants);
     $updateCours->bindParam(":time", $nbHeure);
     $updateCours->bindParam(":idc", $idCours);
@@ -52,7 +60,7 @@ function updateCoursClose($courseComment, $nbInscrits, $nbParticipants, $nbHeure
 // Met a jours un cours ou le cours est annulé
 function updateCoursCancel($raison, $idCours)
 {
-    $updateCours =  $GLOBALS['db']->prepare('UPDATE cours SET commentaires = :comm status = 2 WHERE id_cours = :idc');
+    $updateCours =  $GLOBALS['db']->prepare('UPDATE cours SET commentaires = :comm, status = 2 WHERE id_cours = :idc');
     $updateCours->bindParam(":comm", $raison);
     $updateCours->bindParam(":idc", $idCours);
     $updateCours->execute();
