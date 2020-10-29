@@ -36,6 +36,8 @@ function insertCours($idCours, $intituleCours, $dateCours, $idMatiere, $secuCode
     $cours->execute();
 }
 
+// Mis a jour V2.0
+// Insere la liaison cours tuteur
 function insertPersonneCoursProf($idCours, $idPersonne)
 {
     $personneCours = $GLOBALS['db']->prepare('INSERT INTO personne_cours(id_personne, id_cours, rang_personne) VALUES (:idp, :idc, 1)');
