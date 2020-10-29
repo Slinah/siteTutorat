@@ -33,23 +33,12 @@ if (isset($userTkn) && $userTkn != null) {
             $newPromo = $_POST['classe'];
         }
         $tkn = substr(base_convert(sha1(uniqid(mt_rand())), 16, 36), 0, 32);
-        if ($newIntitule != '' || $newDate != '' ||  $newMatiere != '') {
-            updateCoursMdf($newIntitule, $newDate, $newMatiere, $idCours);
-            if ($newPromo != '') {
-                updateCoursPromo($newPromo, $idCours);
-                updateToken($tkn, $_SESSION['id_personne']);
-                header('location: courses.php?course=update');
-            } else {
-                header('location: courses.php?course=update');
-            }
+        if ($newIntitule != '' || $newDate != '' ||  $newMatiere != '' || $newPromo != '') {
+            updateCoursMdf($newIntitule, $newDate, $newMatiere, $idCours, $newPromo);   
+            updateToken($tkn, $_SESSION['id_personne']);
+            header('location: courses.php?course=update');       
         } else {
-            if ($newPromo != '') {
-                updateCoursPromo($newPromo, $idCours);
-                updateToken($tkn, $_SESSION['id_personne']);
-                header('location: courses.php?course=update');
-            } else {
-                header('location: editCourse.php?course=' . $cours['secu'] . '&error=unset');
-            }
+            header('location: editCourse.php?course=' . $cours['secu'] . '&error=unset');     
         }
     }
 } else {

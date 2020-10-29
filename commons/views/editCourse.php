@@ -36,7 +36,7 @@ include_once '../../bases/head.php';
             echo '</select>';
             echo '<br><select name="classe" data-role="select" data-filter="false" data-prepend="Niveau concerné">';
             echo '<option value="' . $c['id_promo'] . '">' . $c['niveau'] . '</option>';
-            foreach (selectClassesPromoEcoles() as $promo) {
+            foreach (selectPromos() as $promo) {
                 if ($c['id_promo'] != $promo['id_promo'] && $c['niveau'] != $promo['promo']) {
                     echo '<option value="' . $promo['id_promo'] . '">' . $promo['promo'] . '</option>';
                 } else {

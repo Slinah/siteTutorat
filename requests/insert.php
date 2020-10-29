@@ -24,11 +24,10 @@ function insertPersonne($nomPersonne, $prenomPersonne, $passPersonne, $mailPerso
 
 // Mis a jour V2.0
 // Insertion d'un cours
-function insertCours($intituleCours, $dateCours, $idMatiere, $secuCode, $idPromo)
+function insertCours($idCours, $intituleCours, $dateCours, $idMatiere, $secuCode, $idPromo)
 {
-    $idc = strtoupper(UUID::v4());
     $cours = $GLOBALS['db']->prepare('INSERT INTO cours(id_cours, intitule, date, id_matiere, secu, id_promo) VALUES (:idc, :int, :date, :idm, :secu, :idp)');
-    $cours->bindParam(":idc", $idc);
+    $cours->bindParam(":idc", $idCours);
     $cours->bindParam(":int", $intituleCours);
     $cours->bindParam(":date", $dateCours);
     $cours->bindParam(":idm", $idMatiere);
