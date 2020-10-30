@@ -73,20 +73,22 @@ function selectMatieresByValidation($bool)
     return $matiere;
 }
 
+// Deprecated
 // Sélection du dernier cours rentré en base
-function selectIdLastCours()
-{
-    $lastCours = $GLOBALS['db']->prepare('SELECT id_cours FROM cours ORDER BY id_cours DESC LIMIT 1');
-    $lastCours->execute();
-    $cours = $lastCours->fetchAll();
-    $cours = $cours[0][0];
-    return $cours;
-}
+// function selectIdLastCours()
+// {
+//     $lastCours = $GLOBALS['db']->prepare('SELECT id_cours FROM cours ORDER BY id_cours DESC LIMIT 1');
+//     $lastCours->execute();
+//     $cours = $lastCours->fetchAll();
+//     $cours = $cours[0][0];
+//     return $cours;
+// }
 
+// Mis a jour V2.0
 // Sélection de l'ID du cours en fonction de son intitule
 function selectIdCoursByIntitule($intituleCours)
 {
-    $idCours = $GLOBALS['db']->prepare('SELECT id_cours FROM cours WHERE intitule = :intit ORDER BY id_cours DESC LIMIT 1');
+    $idCours = $GLOBALS['db']->prepare('SELECT id_cours FROM cours WHERE intitule = :intit AND status = 0');
     $idCours->bindParam(":intit", $intituleCours);
     $idCours->execute();
     $cours = $idCours->fetchAll();
@@ -222,6 +224,7 @@ function selectCountParticipantsByIdCours($idCours)
     return $cou;
 }
 
+// Mis a jour V2.0
 // Sélectionne le code de sécu en fonction d'un ID cours
 function selectSecuByIdCours($idCours)
 {
@@ -313,6 +316,7 @@ function selectPropositionMatierePromo()
     return $prop;
 }
 
+// Mis a jour V2.0
 // Vérifie l'existente d'un lien personne proposition
 function verifExistPersonneProposition($idPersonne, $idProposition)
 {
@@ -360,6 +364,7 @@ function selectPropositionMatierePromoByIdProposition($idProposition)
     return $prop;
 }
 
+// Mis a jour V2.0
 // Sélectionne un lien personne proposition en fonction de l'id proposition
 function selectPersonnePropositionByIdProposition($idProposition)
 {
@@ -387,7 +392,6 @@ function selectCountPersonnePropositionByIdPersonneIdProposition($idPersonne, $i
     return $personne;
 }
 
-// Sélect
 function selectTuteurCoursClosHeures()
 {
     $tuteurHeure = $GLOBALS['db']->prepare('SELECT p.id_personne AS id_personne, p.nom AS nom, p.prenom AS prenom, po.promo AS promo, SUM(c.duree) AS duree FROM personne p INNER JOIN classe cl ON p.id_classe=cl.id_classe INNER JOIN promo po ON cl.id_promo=po.id_promo INNER JOIN personne_cours pc ON p.id_personne=pc.id_personne INNER JOIN cours c ON pc.id_cours=c.id_cours WHERE c.status=1 AND pc.rang_personne=1 GROUP BY p.id_personne, p.nom, p.prenom, po.promo ORDER BY SUM(c.duree) DESC');
@@ -555,6 +559,8 @@ function selectPropositionByLogs($idProposition)
     return $prop;
 }
 
+// Mis a jour V2.0
+// Récupère les infos d'une personne par son ID
 function selectPersonneByIdPersonne($idPersonne)
 {
     $personne = $GLOBALS['db']->prepare('SELECT p.prenom AS prenom, p.nom AS nom, p.mdp AS mdp, p.mail AS mail, c.classe AS classe FROM personne p JOIN classe c ON p.id_classe=c.id_classe WHERE id_personne = :idp');
@@ -565,6 +571,7 @@ function selectPersonneByIdPersonne($idPersonne)
 }
 
 // Mis a jour V2.0
+// Check si le mail d'une personne existe
 function verifExistMail($mailPersonne)
 {
     $mail = $GLOBALS['db']->prepare('SELECT id_personne FROM personne where mail = :mail');
@@ -616,4 +623,24 @@ function selectMatieres(){
     $matieres = $GLOBALS['db']->prepare('SELECT id_matiere, intitule FROM matiere WHERE validationAdmin = 1');
     $matieres->execute();
     return $matieres->fetchAll();
+}
+
+// Mis a jour V2.0
+// Renvoie le prenom d'une personne en fonction de son ID
+function selectPrenomById($idPersonne){
+    $prenom = $GLOBALS['db']->prepare('SELECT prenom FROM personne WHERE id_personne = :idp');
+    $prenom->bindParam(":idp", $idPersonne);
+    $prenom->execute();
+    $prenom = $prenom->fetchAll();
+    return $prenom[0][0];
+}
+
+// Mis a jour V2.0
+// Renvoie le nom d'une personne en fonction de son ID
+function selectNomById($idPersonne){
+    $nom = $GLOBALS['db']->prepare('SELECT nom FROM personne WHERE id_personne = :idp');
+    $nom->bindParam(":idp", $idPersonne);
+    $nom->execute();
+    $nom = $nom->fetchAll();
+    return $nom[0][0];
 }
