@@ -617,3 +617,23 @@ function selectMatieres(){
     $matieres->execute();
     return $matieres->fetchAll();
 }
+
+// Mis a jour V2.0
+// Renvoie le prenom d'une personne en fonction de son ID
+function selectPrenomById($idPersonne){
+    $prenom = $GLOBALS['db']->prepare('SELECT prenom FROM personne WHERE id_personne = :idp');
+    $prenom->bindParam(":idp", $idPersonne);
+    $prenom->execute();
+    $prenom = $prenom->fetchAll();
+    return $prenom[0][0];
+}
+
+// Mis a jour V2.0
+// Renvoie le nom d'une personne en fonction de son ID
+function selectNomById($idPersonne){
+    $nom = $GLOBALS['db']->prepare('SELECT nom FROM personne WHERE id_personne = :idp');
+    $nom->bindParam(":idp", $idPersonne);
+    $nom->execute();
+    $nom = $nom->fetchAll();
+    return $nom[0][0];
+}
