@@ -36,6 +36,7 @@
         <form class="login-form bg-white p-6 mx-auto border bd-default win-shadow" data-role="validator" action="mailPwd.php" data-clear-invalid="2000" data-on-error-form="invalidForm" data-on-validate-form="validateForm" method="post">
             <span style="margin-top: -10px;" class="place-right"><img class="co" src="../medias/scratchOverflow.png"></span>
             <h2 class="text-light">Changement de mot de passe</h2>
+            <h10><i>Le mail peut se retrouver en spams </i><span class="mif-warning ani-bounce fg-red"></span></h10>
             <hr class="thin mt-4 mb-4 bg-white">
             <div class="form-group">
                 <input name="mail" type="text" data-role="input" data-prepend="<span class='mif-envelop'>" placeholder="Email....." data-validate="required email">

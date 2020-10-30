@@ -27,7 +27,7 @@ if (verifExistMail($mail) != 'none') {
         'https://scratchoverflow.fr',
         'ScratchOverflow',
         'ScratchOverflow - Changement de mot de passe',
-        '<HTML>Bonjour,<br><br>Voici votre mot de passe temporaire suite à votre demande de changement de mot de passe : <b>' . $passPersonne . '<b><br><br><i>Ceci est un mail automatique.</i></HTML>'
+        '<HTML>Bonjour,<br><br>Voici votre mot de passe temporaire suite à votre demande de changement de mot de passe : <b>' . $passPersonne . '<b><br><br>Vous pourrez modifier ce mot de passe dans la rubrique "Mon compte" du iste ! :D<b><br><br><i>Ceci est un mail automatique.</i></HTML>'
     );
     header('location: co.php?co=pwd');
 } else {
