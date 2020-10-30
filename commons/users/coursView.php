@@ -25,7 +25,7 @@ include_once '../../bases/head.php';
                 <?php
                 if (verifExistCoursByIdPersonneRangStatus($_SESSION['id_personne'], 1, 1) != 0) {
                     foreach (selectCoursMatiereNiveauByStatusIdPersonneRang(1, $_SESSION['id_personne'], 1) as $c) {
-                        echo '<div class="remark success"><b>Intitule :</b> <i><span class="fg-crimson">' . $c['intitule'] . '</span></i><br><b>Matière :</b> <i><span class="fg-crimson">' . $c['matiere'] . '</span></i><br><b>Le ' . date("d", strtotime($c['date'])) . ' ' . getMois($c['date']) . ' à ' . date("H:i", strtotime($c['heure'])) . '</b><br><b>Durée :</b> <i><span class="fg-crimson">' . $c['duree'] . '</span></i><br><b>Inscrits :</b> <i><span class="fg-crimson">' . $c['inscrits'] . '</span></i><br><b>Participants :</b> <i><span class="fg-crimson">' . $c['participants'] . '</span></i>';
+                        echo '<div class="remark success"><b>Intitule :</b> <i><span class="fg-crimson">' . $c['intitule'] . '</span></i><br><b>Matière :</b> <i><span class="fg-crimson">' . $c['matiere'] . '</span></i><br><b>Le ' . date("d", strtotime($c['date'])) . ' ' . getMois($c['date']) . ' à ' . date('H', strtotime($c['date'])) . 'h' . date('m', strtotime($c['date'])) . '</b><br><b>Durée :</b> <i><span class="fg-crimson">' . $c['duree'] . '</span></i><br><b>Inscrits :</b> <i><span class="fg-crimson">' . selectCountParticipantsByIdCours($c['id_cours']) . '</span></i><br><b>Participants :</b> <i><span class="fg-crimson">' . $c['participants'] . '</span></i>';
                         if ($c['commentaires'] != '') {
                             echo '<br><b>Commentaires :</b> <i><span class="fg-crimson">' . $c['commentaires'] . '</span></i>';
                         }
@@ -41,7 +41,7 @@ include_once '../../bases/head.php';
                 <?php
                 if (verifExistCoursByIdPersonneRangStatus($_SESSION['id_personne'], 1, 2) != 0) {
                     foreach (selectCoursMatiereNiveauByStatusIdPersonneRang(2, $_SESSION['id_personne'], 1) as $c) {
-                        echo '<div class="remark alert"><b>Intitule :</b> <i><span class="fg-crimson">' . $c['intitule'] . '</span></i><br><b>Matière :</b> <i><span class="fg-crimson">' . $c['matiere'] . '</span></i><br><b>Le ' . date("d", strtotime($c['date'])) . ' ' . getMois($c['date']) . ' à ' . date("H:i", strtotime($c['heure'])) . '</b><br><b>Inscrits :</b> <i><span class="fg-crimson">' . $c['inscrits'] . '</span></i><br><b>Motif :</b> <i><span class="fg-crimson">' . $c['commentaires'] . '</span></i></div>';
+                        echo '<div class="remark alert"><b>Intitule :</b> <i><span class="fg-crimson">' . $c['intitule'] . '</span></i><br><b>Matière :</b> <i><span class="fg-crimson">' . $c['matiere'] . '</span></i><br><b>Le ' . date("d", strtotime($c['date'])) . ' ' . getMois($c['date']) . ' à ' . date('H', strtotime($c['date'])) . 'h' . date('m', strtotime($c['date'])) . '</b><br><b>Inscrits :</b> <i><span class="fg-crimson">' . selectCountParticipantsByIdCours($c['id_cours']) . '</span></i><br><b>Motif :</b> <i><span class="fg-crimson">' . $c['commentaires'] . '</span></i></div>';
                     }
                 } else {
                     echo 'Vous n\'avez annulé aucun cours.';
