@@ -236,6 +236,7 @@ function selectSecuByIdCours($idCours)
     return $secu;
 }
 
+// Mis a jour V2.0
 // Vérifie l'existence d'une relation cours personne en fonction de l'ID personne, de son rang et de son status
 function verifExistCoursByIdPersonneRangStatus($idPersonne, $rangPersonne, $valueStatus)
 {
@@ -563,7 +564,7 @@ function selectPropositionByLogs($idProposition)
 // Récupère les infos d'une personne par son ID
 function selectPersonneByIdPersonne($idPersonne)
 {
-    $personne = $GLOBALS['db']->prepare('SELECT p.prenom AS prenom, p.nom AS nom, p.mdp AS mdp, p.mail AS mail, c.classe AS classe FROM personne p JOIN classe c ON p.id_classe=c.id_classe WHERE id_personne = :idp');
+    $personne = $GLOBALS['db']->prepare('SELECT p.prenom AS prenom, p.nom AS nom, p.password AS mdp, p.mail AS mail, c.intitule AS classe FROM personne p JOIN classe c ON p.id_classe=c.id_classe WHERE id_personne = :idp');
     $personne->bindParam(':idp', $idPersonne);
     $personne->execute();
     $per = $personne->fetchAll();
