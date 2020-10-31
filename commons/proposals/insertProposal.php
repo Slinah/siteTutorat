@@ -9,8 +9,8 @@ require_once '../../requests/UUID.php';
 $userTkn = selectTokenByIdPersonne($_SESSION['id_personne']);
 if (isset($userTkn) && $userTkn != null) {
 
-    $idMatiere = isset($_POST['matiere']) ? $_POST['matiere'] : null;
-    $niveau = isset($_POST['classe']) ? $_POST['classe'] : null;
+    $idMatiere = !empty($_POST['matiere']) ? $_POST['matiere'] : null;
+    $niveau = !empty($_POST['classe']) ? $_POST['classe'] : null;
     // if (isset($_POST['matiere'])) {
     //     $idMatiere = $_POST['matiere'];
     // } else {
@@ -37,19 +37,19 @@ if (isset($userTkn) && $userTkn != null) {
 
     $idProposition = strtoupper(UUID::v4());
 
-    // if (verifExistPropositionByIdMatiereIdPromo($idMatiere, $niveau) == 'aucune proposition avec ces id') {
-    //     insertProposition($idProposition, $idMatiere, secuStg());
-    //     insertPropositionPromo($idProposition, $niveau);
-    //     insertPersonneProposition($_SESSION['id_personne'], $idProposition);
-    //     insertLogProposition($idProposition, date("Y-m-d H:i:s", $localDate));
-    //     deletePropositionWithNullMatiere();
-    //     updateToken($tkn, $_SESSION['id_personne']);
-    //     header("location: proposeCourse.php?proposal=success");
-    // } else {
-    //     insertPersonneProposition($_SESSION['id_personne'], selectPropositionMatierePromo($idMatiere, $niveau));
-    //     updateToken($tkn, $_SESSION['id_personne']);
-    //     header("location: proposeCourse.php?proposal=creaupvoted");
-    // }
+    if (verifExistPropositionByIdMatiereIdPromo($idMatiere, $niveau) == 'aucune proposition avec ces id') {
+        insertProposition($idProposition, $idMatiere, secuStg());
+        insertPropositionPromo($idProposition, $niveau);
+        insertPersonneProposition($_SESSION['id_personne'], $idProposition);
+        insertLogProposition($idProposition, date("Y-m-d H:i:s", $localDate));
+        deletePropositionWithNullMatiere();
+        updateToken($tkn, $_SESSION['id_personne']);
+        header("location: proposeCourse.php?proposal=success");
+    } else {
+        insertPersonneProposition($_SESSION['id_personne'], selectPropositionMatierePromo($idMatiere, $niveau));
+        updateToken($tkn, $_SESSION['id_personne']);
+        header("location: proposeCourse.php?proposal=creaupvoted");
+    }
 } else {
     echo 'Bien essayé';
 }
