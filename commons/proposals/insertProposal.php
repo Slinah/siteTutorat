@@ -8,7 +8,6 @@ require_once '../../requests/UUID.php';
 
 $userTkn = selectTokenByIdPersonne($_SESSION['id_personne']);
 if (isset($userTkn) && $userTkn != null) {
-
     $idMatiere = !empty($_POST['matiere']) ? $_POST['matiere'] : null;
     $niveau = !empty($_POST['classe']) ? $_POST['classe'] : null;
     // if (isset($_POST['matiere'])) {
@@ -36,22 +35,6 @@ if (isset($userTkn) && $userTkn != null) {
     $localDate = strtotime('+2 hours');
 
     $idProposition = strtoupper(UUID::v4());
-<<<<<<< HEAD
-
-    if (verifExistPropositionByIdMatiereIdPromo($idMatiere, $niveau) == 'aucune proposition avec ces id') {
-        insertProposition($idProposition, $idMatiere, secuStg());
-        insertPropositionPromo($idProposition, $niveau);
-        insertPersonneProposition($_SESSION['id_personne'], $idProposition);
-        insertLogProposition($idProposition, date("Y-m-d H:i:s", $localDate));
-        deletePropositionWithNullMatiere();
-        updateToken($tkn, $_SESSION['id_personne']);
-        header("location: proposeCourse.php?proposal=success");
-    } else {
-        insertPersonneProposition($_SESSION['id_personne'], selectPropositionMatierePromo($idMatiere, $niveau));
-        updateToken($tkn, $_SESSION['id_personne']);
-        header("location: proposeCourse.php?proposal=creaupvoted");
-    }
-=======
   
     // if (verifExistPropositionByIdMatiereIdPromo($idMatiere, $niveau) == 'aucune proposition avec ces id') {
     //     insertProposition($idProposition, $idMatiere, secuStg());
@@ -66,7 +49,6 @@ if (isset($userTkn) && $userTkn != null) {
     //     updateToken($tkn, $_SESSION['id_personne']);
     //     header("location: proposeCourse.php?proposal=creaupvoted");
     // }
->>>>>>> ce7de81713cf0291ffb768c351ed893d258c3d63
 } else {
     echo 'Bien essayé';
 }
