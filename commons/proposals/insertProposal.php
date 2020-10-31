@@ -8,9 +8,8 @@ require_once '../../requests/UUID.php';
 
 $userTkn = selectTokenByIdPersonne($_SESSION['id_personne']);
 if (isset($userTkn) && $userTkn != null) {
-
-    $idMatiere = isset($_POST['matiere']) ? $_POST['matiere'] : null;
-    $niveau = isset($_POST['classe']) ? $_POST['classe'] : null;
+    $idMatiere = !empty($_POST['matiere']) ? $_POST['matiere'] : null;
+    $niveau = !empty($_POST['classe']) ? $_POST['classe'] : null;
     // if (isset($_POST['matiere'])) {
     //     $idMatiere = $_POST['matiere'];
     // } else {
