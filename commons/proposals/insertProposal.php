@@ -8,10 +8,19 @@ require_once '../../requests/UUID.php';
 
 $userTkn = selectTokenByIdPersonne($_SESSION['id_personne']);
 if (isset($userTkn) && $userTkn != null) {
-    $idMatiere = $_POST['matiere'];
 
-    $niveau = $_POST['classe'];
-    
+    if (isset($_POST['matiere'])) {
+        $idMatiere = $_POST['matiere'];
+    } else {
+        header("location: proposeCourse.php?proposal=error");
+    }
+
+    if (isset($_POST['classe'])) {
+        $niveau = $_POST['classe'];
+    } else {
+        header("location: proposeCourse.php?proposal=error");
+    }
+
     $tkn = substr(base_convert(sha1(uniqid(mt_rand())), 16, 36), 0, 32);
     function secuStg($length = 15)
     {
@@ -25,7 +34,7 @@ if (isset($userTkn) && $userTkn != null) {
     $localDate = strtotime('+2 hours');
 
     $idProposition = strtoupper(UUID::v4());
-    
+
     if (verifExistPropositionByIdMatiereIdPromo($idMatiere, $niveau) == 'aucune proposition avec ces id') {
         insertProposition($idProposition, $idMatiere, secuStg());
         insertPropositionPromo($idProposition, $niveau);
