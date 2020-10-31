@@ -36,7 +36,7 @@ if (isset($userTkn) && $userTkn != null) {
     $localDate = strtotime('+2 hours');
 
     $idProposition = strtoupper(UUID::v4());
-
+  
     // if (verifExistPropositionByIdMatiereIdPromo($idMatiere, $niveau) == 'aucune proposition avec ces id') {
     //     insertProposition($idProposition, $idMatiere, secuStg());
     //     insertPropositionPromo($idProposition, $niveau);
