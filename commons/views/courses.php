@@ -45,6 +45,7 @@ include_once '../../bases/head.php';
             echo '<script>Metro.toast.create("Cours créé avec succès avec succès !", null, null, "success");</script>';
             break;
     }
+    var_dump($_SESSION['id_personne']);
     foreach (selectCoursMatiereNiveauByStatusIdPersonneRang(0, $_SESSION['id_personne'], 1) as $c) {
         echo '<div id="' . $c['secu'] . '" class="dialog alert" data-role="dialog">
     <div class="dialog-title">Voulez-vous vraiment annuler ce cours ?</div>
