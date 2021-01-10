@@ -185,6 +185,11 @@ function selectCoursMatiereNiveauByStatusIdPersonneRang($valueStatus, $idPersonn
     $cours->bindParam(":rang", $rangPersonne);
     $cours->execute();
     $cour = $cours->fetchAll();
+    if (empty($cour)) {
+        $cour = 0;
+    } else {
+        $cour = $cour[0][0];
+    }
     return $cour;
 }
 
