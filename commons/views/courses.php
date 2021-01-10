@@ -45,9 +45,9 @@ include_once '../../bases/head.php';
             echo '<script>Metro.toast.create("Cours créé avec succès avec succès !", null, null, "success");</script>';
             break;
     }
-    var_dump($_SESSION['id_personne']);
-    foreach (selectCoursMatiereNiveauByStatusIdPersonneRang(0, $_SESSION['id_personne'], 1) as $c) {
-        echo '<div id="' . $c['secu'] . '" class="dialog alert" data-role="dialog">
+    if (selectCoursMatiereNiveauByStatusIdPersonneRang(0, $_SESSION['id_personne'], 1) != 0) {
+        foreach (selectCoursMatiereNiveauByStatusIdPersonneRang(0, $_SESSION['id_personne'], 1) as $c) {
+            echo '<div id="' . $c['secu'] . '" class="dialog alert" data-role="dialog">
     <div class="dialog-title">Voulez-vous vraiment annuler ce cours ?</div>
     <div class="dialog-content">
     <button class="button" onclick="location.href = `updateCourseCancel.php?course=' . $c['id_cours'] . '&reason=alone`;"><span class="mif-done_all"></span> Il n\'y avais personne</button>
@@ -57,6 +57,7 @@ include_once '../../bases/head.php';
         <button class="button js-dialog-close">Retour</button>
     </div>
 </div>';
+        }
     }
     ?>
     <div class="container">
@@ -100,7 +101,7 @@ include_once '../../bases/head.php';
                     echo 'Personne n\'est encore inscrit à ce cours.</br></br>';
                 }
                 if (verifExistProfCoursByIdPersonneIdCours($_SESSION['id_personne'], $c['id_cours'], 1) == 0) {
-                    if(verifExistProfCoursByIdPersonneIdCours($_SESSION['id_personne'], $c['id_cours'], 0) == 0){
+                    if (verifExistProfCoursByIdPersonneIdCours($_SESSION['id_personne'], $c['id_cours'], 0) == 0) {
                         echo '</tbody></table><button class="button bg-darkViolet fg-white" onclick="location.href = `insertStudent.php?course=' . $c['id_cours'] . '&student=' . $_SESSION['id_personne'] . '`;"><span class="mif-add"></span> S\'inscrire au cours</button>';
                     } else {
                         echo '</tbody></table>';
