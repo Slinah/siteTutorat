@@ -13,8 +13,8 @@ function selectPersonneByMail($mailPersonne)
     $personne = $GLOBALS['db']->prepare("SELECT id_personne, prenom, nom, role FROM personne WHERE mail=:mail");
     $personne->bindParam(":mail", $mailPersonne);
     $personne->execute();
-    $personne->fetchAll();
-    return $personne;
+    $resultat = $personne->fetchAll();
+    return $resultat;
 }
 
 // Mis a jour V2.0
@@ -24,8 +24,9 @@ function selectHashPasswordPersonneByMail($mailPersonne)
     $hashPersonne = $GLOBALS['db']->prepare('SELECT password FROM personne WHERE mail = :mail');
     $hashPersonne->bindParam(":mail", $mailPersonne);
     $hashPersonne->execute();
-    $hashPersonne->fetchAll();
-    return $hashPersonne[0][0];
+    $hashP = $hashPersonne->fetchAll();
+    $hashP = $hashP[0][0];
+    return $hashP;
 }
 
 // Mis a jour V2.0
@@ -36,8 +37,8 @@ function selectClassesPromoEcoles($promo, $ecole)
     $classes->bindParam(':promo', $promo);
     $classes->bindParam(':ecole', $ecole);
     $classes->execute();
-    $classes->fetchAll();
-    return $classes;
+    $classe = $classes->fetchAll();
+    return $classe;
 }
 
 // Mis a jour V2.0
@@ -46,8 +47,8 @@ function selectPromos()
 {
     $promos = $GLOBALS['db']->prepare('SELECT id_promo, intitule AS promo FROM promo');
     $promos->execute();
-    $promos->fetchAll();
-    return $promos;
+    $promo = $promos->fetchAll();
+    return $promo;
 }
 
 // Mis a jour V2.0
@@ -58,7 +59,8 @@ function selectPromoByIdPromo($idPromo)
     $promos->bindParam(":idp", $idPromo);
     $promos->execute();
     $promo = $promos->fetchAll();
-    return $promo[0][0];
+    $promo = $promo[0][0];
+    return $promo;
 }
 
 // Mis a jour V2.0
@@ -68,8 +70,8 @@ function selectMatieresByValidation($bool)
     $matieres = $GLOBALS['db']->prepare('SELECT id_matiere, intitule FROM matiere WHERE validationAdmin = :vaa');
     $matieres->bindParam(":vaa", $bool);
     $matieres->execute();
-    $matieres->fetchAll();
-    return $matieres;
+    $matiere = $matieres->fetchAll();
+    return $matiere;
 }
 
 // Deprecated
@@ -106,8 +108,9 @@ function verifExistsProfPersonneByIdPersonne($idPersonne)
     $countCours = $GLOBALS['db']->prepare('SELECT COUNT(*) FROM personne_cours WHERE id_personne = :idp');
     $countCours->bindParam(":idp", $idPersonne);
     $countCours->execute();
-    $countCours->fetchAll();
-    return $countCours[0][0];
+    $count = $countCours->fetchAll();
+    $count = $count[0][0];
+    return $count;
 }
 
 // Mis a jour V2.0
@@ -117,8 +120,8 @@ function selectCoursByStatus($valueStatus)
     $cours = $GLOBALS['db']->prepare('SELECT c.id_cours AS id_cours, c.intitule AS intitule, c.date AS date, c.secu AS secu, m.intitule AS matiere, p.intitule AS promo FROM cours c JOIN matiere m ON m.id_matiere=c.id_matiere JOIN promo p ON p.id_promo=c.id_promo WHERE c.status = :status');
     $cours->bindParam(":status", $valueStatus);
     $cours->execute();
-    $cours->fetchAll();
-    return $cours;
+    $cour = $cours->fetchAll();
+    return $cour;
 }
 
 // Mis a jour V2.0
@@ -142,8 +145,8 @@ function selectPersonnePromoByIdCoursRangPersonne($idCours, $rangPersonne)
     $prof->bindParam(":idc", $idCours);
     $prof->bindParam(":rang", $rangPersonne);
     $prof->execute();
-    $prof->fetchAll();
-    return $prof;
+    $p = $prof->fetchAll();
+    return $p;
 }
 
 // Mis a jour V2.0
@@ -155,8 +158,9 @@ function verifExistProfCoursByIdPersonneIdCours($idPersonne, $idCours, $rang)
     $personneCours->bindParam(":idc", $idCours);
     $personneCours->bindParam(":rang", $rang);
     $personneCours->execute();
-    $personneCours->fetchAll();
-    return $personneCours[0][0];
+    $pc = $personneCours->fetchAll();
+    $pc = $pc[0][0];
+    return $pc;
 }
 
 // Mis a jour V2.0
@@ -167,8 +171,9 @@ function verifExistEleveCoursByIdPersonneIdCours($idPersonne, $idCours)
     $personneCours->bindParam(":idp", $idPersonne);
     $personneCours->bindParam(":idc", $idCours);
     $personneCours->execute();
-    $personneCours->fetchAll();
-    return $personneCours[0][0];
+    $pc = $personneCours->fetchAll();
+    $pc = $pc[0][0];
+    return $pc;
 }
 
 // Mis a jour V2.0
@@ -198,8 +203,8 @@ function selectCoursMatiereNiveauBySecuIdPersonneRang($secuCode, $idPersonne, $r
     $cours->bindParam(":idp", $idPersonne);
     $cours->bindParam(":rang", $rangPersonne);
     $cours->execute();
-    $cours->fetchAll();
-    return $cours;
+    $cour = $cours->fetchAll();
+    return $cour;
 }
 
 // Mis a jour V2.0
@@ -209,8 +214,8 @@ function selectCoursMatiereNiveauByIdCours($idCours)
     $cours = $GLOBALS['db']->prepare('SELECT c.intitule AS intitule, c.date AS date, c.secu AS secu, m.id_matiere AS id_matiere, p.id_promo AS promo FROM cours c JOIN matiere m ON c.id_matiere=m.id_matiere JOIN promo p ON c.id_promo=p.id_promo WHERE c.id_cours = :idc');
     $cours->bindParam(":idc", $idCours);
     $cours->execute();
-    $cours->fetchAll();
-    return $cours;
+    $cour = $cours->fetchAll();
+    return $cour;
 }
 
 // Mis a jour V2.0
@@ -220,8 +225,9 @@ function selectCountParticipantsByIdCours($idCours)
     $count = $GLOBALS['db']->prepare('SELECT COUNT(*) FROM personne_cours WHERE id_cours = :idc AND rang_personne = 0');
     $count->bindParam(":idc", $idCours);
     $count->execute();
-    $count->fetchAll();
-    return $count[0][0];
+    $cou = $count->fetchAll();
+    $cou = $cou[0][0];
+    return $cou;
 }
 
 // Mis a jour V2.0
@@ -231,8 +237,9 @@ function selectSecuByIdCours($idCours)
     $secuCours = $GLOBALS['db']->prepare('SELECT secu FROM cours WHERE id_cours = :idc');
     $secuCours->bindParam(":idc", $idCours);
     $secuCours->execute();
-    $secuCours->fetchAll();
-    return $secuCours[0][0];
+    $secu = $secuCours->fetchAll();
+    $secu = $secu[0][0];
+    return $secu;
 }
 
 // Mis a jour V2.0
@@ -244,8 +251,9 @@ function verifExistCoursByIdPersonneRangStatus($idPersonne, $rangPersonne, $valu
     $existCours->bindParam(':rng', $rangPersonne);
     $existCours->bindParam(':stt', $valueStatus);
     $existCours->execute();
-    $existCours->fetchAll();
-    return $existCours[0][0];
+    $existCour = $existCours->fetchAll();
+    $existCour = $existCour[0][0];
+    return $existCour;
 }
 
 // Mis a jour V2.0
@@ -265,15 +273,16 @@ function selectMatiereByIntitule($intituleMatiere)
 }
 
 // Mis a jour V2.0
-// Sélectionne la dernière proposition insert dans la base 
+// Sélectionne la dernière proposition insert dans la base
 function selectIdLastPropositionByMatiereNiveau($matiere, $niveau)
 {
     $proposition = $GLOBALS['db']->prepare('SELECT p.id_proposition FROM proposition p JOIN matiere m ON p.id_matiere=m.id_matiere JOIN proposition_promo pp ON p.id_proposition=pp.id_proposition JOIN promo po ON pp.id_promo=po.id_promo WHERE m.id_matiere = :idm AND po.id_promo = :idp');
     $proposition->bindParam(":idm", $matiere);
     $proposition->bindParam(":idp", $niveau);
     $proposition->execute();
-    $proposition->fetchAll();
-    return $proposition[0][0];
+    $prop = $proposition->fetchAll();
+    $prop = $prop[0][0];
+    return $prop;
 }
 
 // Mis a jour V2.0
@@ -299,8 +308,9 @@ function verifExistProposition()
 {
     $proposition = $GLOBALS['db']->prepare('SELECT COUNT(*) FROM proposition');
     $proposition->execute();
-    $proposition->fetchAll();
-    return $proposition[0][0];
+    $prop = $proposition->fetchAll();
+    $prop = $prop[0][0];
+    return $prop;
 }
 
 // Mis a jour V2.0
@@ -309,8 +319,8 @@ function selectPropositionMatierePromo()
 {
     $proposition = $GLOBALS['db']->prepare('SELECT p.id_proposition AS id_proposition, p.secu AS secu, po.intitule AS promo, m.intitule AS matiere from proposition p JOIN promo po ON p.id_promo=po.id_promo JOIN matiere m ON p.id_matiere=m.id_matiere');
     $proposition->execute();
-    $proposition->fetchAll();
-    return $proposition;
+    $prop = $proposition->fetchAll();
+    return $prop;
 }
 
 // Mis a jour V2.0
@@ -321,8 +331,9 @@ function verifExistPersonneProposition($idPersonne, $idProposition)
     $verifProposition->bindParam(':idp', $idPersonne);
     $verifProposition->bindParam(':idpo', $idProposition);
     $verifProposition->execute();
-    $verifProposition->fetchAll();
-    return $verifProposition[0][0];
+    $verif = $verifProposition->fetchAll();
+    $verif = $verif[0][0];
+    return $verif;
 }
 
 // Mis a jour V2.0
@@ -332,8 +343,9 @@ function selectCountPersonnePropositionByIdProposition($idProposition)
     $proposition = $GLOBALS['db']->prepare('SELECT COUNT(*) FROM personne_proposition WHERE id_proposition = :idp');
     $proposition->bindParam(':idp', $idProposition);
     $proposition->execute();
-    $proposition->fetchAll();
-    return $proposition[0][0];
+    $prop = $proposition->fetchAll();
+    $prop = $prop[0][0];
+    return $prop;
 }
 
 // Mis a jour V2.0
@@ -343,8 +355,9 @@ function selectIdPropositionBySecu($secuCode)
     $idProposition = $GLOBALS['db']->prepare('SELECT id_proposition FROM proposition WHERE secu = :secu');
     $idProposition->bindParam(':secu', $secuCode);
     $idProposition->execute();
-    $idProposition->fetchAll();
-    return $idProposition[0][0];
+    $id = $idProposition->fetchAll();
+    $id = $id[0][0];
+    return $id;
 }
 
 // Mis a jour V2.0
@@ -354,8 +367,8 @@ function selectPropositionMatierePromoByIdProposition($idProposition)
     $proposition = $GLOBALS['db']->prepare('SELECT p.secu AS secu, p.id_matiere AS id_matiere, po.id_promo AS id_promo, po.intitule AS promo, m.intitule AS matiere from proposition p JOIN proposition_promo ppo ON p.id_proposition=ppo.id_proposition JOIN promo po ON ppo.id_promo=po.id_promo JOIN matiere m ON p.id_matiere=m.id_matiere WHERE p.id_proposition = :idp');
     $proposition->bindParam(':idp', $idProposition);
     $proposition->execute();
-    $proposition->fetchAll();
-    return $proposition;
+    $prop = $proposition->fetchAll();
+    return $prop;
 }
 
 // Mis a jour V2.0
@@ -365,8 +378,8 @@ function selectPersonnePropositionByIdProposition($idProposition)
     $personneProposition = $GLOBALS['db']->prepare('SELECT id_personne FROM personne_proposition WHERE id_proposition = :idp');
     $personneProposition->bindParam(':idp', $idProposition);
     $personneProposition->execute();
-    $personneProposition->fetchAll();
-    return $personneProposition;
+    $personnes = $personneProposition->fetchAll();
+    return $personnes;
 }
 
 // Mis a jour V2.0
@@ -390,16 +403,16 @@ function selectTuteurCoursClosHeures()
 {
     $tuteurHeure = $GLOBALS['db']->prepare('SELECT p.id_personne AS id_personne, p.nom AS nom, p.prenom AS prenom, po.promo AS promo, SUM(c.duree) AS duree FROM personne p INNER JOIN classe cl ON p.id_classe=cl.id_classe INNER JOIN promo po ON cl.id_promo=po.id_promo INNER JOIN personne_cours pc ON p.id_personne=pc.id_personne INNER JOIN cours c ON pc.id_cours=c.id_cours WHERE c.status=1 AND pc.rang_personne=1 GROUP BY p.id_personne, p.nom, p.prenom, po.promo ORDER BY SUM(c.duree) DESC');
     $tuteurHeure->execute();
-    $tuteurHeure->fetchAll();
-    return $tuteurHeure;
+    $tutHeure = $tuteurHeure->fetchAll();
+    return $tutHeure;
 }
 
 function selectHeuresMatieresCoursClos()
 {
     $heureMatiere = $GLOBALS['db']->prepare('SELECT m.id_matiere AS id_matiere, m.intitule AS matiere, SUM(c.duree) AS duree FROM cours c INNER JOIN matiere m ON c.id_matiere=m.id_matiere WHERE c.status=1 GROUP BY m.id_matiere, m.intitule ORDER BY SUM(c.duree) DESC');
     $heureMatiere->execute();
-    $heureMatiere->fetchAll();
-    return $heureMatiere;
+    $heuMat = $heureMatiere->fetchAll();
+    return $heuMat;
 }
 
 function selectHeuresByIdMatiereIdTuteur($idPersonne, $idMatiere)
@@ -422,16 +435,18 @@ function selectHeureByMatiere($idMatiere)
     $heure = $GLOBALS['db']->prepare('SELECT SUM(c.duree) AS duree FROM cours c WHERE c.id_matiere=:idm AND c.status=1 GROUP BY c.id_matiere');
     $heure->bindParam(':idm', $idMatiere);
     $heure->execute();
-    $heure->fetchAll();
-    return $heure[0][0];
+    $heur = $heure->fetchAll();
+    $heur = $heur[0][0];
+    return $heur;
 }
 
 function selectHeuresTotal()
 {
     $heures = $GLOBALS['db']->prepare('SELECT SUM(c.duree) AS duree FROM cours c WHERE c.status=1');
     $heures->execute();
-    $heures->fetchAll();
-    return $heures[0][0];
+    $heure = $heures->fetchAll();
+    $heure = $heure[0][0];
+    return $heure;
 }
 
 function selectMatieresHeuresByIdPromo($idPromo)
@@ -439,8 +454,8 @@ function selectMatieresHeuresByIdPromo($idPromo)
     $heureMatiere = $GLOBALS['db']->prepare('SELECT SUM(c.duree) AS duree, m.intitule AS matiere FROM cours c INNER JOIN matiere m ON c.id_matiere=m.id_matiere INNER JOIN cours_promo cp ON c.id_cours=cp.id_cours WHERE c.status=1 AND cp.id_promo=:idp GROUP BY m.intitule ORDER BY SUM(c.duree) DESC');
     $heureMatiere->bindParam(':idp', $idPromo);
     $heureMatiere->execute();
-    $heureMatiere->fetchAll();
-    return $heureMatiere;
+    $heure = $heureMatiere->fetchAll();
+    return $heure;
 }
 
 function selectParticipantsMatiereByIdPromo($idPromo)
@@ -448,8 +463,8 @@ function selectParticipantsMatiereByIdPromo($idPromo)
     $nbParticipant = $GLOBALS['db']->prepare('SELECT m.intitule AS matiere, SUM(c.nbParticipants) AS participants FROM cours c INNER JOIN matiere m ON c.id_matiere=m.id_matiere INNER JOIN cours_promo cp ON c.id_cours=cp.id_cours WHERE c.status=1 AND cp.id_promo=:idp GROUP BY m.intitule');
     $nbParticipant->bindParam(':idp', $idPromo);
     $nbParticipant->execute();
-    $nbParticipant->fetchAll();
-    return $nbParticipant;
+    $nbPart = $nbParticipant->fetchAll();
+    return $nbPart;
 }
 
 function selectPartMoisByIdPromo($idPromo)
@@ -457,16 +472,16 @@ function selectPartMoisByIdPromo($idPromo)
     $partMois = $GLOBALS['db']->prepare('SELECT SUM(c.nbParticipants) AS participants, MONTH(c.date) AS mois FROM cours c INNER JOIN cours_promo cp ON c.id_cours=cp.id_cours WHERE c.status=1 AND cp.id_promo=:idp GROUP BY MONTH(c.date) ORDER BY MONTH(c.date)');
     $partMois->bindParam(':idp', $idPromo);
     $partMois->execute();
-    $partMois->fetchAll();
-    return $partMois;
+    $part = $partMois->fetchAll();
+    return $part;
 }
 
 function selectLogs()
 {
     $logs = $GLOBALS['db']->prepare('SELECT heure AS heure, id_cours AS id_cours FROM logs');
     $logs->execute();
-    $logs->fetchAll();
-    return $logs;
+    $l = $logs->fetchAll();
+    return $l;
 }
 
 function selectCourseProfByLogs($idCours)
@@ -474,16 +489,16 @@ function selectCourseProfByLogs($idCours)
     $cours = $GLOBALS['db']->prepare('SELECT c.heure AS heure, c.date as date, m.intitule as matiere, p.nom AS nom, p.prenom AS prenom, po.promo AS promo FROM cours c INNER JOIN matiere m on c.id_matiere=m.id_matiere INNER JOIN personne_cours pc ON pc.id_cours=c.id_cours INNER JOIN personne p ON pc.id_personne=p.id_personne INNER JOIN cours_promo cp ON cp.id_cours=c.id_cours INNER JOIN promo po ON po.id_promo=cp.id_promo WHERE pc.rang_personne=1 AND c.id_cours=:idc');
     $cours->bindParam(':idc', $idCours);
     $cours->execute();
-    $cours->fetchAll();
-    return $cours;
+    $cour = $cours->fetchAll();
+    return $cour;
 }
 
 function selectPersonnePromoClasse()
 {
     $admin = $GLOBALS['db']->prepare('SELECT p.id_personne AS id_personne, p.nom AS nom, p.prenom AS prenom, p.role AS role, po.promo AS promo, c.classe AS classe FROM personne p JOIN classe c ON p.id_classe=c.id_classe JOIN promo po ON c.id_promo=po.id_promo WHERE id_personne > 1');
     $admin->execute();
-    $admin->fetchAll();
-    return $admin;
+    $adm = $admin->fetchAll();
+    return $adm;
 }
 
 function selectMailByIdPersonne($idPersonne)
@@ -491,16 +506,17 @@ function selectMailByIdPersonne($idPersonne)
     $mail = $GLOBALS['db']->prepare('SELECT mail FROM personne WHERE id_personne = :idp');
     $mail->bindParam(':idp', $idPersonne);
     $mail->execute();
-    $mail->fetchAll();
-    return $mail[0][0];
+    $m = $mail->fetchAll();
+    $m = $m[0][0];
+    return $m;
 }
 
 function selectCoursTuteurMatiere()
 {
     $cours = $GLOBALS['db']->prepare('SELECT c.id_cours AS id_cours, c.secu AS secu, c.status AS status, c.date AS date, p.nom AS nom, p.prenom AS prenom, p.id_personne AS id_personne, po.promo AS promo, m.intitule AS matiere FROM cours c JOIN personne_cours pc on c.id_cours=pc.id_cours JOIN personne p ON pc.id_personne=p.id_personne JOIN cours_promo cp ON c.id_cours=cp.id_cours JOIN promo po ON cp.id_promo=po.id_promo JOIN matiere m ON c.id_matiere=m.id_matiere WHERE pc.rang_personne=1');
     $cours->execute();
-    $cours->fetchAll();
-    return $cours;
+    $cour = $cours->fetchAll();
+    return $cour;
 }
 
 function selectMatiereById($idMat)
@@ -508,8 +524,9 @@ function selectMatiereById($idMat)
     $matiere = $GLOBALS['db']->prepare('SELECT intitule FROM matiere WHERE id_matiere = :idm');
     $matiere->bindParam(':idm', $idMat);
     $matiere->execute();
-    $matiere->fetchAll();
-    return $matiere[0][0];
+    $matiere = $matiere->fetchAll();
+    $mati = $matiere[0][0];
+    return $mati;
 }
 
 // Mis a jour V2.0
@@ -519,24 +536,25 @@ function selectTokenByIdPersonne($idPersonne)
     $token = $GLOBALS['db']->prepare('SELECT token FROM personne WHERE id_personne = :idp');
     $token->bindParam(':idp', $idPersonne);
     $token->execute();
-    $token->fetchAll();
-    return $token[0][0];
+    $token = $token->fetchAll();
+    $token = $token[0][0];
+    return $token;
 }
 
 function selectLogsProp()
 {
     $logsProp = $GLOBALS['db']->prepare('SELECT heure AS heure, id_proposition AS id_proposition FROM logs_proposition');
     $logsProp->execute();
-    $logsProp->fetchAll();
-    return $logsProp;
+    $l = $logsProp->fetchAll();
+    return $l;
 }
 
 function selectProposition()
 {
     $proposition = $GLOBALS['db']->prepare('SELECT m.intitule AS matiere, po.promo AS promo FROM proposition p JOIN matiere m ON p.id_matiere=m.id_matiere JOIN promo po ON p.id_promo=po.id_promo');
     $proposition->execute();
-    $proposition->fetchAll();
-    return $proposition;
+    $p = $proposition->fetchAll();
+    return $p;
 }
 
 function selectPropositionByLogs($idProposition)
@@ -544,8 +562,8 @@ function selectPropositionByLogs($idProposition)
     $proposition = $GLOBALS['db']->prepare('SELECT m.intitule AS matiere, po.promo AS promo FROM proposition p JOIN matiere m ON p.id_matiere=m.id_matiere JOIN promo po ON p.id_promo=po.id_promo WHERE id_proposition = :idp');
     $proposition->bindParam(':idp', $idProposition);
     $proposition->execute();
-    $proposition->fetchAll();
-    return $proposition;
+    $prop = $proposition->fetchAll();
+    return $prop;
 }
 
 // Mis a jour V2.0
@@ -555,8 +573,8 @@ function selectPersonneByIdPersonne($idPersonne)
     $personne = $GLOBALS['db']->prepare('SELECT p.prenom AS prenom, p.nom AS nom, p.password AS mdp, p.mail AS mail, c.intitule AS classe FROM personne p JOIN classe c ON p.id_classe=c.id_classe WHERE id_personne = :idp');
     $personne->bindParam(':idp', $idPersonne);
     $personne->execute();
-    $personne->fetchAll();
-    return $personne;
+    $per = $personne->fetchAll();
+    return $per;
 }
 
 // Mis a jour V2.0
@@ -591,8 +609,8 @@ function selectInscritParticipantsCours($promo)
     $inscPart = $GLOBALS['db']->prepare('SELECT DATE_FORMAT(c.date, "%d %M %Y") AS date, m.intitule AS matiere, c.nbInscrits AS inscrits, c.nbParticipants AS participants, p.promo AS niveau FROM cours c JOIN matiere m ON c.id_matiere=m.id_matiere JOIN cours_promo cp ON c.id_cours=cp.id_cours JOIN promo p ON cp.id_promo=p.id_promo WHERE p.id_promo = :promo AND c.status > 0 ORDER BY c.date ASC');
     $inscPart->bindParam(":promo", $promo);
     $inscPart->execute();
-    $inscPart->fetchAll();
-    return $inscPart;
+    $insc = $inscPart->fetchAll();
+    return $insc;
 }
 
 
@@ -603,7 +621,8 @@ function verifExistPersonneInscrits($idCours){
     $inscrits->bindParam(":idc", $idCours);
     $inscrits->execute();
     $count = $inscrits->fetchAll();
-    return $count[0][0];
+    $c = $count[0][0];
+    return $c;
 }
 
 // Mis a jour V2.0
