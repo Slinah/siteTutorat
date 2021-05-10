@@ -51,10 +51,11 @@ function selectPromos()
     return $promo;
 }
 
+// Mis a jour V2.0
 // Sélection des infos d'une promo en fonction de son ID
 function selectPromoByIdPromo($idPromo)
 {
-    $promos = $GLOBALS['db']->prepare('SELECT promo FROM promo WHERE id_promo = :idp');
+    $promos = $GLOBALS['db']->prepare('SELECT intitule FROM promo WHERE id_promo = :idp');
     $promos->bindParam(":idp", $idPromo);
     $promos->execute();
     $promo = $promos->fetchAll();
