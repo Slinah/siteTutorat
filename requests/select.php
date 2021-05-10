@@ -317,7 +317,7 @@ function verifExistProposition()
 // Sélectionne les propositions matières et promos
 function selectPropositionMatierePromo()
 {
-    $proposition = $GLOBALS['db']->prepare('SELECT p.id_proposition AS id_proposition, p.secu AS secu, po.intitule AS promo, m.intitule AS matiere from proposition p JOIN promo po ON p.id_promo=po.id_promo JOIN matiere m ON p.id_matiere=m.id_matiere');
+    $proposition = $GLOBALS['db']->prepare('SELECT p.id_proposition AS id_proposition, p.secu AS secu, po.intitule AS promo, m.intitule AS matiere from proposition p JOIN proposition_promo pp ON p.id_proposition=pp.id_proposition JOIN promo po ON pp.id_promo=po.id_promo JOIN matiere m ON p.id_matiere=m.id_matiere');
     $proposition->execute();
     $prop = $proposition->fetchAll();
     return $prop;
