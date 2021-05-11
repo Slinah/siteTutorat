@@ -2,7 +2,7 @@
 
 class Config {
     const SERVERNAME="localhost";
-    const DBNAME="tutoratrefonte";
+    const DBNAME="tutoratrefonte2";
     const USER="admin";
     const PASSWORD="tutorat2020!";
 }
