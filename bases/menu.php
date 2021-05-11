@@ -5,7 +5,8 @@
         if (isset($_SESSION)) {
             echo '<li id="proposeCourse"><a href="../../commons/proposals/proposeCourse.php?proposal=unset">Proposer</a></li>
             <li id="courses"><a href="../../commons/views/courses.php?course=unset">S\'inscrire à un cours</a></li>
-            <li id="newCourse"><a href="../../commons/courses/newCourse.php?newc=unset">Donner un cours</a></li>';
+            <li id="newCourse"><a href="../../commons/courses/newCourse.php?newc=unset">Donner un cours</a></li>
+            <li id="newCourse"><a href="../../commons/forum/forum.php?forum=unset">Forum</a></li>';
             if ($_SESSION["role"] == 1) {
                 echo '<li id="admin"><a href="../../admin/pannel/administration.php?action=none">Pannel admin</a></li>';
                 echo '<li>
