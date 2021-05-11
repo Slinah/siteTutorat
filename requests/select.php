@@ -6,7 +6,7 @@ include_once dirname(__DIR__) . '/conf/conf.php';
 // Connexion à la base
 $GLOBALS['db'] = new PDO("mysql:host=" . Config::SERVERNAME . ";dbname=" . Config::DBNAME, Config::USER, Config::PASSWORD);
 
-// Mis a jour V2.0
+// Mise à jour V2.0
 // Sélection d'une personne en fonction d'un mail
 function selectPersonneByMail($mailPersonne)
 {
@@ -17,7 +17,7 @@ function selectPersonneByMail($mailPersonne)
     return $resultat;
 }
 
-// Mis a jour V2.0
+// Mise à jour V2.0
 // Sélection du mot de passe hashé en fonction du mail d'une personne
 function selectHashPasswordPersonneByMail($mailPersonne)
 {
@@ -29,7 +29,7 @@ function selectHashPasswordPersonneByMail($mailPersonne)
     return $hashP;
 }
 
-// Mis a jour V2.0
+// Mise à jour V2.0
 // Sélection des classes d'une promo donnée
 function selectClassesPromoEcoles($promo, $ecole)
 {
@@ -41,7 +41,7 @@ function selectClassesPromoEcoles($promo, $ecole)
     return $classe;
 }
 
-// Mis a jour V2.0
+// Mise à jour V2.0
 // Sélection des promos
 function selectPromos()
 {
@@ -51,7 +51,7 @@ function selectPromos()
     return $promo;
 }
 
-// Mis a jour V2.0
+// Mise à jour V2.0
 // Sélection des infos d'une promo en fonction de son ID
 function selectPromoByIdPromo($idPromo)
 {
@@ -63,7 +63,7 @@ function selectPromoByIdPromo($idPromo)
     return $promo;
 }
 
-// Mis a jour V2.0
+// Mise à jour V2.0
 // Sélection des matières
 function selectMatieresByValidation($bool)
 {
@@ -85,7 +85,7 @@ function selectMatieresByValidation($bool)
 //     return $cours;
 // }
 
-// Mis a jour V2.0
+// Mise à jour V2.0
 // Sélection de l'ID du cours en fonction de son intitule
 function selectIdCoursByIntitule($intituleCours)
 {
@@ -101,7 +101,7 @@ function selectIdCoursByIntitule($intituleCours)
     return $cours;
 }
 
-// Mis a jour V2.0
+// Mise à jour V2.0
 // Vérification de l'existence de la corélation prof / cours en fonction de l'ID d'une personne
 function verifExistsProfPersonneByIdPersonne($idPersonne)
 {
@@ -113,7 +113,7 @@ function verifExistsProfPersonneByIdPersonne($idPersonne)
     return $count;
 }
 
-// Mis a jour V2.0
+// Mise à jour V2.0
 // Sélection des cours ayant un status particulier
 function selectCoursByStatus($valueStatus)
 {
@@ -124,7 +124,7 @@ function selectCoursByStatus($valueStatus)
     return $cour;
 }
 
-// Mis a jour V2.0
+// Mise à jour V2.0
 // Sélection des cours ayant le status 0
 function selectCoursStatus()
 {
@@ -137,7 +137,7 @@ function selectCoursStatus()
     return $cour;
 }
 
-// Mis a jour V2.0
+// Mise à jour V2.0
 // Sélection des infos personne et promo en fonction de l'id d'un cours et du rang de la personne
 function selectPersonnePromoByIdCoursRangPersonne($idCours, $rangPersonne)
 {
@@ -149,7 +149,7 @@ function selectPersonnePromoByIdCoursRangPersonne($idCours, $rangPersonne)
     return $p;
 }
 
-// Mis a jour V2.0
+// Mise à jour V2.0
 // Vérification de l'existence d'une liaison cours PROF a partir de l'id de la personne et de l'id du cours
 function verifExistProfCoursByIdPersonneIdCours($idPersonne, $idCours, $rang)
 {
@@ -163,7 +163,7 @@ function verifExistProfCoursByIdPersonneIdCours($idPersonne, $idCours, $rang)
     return $pc;
 }
 
-// Mis a jour V2.0
+// Mise à jour V2.0
 // Vérification de l'existence d'une liaison cours ELEVE a partir de l'id de la personne et de l'id du cours
 function verifExistEleveCoursByIdPersonneIdCours($idPersonne, $idCours)
 {
@@ -176,7 +176,7 @@ function verifExistEleveCoursByIdPersonneIdCours($idPersonne, $idCours)
     return $pc;
 }
 
-// Mis a jour V2.0
+// Mise à jour V2.0
 // Sélectionne les infos cours, matière, niveau en fonction du status du cours, de l'id de la personne et de son rang
 function selectCoursMatiereNiveauByStatusIdPersonneRang($valueStatus, $idPersonne, $rangPersonne)
 {
@@ -194,7 +194,7 @@ function selectCoursMatiereNiveauByStatusIdPersonneRang($valueStatus, $idPersonn
     return $cour;
 }
 
-// Mis a jour V2.0
+// Mise à jour V2.0
 // Sélectionne le cours la matière le niveau par le code de sécu, l'id de la personne et son rang
 function selectCoursMatiereNiveauBySecuIdPersonneRang($secuCode, $idPersonne, $rangPersonne)
 {
@@ -207,7 +207,7 @@ function selectCoursMatiereNiveauBySecuIdPersonneRang($secuCode, $idPersonne, $r
     return $cour;
 }
 
-// Mis a jour V2.0
+// Mise à jour V2.0
 // Sélectionne le cours la matière et le niveau d'un cours en fontion de son ID
 function selectCoursMatiereNiveauByIdCours($idCours)
 {
@@ -218,7 +218,7 @@ function selectCoursMatiereNiveauByIdCours($idCours)
     return $cour;
 }
 
-// Mis a jour V2.0
+// Mise à jour V2.0
 // Sélectionne le nombre de participants a un cours en fonction de son ID
 function selectCountParticipantsByIdCours($idCours)
 {
@@ -230,7 +230,7 @@ function selectCountParticipantsByIdCours($idCours)
     return $cou;
 }
 
-// Mis a jour V2.0
+// Mise à jour V2.0
 // Sélectionne le code de sécu en fonction d'un ID cours
 function selectSecuByIdCours($idCours)
 {
@@ -242,7 +242,7 @@ function selectSecuByIdCours($idCours)
     return $secu;
 }
 
-// Mis a jour V2.0
+// Mise à jour V2.0
 // Vérifie l'existence d'une relation cours personne en fonction de l'ID personne, de son rang et de son status
 function verifExistCoursByIdPersonneRangStatus($idPersonne, $rangPersonne, $valueStatus)
 {
@@ -256,7 +256,7 @@ function verifExistCoursByIdPersonneRangStatus($idPersonne, $rangPersonne, $valu
     return $existCour;
 }
 
-// Mis a jour V2.0
+// Mise à jour V2.0
 // Sélectionne la matière a partir de son intitulé
 function selectMatiereByIntitule($intituleMatiere)
 {
@@ -272,7 +272,7 @@ function selectMatiereByIntitule($intituleMatiere)
     return $mat;
 }
 
-// Mis a jour V2.0
+// Mise à jour V2.0
 // Sélectionne la dernière proposition insert dans la base
 function selectIdLastPropositionByMatiereNiveau($matiere, $niveau)
 {
@@ -285,7 +285,7 @@ function selectIdLastPropositionByMatiereNiveau($matiere, $niveau)
     return $prop;
 }
 
-// Mis a jour V2.0
+// Mise à jour V2.0
 // Vérification de l'existance d'une proposition en fonction de l'id de la matière et de l'id de la promo
 function verifExistPropositionByIdMatiereIdPromo($idMatiere, $idPromo)
 {
@@ -302,7 +302,7 @@ function verifExistPropositionByIdMatiereIdPromo($idMatiere, $idPromo)
     return $prop;
 }
 
-// Mis a jour V2.0
+// Mise à jour V2.0
 // Vérification de l'existance de propositions
 function verifExistProposition()
 {
@@ -313,7 +313,7 @@ function verifExistProposition()
     return $prop;
 }
 
-// Mis a jour V2.0
+// Mise à jour V2.0
 // Sélectionne les propositions matières et promos
 function selectPropositionMatierePromo()
 {
@@ -323,7 +323,7 @@ function selectPropositionMatierePromo()
     return $prop;
 }
 
-// Mis a jour V2.0
+// Mise à jour V2.0
 // Vérifie l'existente d'un lien personne proposition
 function verifExistPersonneProposition($idPersonne, $idProposition)
 {
@@ -336,7 +336,7 @@ function verifExistPersonneProposition($idPersonne, $idProposition)
     return $verif;
 }
 
-// Mis a jour V2.0
+// Mise à jour V2.0
 // Compte le nombre de personne inscrites a une proposition en fonction de l'ID proposition
 function selectCountPersonnePropositionByIdProposition($idProposition)
 {
@@ -348,7 +348,7 @@ function selectCountPersonnePropositionByIdProposition($idProposition)
     return $prop;
 }
 
-// Mis a jour V2.0
+// Mise à jour V2.0
 // Sélectionne l'ID d'une proposition en fonction de son code de sécurité
 function selectIdPropositionBySecu($secuCode)
 {
@@ -360,7 +360,7 @@ function selectIdPropositionBySecu($secuCode)
     return $id;
 }
 
-// Mis a jour V2.0
+// Mise à jour V2.0
 // Sélectonne la proposition, matiere promo en fonction de l'ID proposition
 function selectPropositionMatierePromoByIdProposition($idProposition)
 {
@@ -371,7 +371,7 @@ function selectPropositionMatierePromoByIdProposition($idProposition)
     return $prop;
 }
 
-// Mis a jour V2.0
+// Mise à jour V2.0
 // Sélectionne un lien personne proposition en fonction de l'id proposition
 function selectPersonnePropositionByIdProposition($idProposition)
 {
@@ -382,7 +382,7 @@ function selectPersonnePropositionByIdProposition($idProposition)
     return $personnes;
 }
 
-// Mis a jour V2.0
+// Mise à jour V2.0
 // Compte le nombre d'incrits a une proposition
 function selectCountPersonnePropositionByIdPersonneIdProposition($idPersonne, $idProposition)
 {
@@ -557,7 +557,7 @@ function selectMatiereById($idMat)
     return $mati;
 }
 
-// Mis a jour V2.0
+// Mise à jour V2.0
 // Select le token d'une personne a l'aide de son ID
 function selectTokenByIdPersonne($idPersonne)
 {
@@ -600,7 +600,7 @@ function selectPropositionByLogs($idProposition)
     return $prop;
 }
 
-// Mis a jour V2.0
+// Mise à jour V2.0
 // Récupère les infos d'une personne par son ID
 function selectPersonneByIdPersonne($idPersonne)
 {
@@ -611,7 +611,7 @@ function selectPersonneByIdPersonne($idPersonne)
     return $per;
 }
 
-// Mis a jour V2.0
+// Mise à jour V2.0
 // Check si le mail d'une personne existe
 function verifExistMail($mailPersonne)
 {
@@ -627,7 +627,7 @@ function verifExistMail($mailPersonne)
     return $m;
 }
 
-// Mis a jour V2.0
+// Mise à jour V2.0
 // Check s'il y a plus d'un cours pour une promo sélectionnée
 function selectCountCoursByPromo($promo)
 {
@@ -655,7 +655,7 @@ function selectInscritParticipantsCours($promo)
 }
 
 
-// Mis a jour V2.0
+// Mise à jour V2.0
 // Permet de vérifier si des gens sont inscrits au cours
 function verifExistPersonneInscrits($idCours){
     $inscrits = $GLOBALS['db']->prepare('SELECT count(*) FROM personne_cours WHERE id_cours = :idc AND rang_personne = 0');
@@ -666,7 +666,7 @@ function verifExistPersonneInscrits($idCours){
     return $c;
 }
 
-// Mis a jour V2.0
+// Mise à jour V2.0
 // Permet de sélectionner toutes les matieres et leurs ID de la base
 function selectMatieres(){
     $matieres = $GLOBALS['db']->prepare('SELECT id_matiere, intitule FROM matiere WHERE validationAdmin = 1 ORDER BY intitule');
@@ -674,7 +674,7 @@ function selectMatieres(){
     return $matieres->fetchAll();
 }
 
-// Mis a jour V2.0
+// Mise à jour V2.0
 // Renvoie le prenom d'une personne en fonction de son ID
 function selectPrenomById($idPersonne){
     $prenom = $GLOBALS['db']->prepare('SELECT prenom FROM personne WHERE id_personne = :idp');
@@ -684,7 +684,7 @@ function selectPrenomById($idPersonne){
     return $prenom[0][0];
 }
 
-// Mis a jour V2.0
+// Mise à jour V2.0
 // Renvoie le nom d'une personne en fonction de son ID
 function selectNomById($idPersonne){
     $nom = $GLOBALS['db']->prepare('SELECT nom FROM personne WHERE id_personne = :idp');
@@ -692,4 +692,16 @@ function selectNomById($idPersonne){
     $nom->execute();
     $nom = $nom->fetchAll();
     return $nom[0][0];
+}
+
+//Mise à jour V2.1
+// Sélection des questions ayant le status 0
+function selectQuestionStatus(){
+    $question_forum = $GLOBALS['db']->prepare('SELECT f.id_question AS id_question, f.id_personne AS id_personne, f.titre AS titre, f.description AS description, f.status AS status, f.date AS date, f.secu AS secu, m.intitule AS matiere, p.intitule AS promo FROM question_forum f JOIN matiere m ON m.id_matiere=f.id_matiere  JOIN promo p ON p.id_promo=f.id_promo WHERE f.status = 0');
+    $question_forum->execute();
+    $questions = $question_forum->fetchAll();
+        if (empty($questions)) {
+            $questions = 'none';
+        }
+    return $questions;
 }

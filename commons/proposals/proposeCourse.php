@@ -28,7 +28,7 @@ include_once '../../bases/head.php';
             break;
 
         case "success":
-            echo '<script>Metro.toast.create("Vous avez créer la proposition avec succès !", null, null, "success");</script>';
+            echo '<script>Metro.toast.create("Vous avez créé la proposition avec succès !", null, null, "success");</script>';
             break;
 
         case "creaupvoted":
