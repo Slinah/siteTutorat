@@ -695,9 +695,27 @@ function selectNomById($idPersonne){
 }
 
 //Mise à jour V2.1
+// Sélection des questions ayant un status particulier
+function selectQuestionByStatus($valueStatusQuestion){
+    $questions = $GLOBALS['db']->prepare('SELECT qf.id_question AS id_question, qf.id_personne AS id_personne, 
+                                               qf.titre AS titre, qf.description AS description, qf.status AS status, 
+                                               qf.date AS date, qf.secu AS secu, m.intitule AS matiere
+                                               FROM question_forum qf JOIN matiere m ON m.id_matiere=qf.id_matiere  
+                                               WHERE qf.status = :status');
+    $questions->bindParam(":status", $valueStatusQuestion);
+    $questions->execute();
+    $question = $questions->fetchAll();
+    return $question;
+}
+
+//Mise à jour V2.1
 // Sélection des questions ayant le status 0
 function selectQuestionStatus(){
-    $question_forum = $GLOBALS['db']->prepare('SELECT f.id_question AS id_question, f.id_personne AS id_personne, f.titre AS titre, f.description AS description, f.status AS status, f.date AS date, f.secu AS secu, m.intitule AS matiere, p.intitule AS promo FROM question_forum f JOIN matiere m ON m.id_matiere=f.id_matiere  JOIN promo p ON p.id_promo=f.id_promo WHERE f.status = 0');
+    $question_forum = $GLOBALS['db']->prepare('SELECT qf.id_question AS id_question, qf.id_personne AS id_personne, 
+                                               qf.titre AS titre, qf.description AS description, qf.status AS status, 
+                                               qf.date AS date, qf.secu AS secu, m.intitule AS matiere
+                                               FROM question_forum qf JOIN matiere m ON m.id_matiere=qf.id_matiere  
+                                               WHERE qf.status = 0');
     $question_forum->execute();
     $questions = $question_forum->fetchAll();
         if (empty($questions)) {
@@ -705,3 +723,14 @@ function selectQuestionStatus(){
         }
     return $questions;
 }
+
+//Mise à jour V2.1
+// Sélectionne des infos personne et promo suivant l'id de la question
+function selectPersonnePromoByIdQuestion($idQuestion){
+    $questionneur = $GLOBALS['db']->prepare('SELECT questionneur.id_personne AS id_questionneur, questionneur.nom AS nom, questionneur.prenom AS prenom, cl.intitule AS classe, po.intitule AS promo FROM question_forum qf JOIN personne questionneur ON  qf.id_personne = questionneur.id_personne JOIN classe cl ON questionneur.id_classe=cl.id_classe JOIN promo po ON cl.id_promo=po.id_promo WHERE id_question = :idq');
+    $questionneur->bindParam(':idq', $idQuestion);
+    $questionneur->execute();
+    $personneQuestionneur = $questionneur->fetchAll();
+    return $personneQuestionneur;
+}
+
