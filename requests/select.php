@@ -51,10 +51,11 @@ function selectPromos()
     return $promo;
 }
 
+// Mis a jour V2.0
 // Sélection des infos d'une promo en fonction de son ID
 function selectPromoByIdPromo($idPromo)
 {
-    $promos = $GLOBALS['db']->prepare('SELECT promo FROM promo WHERE id_promo = :idp');
+    $promos = $GLOBALS['db']->prepare('SELECT intitule FROM promo WHERE id_promo = :idp');
     $promos->bindParam(":idp", $idPromo);
     $promos->execute();
     $promo = $promos->fetchAll();
@@ -272,7 +273,7 @@ function selectMatiereByIntitule($intituleMatiere)
 }
 
 // Mis a jour V2.0
-// Sélectionne la dernière proposition insert dans la base 
+// Sélectionne la dernière proposition insert dans la base
 function selectIdLastPropositionByMatiereNiveau($matiere, $niveau)
 {
     $proposition = $GLOBALS['db']->prepare('SELECT p.id_proposition FROM proposition p JOIN matiere m ON p.id_matiere=m.id_matiere JOIN proposition_promo pp ON p.id_proposition=pp.id_proposition JOIN promo po ON pp.id_promo=po.id_promo WHERE m.id_matiere = :idm AND po.id_promo = :idp');
@@ -316,7 +317,7 @@ function verifExistProposition()
 // Sélectionne les propositions matières et promos
 function selectPropositionMatierePromo()
 {
-    $proposition = $GLOBALS['db']->prepare('SELECT p.id_proposition AS id_proposition, p.secu AS secu, po.intitule AS promo, m.intitule AS matiere from proposition p JOIN promo po ON p.id_promo=po.id_promo JOIN matiere m ON p.id_matiere=m.id_matiere');
+    $proposition = $GLOBALS['db']->prepare('SELECT p.id_proposition AS id_proposition, p.secu AS secu, po.intitule AS promo, m.intitule AS matiere from proposition p JOIN proposition_promo pp ON p.id_proposition=pp.id_proposition JOIN promo po ON pp.id_promo=po.id_promo JOIN matiere m ON p.id_matiere=m.id_matiere');
     $proposition->execute();
     $prop = $proposition->fetchAll();
     return $prop;
