@@ -7,6 +7,7 @@
             <li id="courses"><a href="../../commons/views/courses.php?course=unset">S\'inscrire à un cours</a></li>
             <li id="newCourse"><a href="../../commons/courses/newCourse.php?newc=unset">Donner un cours</a></li>
             <li id="forum"><a href="../../commons/forum/questionForum.php?forum=unset">Forum</a></li>';
+
             if ($_SESSION["role"] == 1) {
                 // echo '<li id="admin"><a href="../../admin/pannel/administration.php?action=none">Pannel admin</a></li>';
                 echo '<li>

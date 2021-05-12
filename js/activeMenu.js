@@ -20,6 +20,10 @@ switch (nom) {
         $('#stats').addClass('active');
         break;
 
+    case 'forum':
+        $('#forum').addClass('active');
+        break;
+
     case 'chartsB1':
         $('#stats').addClass('active');
         idPromo = 1;

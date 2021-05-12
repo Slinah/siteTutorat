@@ -51,6 +51,12 @@ include_once '../../bases/head.php';
                             <div class="p-2">L'onglet "Donner un cours", permet de créer un cours proposé par les autres étudiants (Attention, si vous avez proposer un cours, vous ne pouvez pas en être le tuteur), ou créer un autre cours.</div>
                         </div>
                     </div>
+                    <div class="frame">
+                        <div class="heading"><i>Forum</i></div>
+                        <div class="content">
+                            <div class="p-2">L'onglet "Forum", permet de poser une question sur un cours que vous avez mal compris.<br><br>Cet onglet vous permet également de répondre à une question et de voter pour une réponse qui vous aura aidé.</div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class='cell-4 offset-2'><b>Les quelques règles</b><br><br>
