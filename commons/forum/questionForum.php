@@ -1,6 +1,7 @@
 <?php
 session_start();
 include_once '../../requests/select.php';
+include_once '../date.php';
 
 if (!isset($_SESSION["role"])) {
 
@@ -50,24 +51,32 @@ switch ($_GET["forum"]) {
 
 
     if (selectQuestionStatus() != 'none') {
-        foreach (selectQuestionByStatus(0) as $c) {
-            echo '<div class="card"><div class="card-header"><b>Intitule :</b> <i><span class="fg-crimson">' . $c['intitule'] . '</span></i><br><b>Matière :</b> <i><span class="fg-crimson">' . $c['matiere'] . '</span></i><br><b>A ' . date('H', strtotime($c['date'])) . 'h' . date('m', strtotime($c['date'])) . ' le ' . date("d", strtotime($c['date'])) . ' ' . getMois($c['date']) . '.</b><br><b>Par :</b> ';
-        foreach (selectPersonnePromoByIdQuestionRangPersonne($c['id_question'], 1) as $p) {
-            echo '<i><span class="fg-crimson">' . $p['nom'] . ' ' . $p['prenom']  . ' ' . $p['promo'] . '</span></i>';
-    }
-    echo '<br><b>Niveau :</b> <i><span class="fg-crimson">' . $c['promo'] . '</span></i></div><div class="card-content p-2">';
-    /*if (verifExistPersonneResponse($c['id_reponse']) != 0) {
-        echo '<b>Participants : </b><br>
-    TODO : A utiliser pour mettre le nombre de réponses
+        foreach (selectQuestionByStatus(0) as $qf) {
 
-            
+            echo '<a href=reponseForum.php?id_question=' . $qf ['id_question'] . ' class = "test"><div class="card"><div class="card-header"><b>Intitule :</b> <i><span class="fg-crimson">' . $qf['titre'] . '</span></i><br>
+                                                             <b>Description :</b> <i><span class="fg-crimson">' . $qf['description'] . '</span></i><br>
+                                                             <b>Matière :</b> <i><span class="fg-crimson">' . $qf['matiere'] . '</span></i><br>
+                                                             <b>A ' . date('H', strtotime($qf['date'])) . 'h' . date('m', strtotime($qf['date'])) . ' le ' . date("d", strtotime($qf['date'])) . ' ' . getMois($qf['date']) . '.</b><br><b>Par :</b> ';
 
-    }*/
-    else {
+            foreach (selectPersonnePromoByIdQuestion($qf['id_question'], 1) as $p) {
+                echo '<i><span class="fg-crimson">' . $p['nom'] . ' ' . $p['prenom'] . ' ' . $p['promo'] . '</span></i>';
+            }
+          '<!--<div class="card-content p-2">-->';
+            if (verifExistPersonneResponse($qf['id_reponse']) != 0) {
+                echo '<b>Participants : </b><br>';
+            }
+                //TODO : A utiliser pour mettre le nombre de réponses
+            '</div></a>';
+        }
+
+    }else {
         echo 'Aucune question pour le moment';
     }
     ?>
     <br><br><br>
+    <!-- CF pour créer une question
+
+
     <form action="insertCourse.php" method="post">
         <h3>Créer un cours</h3>
         <input data-role="input" name="intitule" placeholder="Faire des tableaux de chatons" data-prepend="Intitule" required>
@@ -87,9 +96,10 @@ switch ($_GET["forum"]) {
             }
             ?>
         </select>
-        <br><button class="button success" onclick="location.href = 'insertCourse.php';"><span class="mif-checkmark"></span> Créer le cours</button>
+        <br><button class="button success" onclick="location.href = 'insertCourse.php';">
+            <span class="mif-checkmark"></span>
+            Créer le cours</button>-->
     </form>
-</div>
 </div>
 </body>
 <script src="../../js/activeMenu.js"></script>
