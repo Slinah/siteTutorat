@@ -24,10 +24,10 @@ include_once '../../bases/head.php';
             echo '<form action="updateCourseMdfAdmin.php?course=' . $c['id_cours'] . '&usr=' . $_GET['usr'] .'" method="post">';
             echo '<input data-role="input" name="intitule" placeholder="' . $c['intitule'] . '" data-prepend="Intitule">';
             echo '<br><input name="date" data-role="datepicker" data-year="false" data-value="' . $c['date'] . '">';
-            echo '<br><input name="heure" data-role="timepicker" data-seconds="false" data-value="' . $c['heure'] . '">';
+            echo '<br><input name="heure" data-role="timepicker" data-seconds="false" data-value="' . $c['date'] . '">';
             echo '<br><select name="matiere" data-role="select" data-filter="false" data-prepend="Matière">';
             echo '<option value="' . $c['id_matiere'] . '">' . $c['matiere'] . '</option>';
-            foreach (selectMatieres() as $matieres) {
+            foreach (selectMatieresByValidation(1) as $matieres) {
                 if ($c['id_matiere'] != $matieres['id_matiere'] && $c['matiere'] != $matieres['intitule']) {
                     echo '<option value="' . $matieres['id_matiere'] . '">' . $matieres['intitule'] . '</option>';
                 } else {
