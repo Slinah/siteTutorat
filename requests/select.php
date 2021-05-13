@@ -33,7 +33,7 @@ function selectHashPasswordPersonneByMail($mailPersonne)
 // Sélection des classes d'une promo donnée
 function selectClassesPromoEcoles($promo, $ecole)
 {
-    $classes = $GLOBALS['db']->prepare('SELECT c.id_classe, c.intitule AS classe, p.id_promo FROM classe c JOIN promo p ON c.id_promo=p.id_promo JOIN ecole e ON p.id_ecole=e.id_ecole WHERE p.intitule = :promo AND e.intitule = :ecole');
+    $classes = $GLOBALS['db']->prepare('SELECT c.id_classe, c.intitule AS classe, p.id_promo FROM classe c JOIN promo p ON c.id_promo=p.id_promo JOIN ecole e ON p.id_ecole=e.id_ecole WHERE p.intitule = :promo AND e.intitule = :ecole ORDER BY c.fake_id ASC');
     $classes->bindParam(':promo', $promo);
     $classes->bindParam(':ecole', $ecole);
     $classes->execute();
@@ -45,7 +45,7 @@ function selectClassesPromoEcoles($promo, $ecole)
 // Sélection des promos
 function selectPromos()
 {
-    $promos = $GLOBALS['db']->prepare('SELECT id_promo, intitule AS promo FROM promo');
+    $promos = $GLOBALS['db']->prepare('SELECT id_promo, intitule AS promo FROM promo ORDER BY fake_id ASC');
     $promos->execute();
     $promo = $promos->fetchAll();
     return $promo;
@@ -67,7 +67,7 @@ function selectPromoByIdPromo($idPromo)
 // Sélection des matières
 function selectMatieresByValidation($bool)
 {
-    $matieres = $GLOBALS['db']->prepare('SELECT id_matiere, intitule FROM matiere WHERE validationAdmin = :vaa');
+    $matieres = $GLOBALS['db']->prepare('SELECT id_matiere, intitule FROM matiere WHERE validationAdmin = :vaa ORDER BY intitule');
     $matieres->bindParam(":vaa", $bool);
     $matieres->execute();
     $matiere = $matieres->fetchAll();
@@ -635,7 +635,12 @@ function selectCountCoursByPromo($promo)
     $countCours->bindParam(":promo", $promo);
     $countCours->execute();
     $count = $countCours->fetchAll();
-    return $count[0][0];
+    if (empty($count)){
+        $count = 'none';
+    } else {
+        $count = $count[0][0];
+    }
+    return $count;
 }
 
 // Mis a jour V2.1
