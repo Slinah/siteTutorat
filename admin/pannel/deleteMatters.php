@@ -12,7 +12,7 @@ if (isset($userTkn) && $userTkn != null) {
 
     $tkn = substr(base_convert(sha1(uniqid(mt_rand())), 16, 36), 0, 32);
     updateToken($tkn, $_SESSION['id_personne']);
-    header('location: administration.php?action=suppressedMat');
+    header('location: managementMatiere.php?action=suppressedMat');
 } else {
     echo 'Bien essayé';
 }

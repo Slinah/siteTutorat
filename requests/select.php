@@ -517,7 +517,7 @@ function selectCourseProfByLogs($idCours)
 // Return la liste des user
 function selectPersonnePromoClasse()
 {
-    $admin = $GLOBALS['db']->prepare('SELECT p.id_personne AS id_personne, p.nom AS nom, p.prenom AS prenom, p.role AS role, po.intitule AS promo, c.intitule AS classe FROM personne p JOIN classe c ON p.id_classe=c.id_classe JOIN promo po ON c.id_promo=po.id_promo WHERE id_personne > 1');
+    $admin = $GLOBALS['db']->prepare('SELECT p.id_personne AS id_personne, p.nom AS nom, p.prenom AS prenom, p.role AS role, po.intitule AS promo, c.intitule AS classe FROM personne p JOIN classe c ON p.id_classe=c.id_classe JOIN promo po ON c.id_promo=po.id_promo WHERE id_personne > 1 ORDER BY po.fake_id ASC, c.fake_id ASC');
     $admin->execute();
     $adm = $admin->fetchAll();
     return $adm;
@@ -539,7 +539,7 @@ function selectMailByIdPersonne($idPersonne)
 // Return la liste des cours en fonction des tuteurs
 function selectCoursTuteurMatiere()
 {
-    $cours = $GLOBALS['db']->prepare('SELECT c.id_cours AS id_cours, c.secu AS secu, c.status AS status, c.date AS date, p.nom AS nom, p.prenom AS prenom, p.id_personne AS id_personne, po.intitule AS promo, m.intitule AS matiere FROM cours c JOIN personne_cours pc on c.id_cours=pc.id_cours JOIN personne p ON pc.id_personne=p.id_personne JOIN promo po ON c.id_promo=po.id_promo JOIN matiere m ON c.id_matiere=m.id_matiere WHERE pc.rang_personne=1');
+    $cours = $GLOBALS['db']->prepare('SELECT c.id_cours AS id_cours, c.secu AS secu, c.status AS status, c.date AS date, p.nom AS nom, p.prenom AS prenom, p.id_personne AS id_personne, po.intitule AS promo, m.intitule AS matiere FROM cours c JOIN personne_cours pc on c.id_cours=pc.id_cours JOIN personne p ON pc.id_personne=p.id_personne JOIN promo po ON c.id_promo=po.id_promo JOIN matiere m ON c.id_matiere=m.id_matiere WHERE pc.rang_personne=1 ORDER BY c.date DESC');
     $cours->execute();
     $cour = $cours->fetchAll();
     return $cour;
@@ -669,7 +669,7 @@ function verifExistPersonneInscrits($idCours){
 // Mis a jour V2.0
 // Permet de sélectionner toutes les matieres et leurs ID de la base
 function selectMatieres(){
-    $matieres = $GLOBALS['db']->prepare('SELECT id_matiere, intitule FROM matiere WHERE validationAdmin = 1');
+    $matieres = $GLOBALS['db']->prepare('SELECT id_matiere, intitule FROM matiere WHERE validationAdmin = 1 ORDER BY intitule');
     $matieres->execute();
     return $matieres->fetchAll();
 }

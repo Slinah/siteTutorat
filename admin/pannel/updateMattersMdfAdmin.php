@@ -17,7 +17,7 @@ if (isset($userTkn) && $userTkn != null) {
         $tkn = substr(base_convert(sha1(uniqid(mt_rand())), 16, 36), 0, 32);
         updateMatiereMdf($newIntitule, $idMatiere);
         updateToken($tkn, $_SESSION['id_personne']);
-        header('location: administration.php?action=updated');
+        header('location: managementCourse.php?action=updated');
     } else {
         header('location: editMattersAdmin.php?mat=' . $idMatiere);
     }

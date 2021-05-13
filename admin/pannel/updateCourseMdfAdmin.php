@@ -45,16 +45,16 @@ if (isset($userTkn) && $userTkn != null) {
                 updateCoursPromo($newPromo, $idCours);
                 updateToken($tkn, $_SESSION['id_personne']);
 
-                header('location: administration.php?action=updated');
+                header('location: managementCourse.php?action=updated');
             } else {
-                header('location: administration.php?action=updated');
+                header('location: managementCourse.php?action=updated');
             }
         } else {
             if ($newPromo != '') {
                 updateCoursPromo($newPromo, $idCours);
                 updateToken($tkn, $_SESSION['id_personne']);
 
-                header('location: administration.php?action=updated');
+                header('location: managementCourse.php?action=updated');
             } else {
                 header('location: editCourseAdmin.php?course=' . $cours['secu'] . '&error=unset&usr=' . $_GET['usr']);
             }

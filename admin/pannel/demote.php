@@ -11,7 +11,7 @@ if (isset($userTkn) && $userTkn != null) {
 
     $tkn = substr(base_convert(sha1(uniqid(mt_rand())), 16, 36), 0, 32);
     updateToken($tkn, $_SESSION['id_personne']);
-    header('location: administration.php?action=demoted');
+    header('location: managementUser.php?action=demoted');
 } else {
     echo 'Bien essayé';
 }

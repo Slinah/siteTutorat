@@ -19,7 +19,7 @@ if (isset($userTkn) && $userTkn != null) {
 
     $tkn = substr(base_convert(sha1(uniqid(mt_rand())), 16, 36), 0, 32);
     updateToken($tkn, $_SESSION['id_personne']);
-    header('location: administration.php?action=cancel');
+    header('location: managementCourse.php?action=cancel');
 } else {
     echo 'Bien essayé';
 }
