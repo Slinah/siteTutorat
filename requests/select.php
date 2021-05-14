@@ -734,3 +734,71 @@ function selectPersonnePromoByIdQuestion($idQuestion){
     return $personneQuestionneur;
 }
 
+//Mise à jour V2.1
+// Sélection la question correpondant à l'id demandé.
+function selectQuestionById($id_question){
+    $questions = $GLOBALS['db']->prepare('SELECT qf.id_question AS id_question, qf.id_personne AS id_personne, 
+                                               qf.titre AS titre, qf.description AS description, qf.status AS status, 
+                                               qf.date AS date, qf.secu AS secu, m.intitule AS matiere
+                                               FROM question_forum qf JOIN matiere m ON m.id_matiere=qf.id_matiere  
+                                               WHERE qf.id_question = :idq');
+    $questions->bindParam(":idq", $id_question);
+    $questions->execute();
+    $question = $questions->fetchAll();
+    return $question;
+}
+
+//Mise à jour V2.1
+// Sélection des réponses ayant un status particulier
+function selectResponseByStatusIdQuestion($valueStatusResponse,$id_question){
+    $reponses = $GLOBALS['db']->prepare('SELECT rf.id_reponse AS id_reponse, rf.id_personne AS id_personne, 
+                                               rf.message_reponse AS message, rf.status AS status, 
+                                               rf.date AS date, rf.secu AS secu
+                                               FROM reponse_forum rf JOIN question_forum qf ON qf.id_question=rf.id_question
+                                               WHERE rf.status = :status AND rf.id_question= :idq');
+    $reponses->bindParam(":status", $valueStatusResponse);
+    $reponses->bindParam(":idq", $id_question);
+    $reponses->execute();
+    $reponse = $reponses->fetchAll();
+    return $reponse;
+}
+
+//Mise à jour V2.1
+// Sélection des réponses ayant le status 0
+function selectResponseStatus($id_question){
+    $reponse = $GLOBALS['db']->prepare('SELECT rf.id_reponse AS id_reponse, rf.id_personne AS id_personne, 
+                                               rf.message_reponse AS message, rf.status AS status, 
+                                               rf.date AS date, rf.secu AS secu
+                                               FROM reponse_forum rf JOIN question_forum qf ON qf.id_question=rf.id_question
+                                               WHERE rf.status = 0 AND rf.id_question= :idq');
+    $reponse->bindParam(":idq", $id_question);
+    $reponse->execute();
+    $reponses = $reponse->fetchAll();
+    if (empty($reponses)) {
+        $reponses = 'none';
+    }
+    return $reponses;
+}
+
+//Mise à jour V2.1
+// Sélectionne des infos personne et promo suivant l'id de la réponse
+function selectPersonnePromoByIdReponse($idReponse){
+    $repondant = $GLOBALS['db']->prepare('SELECT repondant.id_personne AS id_repondant, repondant.nom AS nom, repondant.prenom AS prenom, cl.intitule AS classe, po.intitule AS promo FROM reponse_forum rf JOIN personne repondant ON  rf.id_personne = repondant.id_personne JOIN classe cl ON repondant.id_classe=cl.id_classe JOIN promo po ON cl.id_promo=po.id_promo WHERE id_reponse = :idr');
+    $repondant->bindParam(':idr', $idReponse);
+    $repondant->execute();
+    $personneRepondant = $repondant->fetchAll();
+    return $personneRepondant;
+}
+
+function selectIdReponseByMessage($message){
+    $idReponse = $GLOBALS['db']->prepare('SELECT id_reponse FROM reponse_forum WHERE message_reponse = :mess AND status = 0');
+    $idReponse->bindParam(":mess", $message);
+    $idReponse->execute();
+    $reponse = $idReponse->fetchAll();
+    if (empty($reponse)) {
+        $reponse = "none";
+    } else {
+        $reponse = $reponse[0][0];
+    }
+    return $reponse;
+}

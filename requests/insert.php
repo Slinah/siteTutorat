@@ -116,3 +116,17 @@ function insertLogProposition($idProposition, $time)
     $logProposition->bindParam(':time', $time);
     $logProposition->execute();
 }
+
+// Mis a jour V2.0
+// Insertion d'une réponse
+function insertReponse($idReponse, $messageReponse, $idPersonne, $idQuestion, $date, $secuCode)
+{
+    $reponse = $GLOBALS['db']->prepare('INSERT INTO reponse_forum(id_reponse, message_reponse, id_personne, id_question, date, secu) VALUES (:idr, :mess, :idp, :idq, :date, :secuCode )');
+    $reponse->bindParam(":idr", $idReponse);
+    $reponse->bindParam(":mess", $messageReponse);
+    $reponse->bindParam(":idp", $idPersonne);
+    $reponse->bindParam(":idq", $idQuestion);
+    $reponse->bindParam(":date", $date);
+    $reponse->bindParam(":secuCode", $secuCode);
+    $reponse->execute();
+}

@@ -53,7 +53,7 @@ switch ($_GET["forum"]) {
     if (selectQuestionStatus() != 'none') {
         foreach (selectQuestionByStatus(0) as $qf) {
 
-            echo '<a href=reponseForum.php?id_question=' . $qf ['id_question'] . ' class = "test"><div class="card" id="colorQuestion"><div class="card-header"><b>Intitule :</b> <i><span class="fg-crimson">' . $qf['titre'] . '</span></i><br>
+            echo '<a href="reponseForum.php?id_question=' . $qf ['id_question'] . '&forum=unset" class = "test"><div class="card" id="colorQuestion"><div class="card-header"><b>Intitule :</b> <i><span class="fg-crimson">' . $qf['titre'] . '</span></i><br>
                                                              <b>Description :</b> <i><span class="fg-crimson">' . $qf['description'] . '</span></i><br>
                                                              <b>Matière :</b> <i><span class="fg-crimson">' . $qf['matiere'] . '</span></i><br>
                                                              <b>A ' . date('H', strtotime($qf['date'])) . 'h' . date('m', strtotime($qf['date'])) . ' le ' . date("d", strtotime($qf['date'])) . ' ' . getMois($qf['date']) . '.</b><br><b>Par :</b> ';
