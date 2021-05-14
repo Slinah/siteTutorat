@@ -44,6 +44,7 @@ if (!isset($_SESSION["role"]) || $_SESSION["role"] != 1) {
             </div>';
             echo '<tr><td>' . $m['intitule'] . '</td><td><button class="button bg info" onclick="location.href = `editMattersAdmin.php?mat=' . $m['id_matiere'] . '`;"><span class="mif-file-text"></span> Modifier la matière</button></td><td><button class="button bg dark" onclick="Metro.dialog.open(`#' . $m['intitule'] . 'Delete`)"><span class="mif-cross"></span></button></td></tr>';
         }
+
         echo '</table>';
     } else {
         echo 'Aucune matière dans la base de données';
