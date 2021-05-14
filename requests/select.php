@@ -705,3 +705,21 @@ function verifExistMatiereByVal($bool)
     $mat = $mat[0][0];
     return $mat;
 }
+
+// V2.1
+// Return les écoles de la base
+function selectEcoles(){
+    $ecoles = $GLOBALS['db']->prepare('SELECT * FROM ecole ORDER BY intitule');
+    $ecoles->execute();
+    $ec =$ecoles->fetchAll();
+    return $ec;
+}
+
+// V2.1
+// Return les promos de la base en fonction de leur école
+function selectPromosByIdEcole($idEcole){
+    $promos = $GLOBALS['db']->prepare('SELECT * FROM promo WHERE id_ecole = :ide ORDER BY fake_id');
+    $promos->bindParam(':ide', $idEcole);
+    $promos->execute();
+    return $promos->fetchAll();
+}
