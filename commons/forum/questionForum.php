@@ -1,6 +1,7 @@
 <?php
 session_start();
 include_once '../../requests/select.php';
+include_once '../../requests/insert.php';
 include_once '../date.php';
 
 if (!isset($_SESSION["role"])) {
@@ -18,11 +19,10 @@ include_once '../../bases/head.php';
 
 <body>
 <?php include_once '../../bases/menu.php'; ?>
-<?php
+<?php /*
 switch ($_GET["forum"]) {
     // TODO : A adapter pour le filtre par matière
-}
-    /*case "error":
+    case "error":
         echo '<script type="text/javascript">
             Metro.dialog.create({
                 title: "Erreur de création.",
@@ -40,16 +40,51 @@ switch ($_GET["forum"]) {
             });
             </script>';
         break;
-}*/
+    }*/
 ?>
 <div class="container">
     <div class="icon">
         <h1><img src="../../medias/scratchOverflow.png" alt=""></h1>
     </div>
+    <div data-role="accordion"
+         data-one-frame="false"
+         data-show-active="true"
+         data-on-frame-open="console.log('frame was opened!', arguments[0])"
+         data-on-frame-close="console.log('frame was closed!', arguments[0])">
+    <div class="frame">
+        <div class="heading">Tu ne trouves pas de réponse à ta question? Vas-y balances ta question!</div>
+        <div class="content">
+            <div class="p-2">Petit conseil : Dans un premier temps, regardes si ta question n'a pas encore été posée... ;)</div>
+            <form action="insertQuestion.php" method="post">
+                <h3>Créer une question :</h3>
+                <div class="card">
+                <input data-role="input" name="titre" placeholder="Titre de ta question" data-prepend="Titre" required><br/>
+                    <input data-role="input" name="description" placeholder="Décris ta question" data-prepend="Description" required>
+                    <br><select name="matiere" data-role="select" data-filter="false" data-prepend="Matière">
+                    <?php
+                    foreach (selectMatieres() as $matieres) {
+                        echo '<option value="' . $matieres['id_matiere'] . '">' . $matieres['intitule'] . '</option>';
+                    }
+                    ?>
+                </select>
+                <br><select name="promo" data-role="select" data-filter="false" data-prepend="Niveau concerné" >
+                        <option value="nonDefini"></option>
+                    <?php
+                    foreach (selectPromos() as $promo) {
+                        echo '<option value="' . $promo['id_promo'] . '">' . $promo['promo'] . '</option>';
+                    }
+                    ?>
+                </select>
+                <br><button class="button success" onclick="location.href = 'insertQuestion.php';">
+                    <span class="mif-checkmark"></span>
+                    Créer une question</button>
+            </form>
+        </div>
+        </div>
+    </div>
+</div>
     <h3>Les questions posées : </h3>
     <?php
-
-
     if (selectQuestionStatus() != 'none') {
         foreach (selectQuestionByStatus(0) as $qf) {
 
@@ -61,12 +96,13 @@ switch ($_GET["forum"]) {
             foreach (selectPersonnePromoByIdQuestion($qf['id_question'], 1) as $p) {
                 echo '<i><span class="fg-crimson">' . $p['nom'] . ' ' . $p['prenom'] . ' ' . $p['promo'] . '</span></i>';
             }
-          '<!--<div class="card-content p-2">-->';
-            if (verifExistPersonneResponse($qf['id_reponse']) != 0) {
+          '<div class="card-content p-2">';
+            /*if (verifExistPersonneResponse($qf['id_reponse']) != 0) {
                 echo '<b>Participants : </b><br>';
-            }
+            }*/
                 //TODO : A utiliser pour mettre le nombre de réponses
             '</div></a>';
+            echo '</div></div>';
         }
 
     }else {
@@ -74,32 +110,6 @@ switch ($_GET["forum"]) {
     }
     ?>
     <br><br><br>
-    <!-- CF pour créer une question
-
-
-    <form action="insertCourse.php" method="post">
-        <h3>Créer un cours</h3>
-        <input data-role="input" name="intitule" placeholder="Faire des tableaux de chatons" data-prepend="Intitule" required>
-        <br><input name="date" data-role="datepicker" data-year="false">
-        <br><input name="heure" data-role="timepicker" data-seconds="false">
-        <br><select name="matiere" data-role="select" data-filter="false" data-prepend="Matière">
-            <?php
-            foreach (selectMatieres() as $matieres) {
-                echo '<option value="' . $matieres['id_matiere'] . '">' . $matieres['intitule'] . '</option>';
-            }
-            ?>
-        </select>
-        <br><select name="classe" data-role="select" data-filter="false" data-prepend="Niveau concerné">
-            <?php
-            foreach (selectPromos() as $promo) {
-                echo '<option value="' . $promo['id_promo'] . '">' . $promo['promo'] . '</option>';
-            }
-            ?>
-        </select>
-        <br><button class="button success" onclick="location.href = 'insertCourse.php';">
-            <span class="mif-checkmark"></span>
-            Créer le cours</button>-->
-    </form>
 </div>
 </body>
 <script src="../../js/activeMenu.js"></script>

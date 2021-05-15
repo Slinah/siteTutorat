@@ -117,6 +117,21 @@ function insertLogProposition($idProposition, $time)
     $logProposition->execute();
 }
 
+//Mise à jour V2.1
+// Insertion d'une question
+function insertQuestion($idQuestion, $titreQuestion, $descriptionQuestion, $idPersonne, $idMatiere, $date, $idPromo){
+    $question = $GLOBALS['db']->prepare('INSERT INTO question_forum(id_question, titre, description, 
+                                         id_personne, id_matiere, date, id_promo) 
+                                         VALUES (:idq, :titre, :desc, :idp, :idm, :date, :idpromo)');
+    $question->bindParam(":idq", $idQuestion);
+    $question->bindParam(":titre", $titreQuestion);
+    $question->bindParam(":desc", $descriptionQuestion);
+    $question->bindParam(":idp", $idPersonne);
+    $question->bindParam(":idm", $idMatiere);
+    $question->bindParam(":date", $date);
+    $question->bindParam(":idpromo", $idPromo);
+    $question->execute();
+}
 // Mis a jour V2.0
 // Insertion d'une réponse
 function insertReponse($idReponse, $messageReponse, $idPersonne, $idQuestion, $secuCode)
