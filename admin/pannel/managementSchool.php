@@ -22,14 +22,14 @@ if (!isset($_SESSION["role"]) || $_SESSION["role"] != 1) {
     <?php include_once '../../bases/menu.php'; ?>
     <div class="container">
         <ul data-role="treeview">
-            <?php foreach (selectEcoles() as $ke=>$e) { ?>
-                <li id="adminEcole<?php echo $ke ?>" data-caption="<?php echo $e['intitule'] ?>" data-collapsed="true">
+            <?php foreach (selectEcoles() as $ke => $e) { ?>
+                <li id="adminEcole<?php echo $e['intitule'] . $ke ?>" data-caption="<?php echo $e['intitule'] ?>" data-collapsed="true">
                     <ul>
-                        <?php foreach (selectPromosByIdEcole($e['id_ecole']) as $kp=>$p) { ?>
-                            <li id="adminPromo<?php echo $kp ?>" data-caption="<?php echo $p['intitule'] ?>" data-collapsed="true">
+                        <?php foreach (selectPromosByIdEcole($e['id_ecole']) as $kp => $p) { ?>
+                            <li id="adminPromo<?php echo $e['intitule'] . $kp ?>" data-caption="<?php echo $p['intitule'] ?>" data-collapsed="true">
                                 <ul>
-                                    <?php foreach (selectClassesPromoEcoles($p['intitule'], $e['intitule']) as $kc=>$c) { ?>
-                                        <li id="adminClasse<?php echo $kc ?>" data-caption="<?php echo $c['classe'] ?>" data-collapsed="true"></li>
+                                    <?php foreach (selectClassesPromoEcoles($p['intitule'], $e['intitule']) as $kc => $c) { ?>
+                                        <li id="adminClasse<?php echo $e['intitule'] . $p['intitule'] . $kc ?>" data-caption="<?php echo $c['classe'] ?>" data-collapsed="true"></li>
                                     <?php } ?>
                                 </ul>
                             </li>
@@ -50,11 +50,18 @@ if (!isset($_SESSION["role"]) || $_SESSION["role"] != 1) {
         }
         return color;
     }
-    for (let i = 0; i < 100; i++) {
-        $("#adminEcole"+i).css("color", getRandomColor());    
-        $("#adminPromo"+i).css("color", getRandomColor());
-        $("#adminClasse"+i).css("color", getRandomColor());
-    }
+
+    let arraySchool = ['EPSI', 'WIS', 'IFAG'];
+    let arrayPromo = ['B1', 'B2', 'B3', 'I1', 'I2', 'Wis1', 'Wis2', 'Wis3']
+    arraySchool.forEach(elementS => {
+        arrayPromo.forEach(elementP => {
+            for (let i = 0; i < 100; i++) {
+                $("#adminEcole" + elementS + i).css("color", getRandomColor());
+                $("#adminPromo" + elementS + i).css("color", getRandomColor());
+                $("#adminClasse" + elementS + elementP + i).css("color", getRandomColor());
+            }
+        });
+    });
 </script>
 
 </html>
