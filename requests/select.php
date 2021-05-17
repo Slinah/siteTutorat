@@ -752,10 +752,10 @@ function selectQuestionById($id_question){
 // Sélection des réponses ayant un status particulier
 function selectResponseByStatusIdQuestion($valueStatusResponse,$id_question){
     $reponses = $GLOBALS['db']->prepare('SELECT rf.id_reponse AS id_reponse, rf.id_personne AS id_personne, 
-                                               rf.message_reponse AS message, rf.status AS status, 
+                                               rf.message_reponse AS message, rf.id_question AS id_question, rf.status AS status, 
                                                rf.date AS date, rf.secu AS secu
                                                FROM reponse_forum rf JOIN question_forum qf ON qf.id_question=rf.id_question
-                                               WHERE rf.status = :status AND rf.id_question= :idq');
+                                               WHERE rf.status = :status AND rf.id_question= :idq ORDER BY date DESC');
     $reponses->bindParam(":status", $valueStatusResponse);
     $reponses->bindParam(":idq", $id_question);
     $reponses->execute();
@@ -767,7 +767,7 @@ function selectResponseByStatusIdQuestion($valueStatusResponse,$id_question){
 // Sélection des réponses ayant le status 0
 function selectResponseStatus($id_question){
     $reponse = $GLOBALS['db']->prepare('SELECT rf.id_reponse AS id_reponse, rf.id_personne AS id_personne, 
-                                               rf.message_reponse AS message, rf.status AS status, 
+                                               rf.message_reponse AS message, rf.id_question AS id_question, rf.status AS status, 
                                                rf.date AS date, rf.secu AS secu
                                                FROM reponse_forum rf JOIN question_forum qf ON qf.id_question=rf.id_question
                                                WHERE rf.status = 0 AND rf.id_question= :idq');
@@ -801,4 +801,29 @@ function selectIdReponseByMessage($message){
         $reponse = $reponse[0][0];
     }
     return $reponse;
+}
+
+// Mise à jour V2.1
+// Vérifie l'existence d'un lien personne Like
+function verifExistPersonneVote($idPersonne, $idReponse)
+{
+    $verifLike = $GLOBALS['db']->prepare('SELECT COUNT(*) FROM vote WHERE id_personne = :idp AND id_reponse = :idr');
+    $verifLike->bindParam(':idp', $idPersonne);
+    $verifLike->bindParam(':idr', $idReponse);
+    $verifLike->execute();
+    $verif = $verifLike->fetchAll();
+    $verif = $verif[0][0];
+    return $verif;
+}
+
+// Mise à jour V2.1
+// Compte le nombre de personne qui ont liké la réponse
+function selectCountVoteByIdReponse($idReponse)
+{
+    $vote = $GLOBALS['db']->prepare('SELECT COUNT(*) FROM vote WHERE id_reponse = :idr');
+    $vote->bindParam(':idr', $idReponse);
+    $vote->execute();
+    $votes = $vote->fetchAll();
+    $votes = $votes[0][0];
+    return $votes;
 }

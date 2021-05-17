@@ -30,15 +30,14 @@ if (isset($userTkn) && $userTkn != null) {
         }
         return $string;
     }
-    $localDate = strtotime('+2 hours');
     $id_reponse = strtoupper(UUID::v4());
     if (selectIdReponseByMessage($messageReponse) == "none") {
-        insertReponse($id_reponse, $messageReponse, $_SESSION['id_personne'], $idQuestion, $localDate, secuStg());
+        insertReponse($id_reponse, $messageReponse, $_SESSION['id_personne'], $idQuestion, secuStg());
         $tkn = substr(base_convert(sha1(uniqid(mt_rand())), 16, 36), 0, 32);
         updateToken($tkn, $_SESSION['id_personne']);
         header("location: ../views/home.php?callback=forum");
     } else {
-        header("location: reponseForum.php?id_question=$idQuestion=&forum=already");
+        header("location: reponseForum.php?id_question=$idQuestion&forum=already");
     }
 } else {
     echo 'Bien essayé';

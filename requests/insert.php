@@ -119,14 +119,23 @@ function insertLogProposition($idProposition, $time)
 
 // Mis a jour V2.0
 // Insertion d'une réponse
-function insertReponse($idReponse, $messageReponse, $idPersonne, $idQuestion, $date, $secuCode)
+function insertReponse($idReponse, $messageReponse, $idPersonne, $idQuestion, $secuCode)
 {
-    $reponse = $GLOBALS['db']->prepare('INSERT INTO reponse_forum(id_reponse, message_reponse, id_personne, id_question, date, secu) VALUES (:idr, :mess, :idp, :idq, :date, :secuCode )');
+    $reponse = $GLOBALS['db']->prepare('INSERT INTO reponse_forum(id_reponse, message_reponse, id_personne, id_question, date, secu) VALUES (:idr, :mess, :idp, :idq, NOW(), :secuCode )');
     $reponse->bindParam(":idr", $idReponse);
     $reponse->bindParam(":mess", $messageReponse);
     $reponse->bindParam(":idp", $idPersonne);
     $reponse->bindParam(":idq", $idQuestion);
-    $reponse->bindParam(":date", $date);
     $reponse->bindParam(":secuCode", $secuCode);
     $reponse->execute();
+}
+
+// Mis a jour V2.0
+// Insertion du lien personnne reponse (Like)
+function insertPersonneLike($idPersonne, $idReponse)
+{
+    $vote = $GLOBALS['db']->prepare('INSERT INTO vote(id_personne, id_reponse) VALUES (:idp, :idr)');
+    $vote->bindParam(":idp", $idPersonne);
+    $vote->bindParam(':idr', $idReponse);
+    $vote->execute();
 }

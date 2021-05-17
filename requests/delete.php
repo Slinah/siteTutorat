@@ -73,3 +73,13 @@ function deletePropositionWithNullMatiere(){
         $deleteProposition->execute();
     }
 }
+
+// Mise à jour V2.1
+// Delete d'un vote/Like sur une réponse par la personne
+function deleteLikeByIdPersonneIdReponse($idPersonne, $idReponse)
+{
+    $deleteLike = $GLOBALS['db']->prepare('DELETE FROM vote WHERE id_personne = :idp AND id_reponse= :idr');
+    $deleteLike->bindParam(':idp', $idPersonne);
+    $deleteLike->bindParam(':idr', $idReponse);
+    $deleteLike->execute();
+}
