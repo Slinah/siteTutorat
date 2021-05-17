@@ -43,6 +43,7 @@ switch ($_GET["forum"]) {
     }*/
 ?>
 <div class="container">
+
     <div class="icon">
         <h1><img src="../../medias/scratchOverflow.png" alt=""></h1>
     </div>
@@ -76,42 +77,116 @@ switch ($_GET["forum"]) {
                     ?>
                 </select>
                 <br><button class="button success" onclick="location.href = 'insertQuestion.php';">
-                    <span class="mif-checkmark"></span>
-                    Créer une question</button>
+                    <span class="mif-checkmark"></span>Créer une question</button>
             </form>
         </div>
         </div>
     </div>
 </div>
+
     <h3>Les questions posées : </h3>
+
+<form>
+    <p>
+        <br><select name="filtreMatiere" data-role="select" data-filter="false" data-prepend="Choisis dans quelle matière">
+            <?php
+            foreach (selectMatieres() as $matieres) {
+                echo '<option value="' . $matieres['id_matiere'] . '">' . $matieres['intitule'] . '</option>';
+            }
+            ?>
+        </select>
+        <input type="checkbox" id ="filterQuestion" data-role="switch" data-caption="Apply filter" />
+    </p>
+</form>
+
+
     <?php
     if (selectQuestionStatus() != 'none') {
+        echo '
+        <table id="forumQuestionsTable" class="table striped table-border mt-2" data-role="table" data-show-search="false"
+            data-show-table-info="false" data-show-rows-steps="false" data-pagination-short-mode="true" data-show-pagination="true" data-rows="5">
+
+            <thead>
+                <tr>
+                    <th>Intitule</th>
+                    <th>Description</th>
+                    <th>Matière</th>
+                    <th>Date</th>
+                    <th>Auteur</th>
+                </tr>
+            </thead>
+        <tbody>';
+
         foreach (selectQuestionByStatus(0) as $qf) {
+            echo '<tr>
+                    <td><a href="reponseForum.php?id_question=' . $qf ['id_question'] . '" class = "test">'.$qf['titre'].'</a></td>
+                    <td>'.$qf['description'].'</td>
+                    <td>'.$qf['matiere'].'</td>
+                    <td>'.date('H\\hi', strtotime($qf['date'])) . ' le ' . date("d", strtotime($qf['date'])) . ' ' . getMois($qf['date']) . ' '. date("Y", strtotime($qf['date'])).'</td>
+                    <td>'.$qf['prenom'].' '.$qf['nom'].'</td>
+                </tr>';
+            /*
+            //TODO : A utiliser et retravailler pour mettre le nombre de réponses
 
-            echo '<a href="reponseForum.php?id_question=' . $qf ['id_question'] . '&forum=unset" class = "test"><div class="card" id="colorQuestion"><div class="card-header"><b>Intitule :</b> <i><span class="fg-crimson">' . $qf['titre'] . '</span></i><br>
-                                                             <b>Description :</b> <i><span class="fg-crimson">' . $qf['description'] . '</span></i><br>
-                                                             <b>Matière :</b> <i><span class="fg-crimson">' . $qf['matiere'] . '</span></i><br>
-                                                             <b>A ' . date('H', strtotime($qf['date'])) . 'h' . date('m', strtotime($qf['date'])) . ' le ' . date("d", strtotime($qf['date'])) . ' ' . getMois($qf['date']) . '.</b><br><b>Par :</b> ';
-
-            foreach (selectPersonnePromoByIdQuestion($qf['id_question'], 1) as $p) {
+            foreach (selectPersonnePromoByIdQuestion($qf['id_question']) as $p) {
                 echo '<i><span class="fg-crimson">' . $p['nom'] . ' ' . $p['prenom'] . ' ' . $p['promo'] . '</span></i>';
             }
           '<div class="card-content p-2">';
-            /*if (verifExistPersonneResponse($qf['id_reponse']) != 0) {
+            if (verifExistPersonneResponse($qf['id_reponse']) != 0) {
                 echo '<b>Participants : </b><br>';
-            }*/
-                //TODO : A utiliser pour mettre le nombre de réponses
+            }
+
             '</div></a>';
-            echo '</div></div>';
+            echo '</div></div>';*/
         }
 
+        echo '</tbody></table>';
     }else {
         echo 'Aucune question pour le moment';
+
     }
     ?>
     <br><br><br>
+
 </div>
 </body>
 <script src="../../js/activeMenu.js"></script>
+<!--Faire comme au-dessus pour inclure le fichier .js de la méthode qui suit-->
+<script type="application/javascript">
+    // TODO : externaliser ceci dans un fichier JS
+    jQuery(function($){
+        $("#forumQuestionsTable").on("click", "tr", function(e){
+            if ($(e.target).is("a,input")) {
+                return;
+            }
+            location.href = $(this).find("a").attr("href");
+        });
+    });
+</script>
+<script>
+    $(document).ready(function(){
+        $("#filterQuestion").submit(function(){
 
+            $.post(
+                'questionForum.php',
+                {
+                    matiere : $("#matiere").val() // Récupération de la valeur de l'input que l'on fait passer à questionForum.php
+                },
+
+                function(data){
+                    console.log(data);
+                    if(data == 'Success'){
+                        $("#resultat").html("<p>Vous avez été connecté avec succès !</p>");
+                    }
+                    else{
+                        $("#resultat").html("<p>Erreur lors de la connexion...</p>");
+                    }
+
+                },
+                'text' // Pour recevoir "Success" ou "Failed", donc on indique text
+            );
+        });
+    });
+
+</script>
 </html>

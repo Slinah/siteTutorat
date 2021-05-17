@@ -697,11 +697,14 @@ function selectNomById($idPersonne){
 //Mise à jour V2.1
 // Sélection des questions ayant un status particulier
 function selectQuestionByStatus($valueStatusQuestion){
-    $questions = $GLOBALS['db']->prepare('SELECT qf.id_question AS id_question, qf.id_personne AS id_personne, 
+    $questions = $GLOBALS['db']->prepare('SELECT qf.id_question AS id_question, p.prenom AS prenom, p.nom AS nom, 
                                           qf.titre AS titre, qf.description AS description, qf.status AS status, 
                                           qf.date AS date, qf.secu AS secu, m.intitule AS matiere
-                                          FROM question_forum qf JOIN matiere m ON m.id_matiere=qf.id_matiere  
-                                          WHERE qf.status = :status');
+                                          FROM question_forum qf 
+                                          JOIN matiere m ON m.id_matiere=qf.id_matiere 
+                                          JOIN personne p ON p.id_personne=qf.id_personne
+                                          WHERE qf.status = :status
+                                          ORDER BY date DESC');
     $questions->bindParam(":status", $valueStatusQuestion);
     $questions->execute();
     $question = $questions->fetchAll();
@@ -715,7 +718,8 @@ function selectQuestionStatus(){
                                                qf.titre AS titre, qf.description AS description, qf.status AS status, 
                                                qf.date AS date, qf.secu AS secu, m.intitule AS matiere
                                                FROM question_forum qf JOIN matiere m ON m.id_matiere=qf.id_matiere  
-                                               WHERE qf.status = 0');
+                                               WHERE qf.status = 0
+                                               ORDER BY date DESC');
     $question_forum->execute();
     $questions = $question_forum->fetchAll();
         if (empty($questions)) {
@@ -739,6 +743,9 @@ function selectPersonnePromoByIdQuestion($idQuestion){
     $personneQuestionneur = $questionneur->fetchAll();
     return $personneQuestionneur;
 }
+
+//Mise à jour V2.1
+//Sélectionne les infos question suivant l'id de la personne, le titre de la question et l'id de la matière
 function selectQuestionByIdPersonneTitreEtMatiere($idPersonne, $titreQuestion, $idMatiere){
     $questionneur = $GLOBALS['db']->prepare(
         'SELECT *
@@ -758,6 +765,21 @@ function selectQuestionByIdPersonneTitreEtMatiere($idPersonne, $titreQuestion, $
     return $personneQuestionneur;
 }
 
+// Mis à jour V2.1
+// Return le nombre d'heures par matière par id de promo
+function selectQuestionByIdPromo($idMatiere)
+{
+    $filtreMatiere = $GLOBALS['db']->prepare(
+        'SELECT m.intitule AS matiere 
+         FROM cours c INNER JOIN matiere m ON c.id_matiere=m.id_matiere 
+         INNER JOIN promo p ON c.id_promo=p.id_promo 
+         WHERE c.status=1 AND p.id_promo=:idp
+         GROUP BY m.intitule');
+    $filtreMatiere->bindParam(':idm', $idMatiere);
+    $filtreMatiere->execute();
+    $filtre = $filtreMatiere->fetchAll();
+    return $filtre;
+}
 
 //Mise à jour V2.1
 // Sélection la question correpondant à l'id demandé.

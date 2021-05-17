@@ -100,10 +100,13 @@ a.test{
   text-decoration: none;
 }
 
-#colorQuestion :hover{
+#forumQuestionsTable > tbody tr:hover td{
   background-color: #D3DBED;
 }
 
+#forumQuestionsTable td {
+  max-width: 60px;
+}
 #backgroundcolorQ{
   background-color: #D3DBED;
 }
