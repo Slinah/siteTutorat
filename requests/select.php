@@ -770,11 +770,15 @@ function selectQuestionByIdPersonneTitreEtMatiere($idPersonne, $titreQuestion, $
 function selectQuestionByIdPromo($idMatiere)
 {
     $filtreMatiere = $GLOBALS['db']->prepare(
-        'SELECT m.intitule AS matiere 
-         FROM cours c INNER JOIN matiere m ON c.id_matiere=m.id_matiere 
-         INNER JOIN promo p ON c.id_promo=p.id_promo 
-         WHERE c.status=1 AND p.id_promo=:idp
-         GROUP BY m.intitule');
+        'SELECT qf.id_question AS id_question, p.prenom AS prenom, p.nom AS nom, 
+              qf.titre AS titre, qf.description AS description, qf.status AS status, 
+              qf.date AS date, qf.secu AS secu, m.intitule AS matiere
+              FROM question_forum qf 
+              JOIN matiere m ON m.id_matiere=qf.id_matiere 
+              JOIN personne p ON p.id_personne=qf.id_personne
+              WHERE qf.status = 0
+                AND m.id_matiere = :idm
+              ORDER BY date DESC');
     $filtreMatiere->bindParam(':idm', $idMatiere);
     $filtreMatiere->execute();
     $filtre = $filtreMatiere->fetchAll();
@@ -873,4 +877,19 @@ function selectCountVoteByIdReponse($idReponse)
     $votes = $vote->fetchAll();
     $votes = $votes[0][0];
     return $votes;
+}
+
+// Mise à jour V2.1
+// Sélectionne le nombre de réponses à une question cours en fonction de l'ID question
+function selectCountResponseByIdQuestion($idQuestion)
+{
+    $countResponse = $GLOBALS['db']->prepare(
+        'SELECT COUNT(*) 
+         FROM reponse_forum 
+         WHERE reponse_forum.id_question = :idq');
+    $countResponse->bindParam(':idq', $idQuestion);
+    $countResponse->execute();
+    $nbResponse = $countResponse->fetchAll();
+    $nbResponse = $nbResponse[0][0];
+    return $nbResponse;
 }

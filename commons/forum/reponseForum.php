@@ -20,7 +20,7 @@ include_once '../../bases/head.php';
 <?php include_once '../../bases/menu.php'; ?>
 <?php
 switch ($_GET["forum"]) {
-    // TODO : A adapter pour le filtre par matière
+
 case "error":
     echo '<script type="text/javascript">
         Metro.dialog.create({

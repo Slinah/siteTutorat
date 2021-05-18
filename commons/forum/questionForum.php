@@ -88,7 +88,7 @@ switch ($_GET["forum"]) {
 
 <form>
     <p>
-        <br><select name="filtreMatiere" data-role="select" data-filter="false" data-prepend="Choisis dans quelle matière">
+        <br><select id="matiere" name="filtreMatiere" data-role="select" data-filter="false" data-prepend="Choisis dans quelle matière">
             <?php
             foreach (selectMatieres() as $matieres) {
                 echo '<option value="' . $matieres['id_matiere'] . '">' . $matieres['intitule'] . '</option>';
@@ -98,7 +98,6 @@ switch ($_GET["forum"]) {
         <input type="checkbox" id ="filterQuestion" data-role="switch" data-caption="Apply filter" />
     </p>
 </form>
-
 
     <?php
     if (selectQuestionStatus() != 'none') {
@@ -113,37 +112,25 @@ switch ($_GET["forum"]) {
                     <th>Matière</th>
                     <th>Date</th>
                     <th>Auteur</th>
+                    <th>Nombre de réponses</th>
                 </tr>
             </thead>
         <tbody>';
 
         foreach (selectQuestionByStatus(0) as $qf) {
             echo '<tr>
-                    <td><a href="reponseForum.php?id_question=' . $qf ['id_question'] . '" class = "test">'.$qf['titre'].'</a></td>
+                    <td><a href="reponseForum.php?id_question=' . $qf ['id_question'] . '&forum=unset" class = "question">'.$qf['titre'].'</a></td>
                     <td>'.$qf['description'].'</td>
                     <td>'.$qf['matiere'].'</td>
                     <td>'.date('H\\hi', strtotime($qf['date'])) . ' le ' . date("d", strtotime($qf['date'])) . ' ' . getMois($qf['date']) . ' '. date("Y", strtotime($qf['date'])).'</td>
                     <td>'.$qf['prenom'].' '.$qf['nom'].'</td>
+                    <td>'.selectCountResponseByIdQuestion($qf['id_question'])  .'</td>
                 </tr>';
-            /*
-            //TODO : A utiliser et retravailler pour mettre le nombre de réponses
-
-            foreach (selectPersonnePromoByIdQuestion($qf['id_question']) as $p) {
-                echo '<i><span class="fg-crimson">' . $p['nom'] . ' ' . $p['prenom'] . ' ' . $p['promo'] . '</span></i>';
-            }
-          '<div class="card-content p-2">';
-            if (verifExistPersonneResponse($qf['id_reponse']) != 0) {
-                echo '<b>Participants : </b><br>';
-            }
-
-            '</div></a>';
-            echo '</div></div>';*/
         }
 
         echo '</tbody></table>';
     }else {
         echo 'Aucune question pour le moment';
-
     }
     ?>
     <br><br><br>
@@ -165,21 +152,21 @@ switch ($_GET["forum"]) {
 </script>
 <script>
     $(document).ready(function(){
-        $("#filterQuestion").submit(function(){
+        $("#filterQuestion").click(function(){
 
             $.post(
-                'questionForum.php',
+                './forumRequests/getFilterQuestion.php',
                 {
-                    matiere : $("#matiere").val() // Récupération de la valeur de l'input que l'on fait passer à questionForum.php
+                    idMatiere : $("#matiere").val() // Récupération de la valeur de l'input que l'on fait passer à questionForum.php
                 },
 
                 function(data){
                     console.log(data);
                     if(data == 'Success'){
-                        $("#resultat").html("<p>Vous avez été connecté avec succès !</p>");
+                        $("#resultat").html("<p>Filtre bien pris en compte !</p>");
                     }
                     else{
-                        $("#resultat").html("<p>Erreur lors de la connexion...</p>");
+                        $("#resultat").html("<p>Erreur...</p>");
                     }
 
                 },

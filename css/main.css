@@ -96,7 +96,7 @@ h1 {
   opacity: 1;
 }
 
-a.test{
+a.question{
   text-decoration: none;
 }
 
@@ -107,6 +107,7 @@ a.test{
 #forumQuestionsTable td {
   max-width: 60px;
 }
+
 #backgroundcolorQ{
   background-color: #D3DBED;
 }
