@@ -21,9 +21,10 @@ if (!isset($_SESSION["role"]) || $_SESSION["role"] != 1) {
 <body>
     <?php include_once '../../bases/menu.php'; ?>
     <div class="container">
+        <h3>Apperçu et ajout de promos</h3>
         <ul data-role="treeview">
             <?php foreach (selectEcoles() as $ke => $e) { ?>
-                <li id="adminEcole<?php echo $e['intitule'] . $ke ?>" data-caption="<?php echo $e['intitule'] ?>" data-collapsed="true">
+                <li id="adminEcole<?php echo $e['intitule'] . $ke ?>" data-caption="<?php echo $e['intitule'] ?>" data-collapsed="true"><button class="button" onclick="location.href = `addPromoToSchool.php?school=<?php echo $e['id_ecole'] ?>`"><span class="mif-add"></span></button>
                     <ul>
                         <?php foreach (selectPromosByIdEcole($e['id_ecole']) as $kp => $p) { ?>
                             <li id="adminPromo<?php echo $e['intitule'] . $kp ?>" data-caption="<?php echo $p['intitule'] ?>" data-collapsed="true">
