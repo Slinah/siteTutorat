@@ -4,7 +4,7 @@
 include_once dirname(__DIR__) . '/conf/conf.php';
 
 // Connexion à la base
-$GLOBALS['db'] = new PDO("mysql:host=" . Config::SERVERNAME . ";dbname=" . Config::DBNAME, Config::USER, Config::PASSWORD);
+$GLOBALS['db'] = new PDO("mysql:host=" . Config::SERVERNAME . ";dbname=" . Config::DBNAME, Config::USER, Config::PASSWORD, [PDO::ATTR_DEFAULT_FETCH_MODE=> PDO::FETCH_ASSOC]);
 
 // Mise à jour V2.0
 // Sélection d'une personne en fonction d'un mail
@@ -749,8 +749,8 @@ function selectQuestionById($id_question){
 }
 
 //Mise à jour V2.1
-// Sélection des réponses ayant un status particulier
-function selectResponseByStatusIdQuestion($valueStatusResponse,$id_question){
+// Sélection des réponses ayant un status particulier et filtré par date
+function selectResponseByStatusIdQuestionByDate($valueStatusResponse,$id_question){
     $reponses = $GLOBALS['db']->prepare('SELECT rf.id_reponse AS id_reponse, rf.id_personne AS id_personne, 
                                                rf.message_reponse AS message, rf.id_question AS id_question, rf.status AS status, 
                                                rf.date AS date, rf.secu AS secu
@@ -762,6 +762,23 @@ function selectResponseByStatusIdQuestion($valueStatusResponse,$id_question){
     $reponse = $reponses->fetchAll();
     return $reponse;
 }
+
+//Mise à jour V2.1
+// Sélection des réponses ayant un status particulier et filtrées par likes
+function selectResponseByStatusIdQuestionFilterByLike($valueStatusResponse,$id_question){
+    $reponses = $GLOBALS['db']->prepare('SELECT COUNT(v.id), rf.id_reponse AS id_reponse, rf.id_personne AS id_personne, 
+                                               rf.message_reponse AS message, rf.id_question AS id_question, rf.status AS status, 
+                                               rf.date AS date, rf.secu AS secu FROM reponse_forum rf 
+                                            JOIN question_forum qf ON rf.id_question=qf.id_question 
+                                            JOIN vote v ON rf.id_reponse=v.id_reponse GROUP BY rf.id_reponse ORDER BY 1 DESC');
+    $reponses->bindParam(":status", $valueStatusResponse);
+    $reponses->bindParam(":idq", $id_question);
+    $reponses->execute();
+    $reponse = $reponses->fetchAll();
+    return $reponse;
+}
+
+
 
 //Mise à jour V2.1
 // Sélection des réponses ayant le status 0
@@ -827,3 +844,20 @@ function selectCountVoteByIdReponse($idReponse)
     $votes = $votes[0][0];
     return $votes;
 }
+
+// Mise à jour V2.1
+// Compte le nombre de personne qui ont liké la réponse
+function selectCountVoteByIdReponseOrderByNbVote($idReponse)
+{
+    $vote = $GLOBALS['db']->prepare('SELECT COUNT(*) FROM vote WHERE id_reponse = :idr');
+    $vote->bindParam(':idr', $idReponse);
+    $vote->execute();
+    $votes = $vote->fetchAll();
+    $votes = $votes[0][0];
+    return $votes;
+}
+
+
+
+
+
