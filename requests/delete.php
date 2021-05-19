@@ -83,3 +83,10 @@ function deleteLikeByIdPersonneIdReponse($idPersonne, $idReponse)
     $deleteLike->bindParam(':idr', $idReponse);
     $deleteLike->execute();
 }
+
+function deleteReponseBySecuCode($secuCode)
+{
+    $deleteReponse = $GLOBALS['db']->prepare('DELETE FROM reponse_forum WHERE secu = :secu');
+    $deleteReponse->bindParam(':secu', $secuCode);
+    $deleteReponse->execute();
+}
