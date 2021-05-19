@@ -19,7 +19,7 @@ include_once '../../bases/head.php';
 <body>
 <?php include_once '../../bases/menu.php'; ?>
 <?php
-switch ($_GET["forum"]) {
+switch ($forum=$_GET["forum"]) {
 
 case "error":
     echo '<script type="text/javascript">
@@ -65,9 +65,28 @@ case "repdeleted":
                 </div>
                     <form action="insertResponse.php" method="post">
                         <input type="hidden" value="<?php echo $id_question?>" name="idQuestion">
-                        <textarea data-role="textarea" placeholder="Votre réponse" name="message"></textarea>
+                        <?php
+                        if ($forum="block") {
+                            echo ' <textarea readonly data-role="textarea" data-cls-textarea="ribbed-red fg-white border bd-amber" placeholder="Votre réponse" name="message">Les réponses sont bloquées pour cette question</textarea>';
+                        } else {
+                            echo ' <textarea data-role="textarea" placeholder="Votre réponse" name="message"></textarea>';
+                        }?>
                         <button class="button success" onclick="location.href = 'insertResponse.php';"> Répondre</button>
                     </form>
+                    <?php
+                    if ($_SESSION["role"] == 1) {
+                        echo " <button class='button bg-crimson fg-white' onclick='Metro.dialog.open(`#" . $qf['secu'] . "`)'><span class='mif-cross'></span> Bloquer</button>";
+                        echo '<div id="' . $qf['secu'] . '" class="dialog alert" data-role="dialog">
+                                <div class="dialog-title">Voulez-vous vraiment bloquer les réponses ?</div>
+                                <div class="dialog-actions">
+                                    <button class="button js-dialog-close"><span class="mif-keyboard-return"></span>Retour</button>
+                                    <button class="button" onclick="location.href = `reponseForum.php?id_question=' . $qf['id_question'] . '&forum=block`;"><span class="mif-cross"></span> Bloquer les réponses</button>
+                                </div>
+                              </div>';
+                    } else {
+                    echo " ";
+                    }?>
+
               </div><br>
 <?php
     }

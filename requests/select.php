@@ -800,13 +800,28 @@ function selectQuestionById($id_question){
 }
 
 //Mise à jour V2.1
-// Sélection des réponses ayant un status particulier
-function selectResponseByStatusIdQuestion($valueStatusResponse,$id_question){
+// Sélection des réponses ayant un status particulier et filtré par date
+function selectResponseByStatusIdQuestionByDate($valueStatusResponse,$id_question){
     $reponses = $GLOBALS['db']->prepare('SELECT rf.id_reponse AS id_reponse, rf.id_personne AS id_personne, 
                                                rf.message_reponse AS message, rf.id_question AS id_question, rf.status AS status, 
                                                rf.date AS date, rf.secu AS secu
                                                FROM reponse_forum rf JOIN question_forum qf ON qf.id_question=rf.id_question
                                                WHERE rf.status = :status AND rf.id_question= :idq ORDER BY date DESC');
+    $reponses->bindParam(":status", $valueStatusResponse);
+    $reponses->bindParam(":idq", $id_question);
+    $reponses->execute();
+    $reponse = $reponses->fetchAll();
+    return $reponse;
+}
+
+//Mise à jour V2.1
+// Sélection des réponses ayant un status particulier et filtrées par likes
+function selectResponseByStatusIdQuestionFilterByLike($valueStatusResponse,$id_question){
+    $reponses = $GLOBALS['db']->prepare('SELECT COUNT(v.id), rf.id_reponse AS id_reponse, rf.id_personne AS id_personne, 
+                                               rf.message_reponse AS message, rf.id_question AS id_question, rf.status AS status, 
+                                               rf.date AS date, rf.secu AS secu FROM reponse_forum rf 
+                                            JOIN question_forum qf ON rf.id_question=qf.id_question 
+                                            JOIN vote v ON rf.id_reponse=v.id_reponse GROUP BY rf.id_reponse ORDER BY 1 DESC');
     $reponses->bindParam(":status", $valueStatusResponse);
     $reponses->bindParam(":idq", $id_question);
     $reponses->execute();
