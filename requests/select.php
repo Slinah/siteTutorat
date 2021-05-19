@@ -289,7 +289,7 @@ function selectIdLastPropositionByMatiereNiveau($matiere, $niveau)
 // Vérification de l'existance d'une proposition en fonction de l'id de la matière et de l'id de la promo
 function verifExistPropositionByIdMatiereIdPromo($idMatiere, $idPromo)
 {
-    $proposition = $GLOBALS['db']->prepare('SELECT id_proposition FROM proposition p JOIN proposition_promo pp ON p.id_proposition=pp.id_proposition JOIN promo po ON pp.id_promo=po.id_promo WHERE id_matiere = :idm AND po.id_promo = :idp');
+    $proposition = $GLOBALS['db']->prepare('SELECT p.id_proposition FROM proposition p JOIN proposition_promo pp ON p.id_proposition=pp.id_proposition JOIN promo po ON pp.id_promo=po.id_promo WHERE id_matiere = :idm AND po.id_promo = :idp');
     $proposition->bindParam(':idm', $idMatiere);
     $proposition->bindParam(':idp', $idPromo);
     $proposition->execute();
