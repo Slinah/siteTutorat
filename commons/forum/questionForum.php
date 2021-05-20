@@ -19,29 +19,7 @@ include_once '../../bases/head.php';
 
 <body>
 <?php include_once '../../bases/menu.php'; ?>
-<?php /*
-switch ($_GET["forum"]) {
-    // TODO : A adapter pour le filtre par matière
-    case "error":
-        echo '<script type="text/javascript">
-            Metro.dialog.create({
-                title: "Erreur de création.",
-                content: "<div>Vos informations de créations de cours sont incorrectes.</div>",
-                closeButton: true
-            });
-            </script>';
-        break;
-    case "already":
-        echo '<script type="text/javascript">
-            Metro.dialog.create({
-                title: "Vous avez déjà créer ce cours.",
-                content: "<div>Ce cours à déjà été créer.</div>",
-                closeButton: true
-            });
-            </script>';
-        break;
-    }*/
-?>
+
 <div class="container">
 
     <div class="icon">
@@ -58,7 +36,7 @@ switch ($_GET["forum"]) {
             <div class="p-2">Petit conseil : Dans un premier temps, regardes si ta question n'a pas encore été posée... ;)</div>
             <form action="insertQuestion.php" method="post">
                 <h3>Créer une question :</h3>
-                <div class="card">
+                <div class="card"><div class="card-header">
                 <input data-role="input" name="titre" placeholder="Titre de ta question" data-prepend="Titre" required><br/>
                     <input data-role="input" name="description" placeholder="Décris ta question" data-prepend="Description" required>
                     <br><select name="matiere" data-role="select" data-filter="false" data-prepend="Matière">
@@ -83,11 +61,10 @@ switch ($_GET["forum"]) {
         </div>
     </div>
 </div>
-
     <h3>Les questions posées : </h3>
 
 <form>
-    <p>
+    <p style="height:150px;display:block;" >
         <br><select id="matiere" name="filtreMatiere" data-role="select" data-filter="false" data-prepend="Choisis dans quelle matière">
             <?php
             foreach (selectMatieres() as $matieres) {
@@ -98,13 +75,13 @@ switch ($_GET["forum"]) {
         <input type="checkbox" id ="filterQuestion" data-role="switch" data-caption="Apply filter" />
     </p>
 </form>
-
+<!--TODO : Ajouter div id comme capture ecran Cedric-->
     <?php
     if (selectQuestionStatus() != 'none') {
         echo '
         <table id="forumQuestionsTable" class="table striped table-border mt-2" data-role="table" data-show-search="false"
-            data-show-table-info="false" data-show-rows-steps="false" data-pagination-short-mode="true" data-show-pagination="true" data-rows="5">
-
+            data-show-table-info="false" data-show-rows-steps="false" data-pagination-short-mode="true" 
+            data-show-pagination="true" data-rows="5">
             <thead>
                 <tr>
                     <th>Intitule</th>
@@ -112,11 +89,10 @@ switch ($_GET["forum"]) {
                     <th>Matière</th>
                     <th>Date</th>
                     <th>Auteur</th>
-                    <th>Nombre de réponses</th>
+                    <th>Réponses</th>
                 </tr>
             </thead>
         <tbody>';
-
         foreach (selectQuestionByStatus(0) as $qf) {
             echo '<tr>
                     <td><a href="reponseForum.php?id_question=' . $qf ['id_question'] . '&forum=unset" class = "question">'.$qf['titre'].'</a></td>
@@ -127,53 +103,14 @@ switch ($_GET["forum"]) {
                     <td>'.selectCountResponseByIdQuestion($qf['id_question'])  .'</td>
                 </tr>';
         }
-
         echo '</tbody></table>';
     }else {
         echo 'Aucune question pour le moment';
     }
     ?>
-    <br><br><br>
-
 </div>
 </body>
 <script src="../../js/activeMenu.js"></script>
-<!--Faire comme au-dessus pour inclure le fichier .js de la méthode qui suit-->
-<script type="application/javascript">
-    // TODO : externaliser ceci dans un fichier JS
-    jQuery(function($){
-        $("#forumQuestionsTable").on("click", "tr", function(e){
-            if ($(e.target).is("a,input")) {
-                return;
-            }
-            location.href = $(this).find("a").attr("href");
-        });
-    });
-</script>
-<script>
-    $(document).ready(function(){
-        $("#filterQuestion").click(function(){
+<script src="../../js/questionForum.js"></script>
 
-            $.post(
-                './forumRequests/getFilterQuestion.php',
-                {
-                    idMatiere : $("#matiere").val() // Récupération de la valeur de l'input que l'on fait passer à questionForum.php
-                },
-
-                function(data){
-                    console.log(data);
-                    if(data == 'Success'){
-                        $("#resultat").html("<p>Filtre bien pris en compte !</p>");
-                    }
-                    else{
-                        $("#resultat").html("<p>Erreur...</p>");
-                    }
-
-                },
-                'text' // Pour recevoir "Success" ou "Failed", donc on indique text
-            );
-        });
-    });
-
-</script>
 </html>

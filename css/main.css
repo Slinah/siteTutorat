@@ -104,10 +104,16 @@ a.question{
   background-color: #D3DBED;
 }
 
-#forumQuestionsTable td {
-  max-width: 60px;
+#forumQuestionsTable td{
+  column-width: 300px;
 }
 
 #backgroundcolorQ{
   background-color: #D3DBED;
 }
+
+#recapCompte{
+  background-color: #D3DBED;
+}
+
+

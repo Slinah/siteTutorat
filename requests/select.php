@@ -604,7 +604,13 @@ function selectPropositionByLogs($idProposition)
 // Récupère les infos d'une personne par son ID
 function selectPersonneByIdPersonne($idPersonne)
 {
-    $personne = $GLOBALS['db']->prepare('SELECT p.prenom AS prenom, p.nom AS nom, p.password AS mdp, p.mail AS mail, c.intitule AS classe FROM personne p JOIN classe c ON p.id_classe=c.id_classe WHERE id_personne = :idp');
+    $personne = $GLOBALS['db']->prepare('
+        SELECT p.prenom AS prenom, p.nom AS nom, p.password AS mdp, p.mail AS mail, pro.intitule AS promo, e.intitule AS ecole, c.intitule AS classe 
+        FROM personne p
+        JOIN classe c ON p.id_classe=c.id_classe 
+        JOIN promo pro ON pro.id_promo=c.id_promo 
+        JOIN ecole e ON e.id_ecole=pro.id_ecole
+        WHERE id_personne = :idp');
     $personne->bindParam(':idp', $idPersonne);
     $personne->execute();
     $per = $personne->fetchAll();
@@ -892,4 +898,24 @@ function selectCountResponseByIdQuestion($idQuestion)
     $nbResponse = $countResponse->fetchAll();
     $nbResponse = $nbResponse[0][0];
     return $nbResponse;
+}
+
+// Mise à jour V2.1
+// Sélection des classes
+function selectClasses()
+{
+    $classes = $GLOBALS['db']->prepare('SELECT id_classe, intitule FROM classe');
+    $classes->execute();
+    $classe = $classes->fetchAll();
+    return $classe;
+}
+
+// Mise à jour V2.1
+// Sélection de l'école
+function selectEcole()
+{
+    $ecoles = $GLOBALS['db']->prepare('SELECT id_ecole, intitule FROM ecole');
+    $ecoles->execute();
+    $ecole = $ecoles->fetchAll();
+    return $ecole;
 }
