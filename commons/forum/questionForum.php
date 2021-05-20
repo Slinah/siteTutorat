@@ -37,24 +37,22 @@ include_once '../../bases/head.php';
             <form action="insertQuestion.php" method="post">
                 <h3>Créer une question :</h3>
                 <div class="card"><div class="card-header">
-                <input data-role="input" name="titre" placeholder="Titre de ta question" data-prepend="Titre" required><br/>
-                    <input data-role="input" name="description" placeholder="Décris ta question" data-prepend="Description" required>
-                    <br><select name="matiere" data-role="select" data-filter="false" data-prepend="Matière">
-                    <?php
-                    foreach (selectMatieres() as $matieres) {
-                        echo '<option value="' . $matieres['id_matiere'] . '">' . $matieres['intitule'] . '</option>';
-                    }
-                    ?>
-                </select>
-                <br><select name="promo" data-role="select" data-filter="false" data-prepend="Niveau concerné" >
-                        <option value="nonDefini"></option>
-                    <?php
-                    foreach (selectPromos() as $promo) {
-                        echo '<option value="' . $promo['id_promo'] . '">' . $promo['promo'] . '</option>';
-                    }
-                    ?>
-                </select>
-                <br><button class="button success" onclick="location.href = 'insertQuestion.php';">
+                        <label>
+                            <input data-role="input" name="titre" placeholder="Titre de ta question" data-prepend="Titre" required>
+                        </label><br/>
+                        <label>
+                            <input data-role="input" name="description" placeholder="Décris ta question" data-prepend="Description" required>
+                        </label>
+                        <br><label>
+                            <select name="matiere" data-role="select" data-filter="false" data-prepend="Matière">
+                            <?php
+                            foreach (selectMatieres() as $matieres) {
+                                echo '<option value="' . $matieres['id_matiere'] . '">' . $matieres['intitule'] . '</option>';
+                            }
+                            ?>
+                        </select>
+                        </label>
+                        <br><button class="button success" onclick="location.href = 'insertQuestion.php';">
                     <span class="mif-checkmark"></span>Créer une question</button>
             </form>
         </div>
@@ -75,6 +73,7 @@ include_once '../../bases/head.php';
         <input type="checkbox" id ="filterQuestion" data-role="switch" data-caption="Apply filter" />
     </p>
 </form>
+<div id="resultat">
 <!--TODO : Ajouter div id comme capture ecran Cedric-->
     <?php
     if (selectQuestionStatus() != 'none') {
