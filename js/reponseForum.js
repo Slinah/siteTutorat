@@ -1,15 +1,38 @@
 $(document).ready(function(){
     $("#filterReponse").click(function(){
+        var thisCheck = $(this);
+        let truc = 2;
+        if (thisCheck.is (':checked'))
+        {
+            $.post(
+                './_content_reponseForumByLike.php', {
+                    // Récupération des valeur id_question pour le select pour afficher la réponse
+                    idQuestion : $("#idQuestion").val(),
+                    truc
+                },
 
-        $.post(
-            './_content_reponseForum.php', {
-                valueStatusResponse : $("#valueStatus").val(), // Récupération des valeur status et id_question pour le select pour afficher la réponse
-                idQuestion : $("#idQuestion").val()
+                function(){
+                    let check = 1;
+                    $("#result").load('../forum/_content_reponseForumByLike.php', {idQuestion : $("#idQuestion").val(), check});
 
-            },
-            function(){
-                $("#result").load('../forum/_content_reponseForum.php', {idQuestion : $("#idQuestion").val()});
+                });
+        }
+        else {
+            $.post(
+                './_content_reponseForumByDate.php', {
+                    // Récupération des valeur id_question pour le select pour afficher la réponse
+                    idQuestion : $("#idQuestion").val(),
+                },
 
-            });
+                function(){
+                    let check = 0;
+                    $("#result").load(
+                        '../forum/_content_reponseForumByDate.php', {
+                            idQuestion : $("#idQuestion").val(),
+                            check
+                        });
+
+                });
+        }
     });
 });

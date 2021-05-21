@@ -1,9 +1,18 @@
 <?php
-session_start();
+if (!isset($_SESSION)) {
+   session_start();
+}
 include_once '../../requests/select.php';
 include_once '../date.php';
-$valueStatusResponse = 0;
-$id_question = $_REQUEST['idQuestion'];
+
+if (!isset ($_REQUEST['check']) ) {
+    $valueStatusResponse = 0;
+    $check = 0;
+}else{
+    $valueStatusResponse = 0;
+    $id_question = $_REQUEST['idQuestion'];
+    $check = $_REQUEST['check'];
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -23,17 +32,12 @@ $id_question = $_REQUEST['idQuestion'];
         echo '<thead>
        <tr>
        <th data-sortable="false">
-            <div class="grid">
-                <div class="row">
-                    <div class="cell"><h3>Liste des réponses : </h3></div>
-                    <div class="cell-2"></div>
-                </div>
-            </div>
+           
        </th>
        </tr>
        </thead>
        <tbody>';
-        foreach (selectResponseByStatusIdQuestionFilterByLike($valueStatusResponse, $id_question) as $rf) {
+        foreach (selectResponseByStatusIdQuestionByDate($valueStatusResponse, $id_question) as $rf) {
 
             echo '
             <tr>
