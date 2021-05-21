@@ -811,7 +811,7 @@ function selectQuestionByIdPersonneTitreEtMatiere($idPersonne, $titreQuestion, $
 }
 
 // Mis à jour V2.1
-//TODO: comment
+//Selection de la question suivant l'id de la matière
 function selectQuestionByIdMatiere($idMatiere)
 {
     $filtreMatiere = $GLOBALS['db']->prepare(

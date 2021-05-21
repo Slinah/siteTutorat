@@ -60,7 +60,6 @@ include_once '../../bases/head.php';
     </div>
 </div>
     <h3>Les questions posées : </h3>
-
 <form>
     <p style="height:150px;display:block;" >
         <br><select id="matiere" name="filtreMatiere" data-role="select" data-filter="false" data-prepend="Choisis dans quelle matière">
@@ -70,17 +69,16 @@ include_once '../../bases/head.php';
             }
             ?>
         </select>
-        <input type="checkbox" id ="filterQuestion" data-role="switch" data-caption="Apply filter" />
+        <input type="checkbox" id ="filterQuestion" data-role="switch" data-caption="Apply filter"/>
     </p>
 </form>
 <div id="resultat">
-<!--TODO : Ajouter div id comme capture ecran Cedric-->
     <?php
     if (selectQuestionStatus() != 'none') {
         echo '
         <table id="forumQuestionsTable" class="table striped table-border mt-2" data-role="table" data-show-search="false"
             data-show-table-info="false" data-show-rows-steps="false" data-pagination-short-mode="true" 
-            data-show-pagination="true" data-rows="5">
+            data-show-pagination="true" data-rows="2">
             <thead>
                 <tr>
                     <th>Intitule</th>
@@ -94,12 +92,12 @@ include_once '../../bases/head.php';
         <tbody>';
         foreach (selectQuestionByStatus(0) as $qf) {
             echo '<tr>
-                    <td><a href="reponseForum.php?id_question=' . $qf ['id_question'] . '&forum=unset" class = "question">'.$qf['titre'].'</a></td>
+                    <td><a href="reponseForum.php?id_question=' . $qf ['id_question'] . '&forum=unset" class = "question">'.$qf['titre'].'</td>
                     <td>'.$qf['description'].'</td>
                     <td>'.$qf['matiere'].'</td>
                     <td>'.date('H\\hi', strtotime($qf['date'])) . ' le ' . date("d", strtotime($qf['date'])) . ' ' . getMois($qf['date']) . ' '. date("Y", strtotime($qf['date'])).'</td>
                     <td>'.$qf['prenom'].' '.$qf['nom'].'</td>
-                    <td>'.selectCountResponseByIdQuestion($qf['id_question'])  .'</td>
+                    <td>'.selectCountResponseByIdQuestion($qf['id_question'])  .'</td></a>
                 </tr>';
         }
         echo '</tbody></table>';
@@ -109,6 +107,7 @@ include_once '../../bases/head.php';
     ?>
 </div>
 </body>
+
 <script src="../../js/activeMenu.js"></script>
 <script src="../../js/questionForum.js"></script>
 
