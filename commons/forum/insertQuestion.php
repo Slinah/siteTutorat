@@ -26,15 +26,10 @@ if (isset($userTkn) && $userTkn != null) {
         die;
     }
 
-    $idPromo = htmlentities($_POST["promo"]);
-    if ($idPromo == 'nonDefini'){
-        $idPromo=NULL;
-    }
-
     $localDate = strtotime('+2 hours');
     $idQuestion = strtoupper(UUID::v4());
     if (selectQuestionByIdPersonneTitreEtMatiere($_SESSION['id_personne'], $titreQuestion, $idMatiere) == "none") {
-        insertQuestion($idQuestion, $titreQuestion, $descriptionQuestion, $_SESSION['id_personne'], $idMatiere, $localDate, $idPromo);
+        insertQuestion($idQuestion, $titreQuestion, $descriptionQuestion, $_SESSION['id_personne'], $idMatiere, $localDate);
         $tkn = substr(base_convert(sha1(uniqid(mt_rand())), 16, 36), 0, 32);
         updateToken($tkn, $_SESSION['id_personne']);
         header("location: questionForum.php");

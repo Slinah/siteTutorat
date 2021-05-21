@@ -68,14 +68,7 @@ switch ($_GET["forum"]) {
                     }
                     ?>
                 </select>
-                <br><select name="promo" data-role="select" data-filter="false" data-prepend="Niveau concerné" >
-                        <option value="nonDefini"></option>
-                    <?php
-                    foreach (selectPromos() as $promo) {
-                        echo '<option value="' . $promo['id_promo'] . '">' . $promo['promo'] . '</option>';
-                    }
-                    ?>
-                </select>
+                <br>
                 <br><button class="button success" onclick="location.href = 'insertQuestion.php';">
                     <span class="mif-checkmark"></span>Créer une question</button>
             </form>
@@ -117,7 +110,7 @@ switch ($_GET["forum"]) {
             </thead>
         <tbody>';
 
-        foreach (selectQuestionByStatus(0) as $qf) {
+        foreach (selectQuestionByStatus(1) as $qf) {
             echo '<tr>
                     <td><a href="reponseForum.php?id_question=' . $qf ['id_question'] . '&forum=unset" class = "question">'.$qf['titre'].'</a></td>
                     <td>'.$qf['description'].'</td>

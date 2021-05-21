@@ -703,7 +703,7 @@ function selectQuestionByStatus($valueStatusQuestion){
                                           FROM question_forum qf 
                                           JOIN matiere m ON m.id_matiere=qf.id_matiere 
                                           JOIN personne p ON p.id_personne=qf.id_personne
-                                          WHERE qf.status = :status
+                                          WHERE qf.status <= :status
                                           ORDER BY date DESC');
     $questions->bindParam(":status", $valueStatusQuestion);
     $questions->execute();
@@ -718,7 +718,7 @@ function selectQuestionStatus(){
                                                qf.titre AS titre, qf.description AS description, qf.status AS status, 
                                                qf.date AS date, qf.secu AS secu, m.intitule AS matiere
                                                FROM question_forum qf JOIN matiere m ON m.id_matiere=qf.id_matiere  
-                                               WHERE qf.status = 0
+                                               WHERE qf.status BETWEEN 0 AND 1
                                                ORDER BY date DESC');
     $question_forum->execute();
     $questions = $question_forum->fetchAll();
@@ -819,8 +819,7 @@ function selectResponseByStatusIdQuestionByDate($valueStatusResponse,$id_questio
 function selectResponseByStatusIdQuestionFilterByLike($valueStatusResponse,$id_question){
     $reponses = $GLOBALS['db']->prepare('SELECT COUNT(v.id), rf.id_reponse AS id_reponse, rf.id_personne AS id_personne, 
                                                rf.message_reponse AS message, rf.id_question AS id_question, rf.status AS status, 
-                                               rf.date AS date, rf.secu AS secu FROM reponse_forum rf 
-                                            JOIN question_forum qf ON rf.id_question=qf.id_question 
+                                               rf.date AS date, rf.secu AS secu FROM question_forum qf JOIN reponse_forum rf ON rf.id_question=qf.id_question 
                                             JOIN vote v ON rf.id_reponse=v.id_reponse GROUP BY rf.id_reponse ORDER BY 1 DESC');
     $reponses->bindParam(":status", $valueStatusResponse);
     $reponses->bindParam(":idq", $id_question);

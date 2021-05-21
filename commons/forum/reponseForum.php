@@ -19,7 +19,7 @@ include_once '../../bases/head.php';
 <body>
 <?php include_once '../../bases/menu.php'; ?>
 <?php
-switch ($forum=$_GET["forum"]) {
+switch ($_GET["forum"]) {
 
 case "error":
     echo '<script type="text/javascript">
@@ -64,25 +64,55 @@ case "repdeleted":
                     }?>
                 </div>
                     <form action="insertResponse.php" method="post">
-                        <input type="hidden" value="<?php echo $id_question?>" name="idQuestion">
+                        <input id="idQuestion" type="hidden" value="<?php echo $id_question?>" name="idQuestion">
                         <?php
-                        if ($forum="block") {
-                            echo ' <textarea readonly data-role="textarea" data-cls-textarea="ribbed-red fg-white border bd-amber" placeholder="Votre réponse" name="message">Les réponses sont bloquées pour cette question</textarea>';
+                        if ($qf['status']==1) {
+                            echo ' <textarea readonly data-role="textarea" data-cls-textarea="ribbed-red fg-white border bd-amber" placeholder="Votre réponse" name="message">Les réponses sont bloquées pour cette question</textarea>
+                        <div class="grid">
+                            <div class="row">
+                                <div class="cell">';
                         } else {
-                            echo ' <textarea data-role="textarea" placeholder="Votre réponse" name="message"></textarea>';
+                            echo ' <textarea data-role="textarea" placeholder="Votre réponse" name="message"></textarea>
+                         <div class="grid">
+                            <div class="row">
+                                <div class="cell">
+                                    <button class="button success" onclick="location.href = `insertResponse.php`;"> Répondre</button>';
                         }?>
-                        <button class="button success" onclick="location.href = 'insertResponse.php';"> Répondre</button>
+
                     </form>
                     <?php
                     if ($_SESSION["role"] == 1) {
-                        echo " <button class='button bg-crimson fg-white' onclick='Metro.dialog.open(`#" . $qf['secu'] . "`)'><span class='mif-cross'></span> Bloquer</button>";
-                        echo '<div id="' . $qf['secu'] . '" class="dialog alert" data-role="dialog">
+                        if ($qf['status']==1){
+                            echo " 
+                        <button class='button bg-crimson fg-white' onclick='Metro.dialog.open(`#" . $qf['secu'] . "`)'><span class='mif-cross'></span> Débloquer </button>
+                        </div>
+                        </div>
+                        </div>";
+                        }else{
+                            echo " 
+                        <button class='button bg-crimson fg-white' onclick='Metro.dialog.open(`#" . $qf['secu'] . "`)'><span class='mif-cross'></span> Bloquer</button>
+                        </div>
+                        </div>
+                        </div>";
+                        }
+                        if ($qf['status']==1) {
+                            echo '<div id="' . $qf['secu'] . '" class="dialog warning" data-role="dialog">
+                                <div class="dialog-title">Voulez-vous vraiment débloquer les <br> réponses ?</div>
+                                <div class="dialog-actions">
+                                    <button class="button js-dialog-close"><span class="mif-keyboard-return"></span>Retour</button>
+                                    <button class="button" onclick="location.href = `reponseForum.php?id_question=' . $qf['id_question'] . '&forum=deblock`;"><span class="mif-cross"></span> Bloquer les réponses</button>
+                                </div>
+                              </div>';
+                              }else{
+                            echo '
+                              <div id="' . $qf['secu'] . '" class="dialog alert" data-role="dialog">
                                 <div class="dialog-title">Voulez-vous vraiment bloquer les réponses ?</div>
                                 <div class="dialog-actions">
                                     <button class="button js-dialog-close"><span class="mif-keyboard-return"></span>Retour</button>
                                     <button class="button" onclick="location.href = `reponseForum.php?id_question=' . $qf['id_question'] . '&forum=block`;"><span class="mif-cross"></span> Bloquer les réponses</button>
                                 </div>
                               </div>';
+                        }
                     } else {
                     echo " ";
                     }?>
@@ -90,34 +120,37 @@ case "repdeleted":
               </div><br>
 <?php
     }
-    echo '
+    ?>
+<input id="filterReponse" type="checkbox" data-role="checkbox" data-caption="filtrer par Likes">
+<div id="valueStatus"><?php echo $status=0 ?></div>
+<div id="result">
 <table class="table"
        data-role="table"
        data-rows="4"
        data-rows-steps="4"
-       data-show-table-info="true" 
+       data-show-table-info="false" 
        data-show-pagination="true"
        data-pagination-short-mode="true" 
        data-show-rows-steps="false"
        data-show-search="false">
-       <thead>
+       
+    
+<?php
+    if (selectResponseStatus($id_question) != 'none') {
+        echo '<thead>
        <tr>
        <th data-sortable="false">
             <div class="grid">
-                <div class="row row flex-align-center">
+                <div class="row">
                     <div class="cell"><h3>Liste des réponses : </h3></div>
-                    <div class="cell-2"><input type="checkbox" data-role="switch" data-caption="filtrer par Likes" onchange="toggleFilter(this.checked)"></div>
+                    <div class="cell-2"></div>
                 </div>
             </div>
        </th>
        </tr>
        </thead>
-       <tbody>
-    
-';
-    if (selectResponseStatus($id_question) != 'none') {
-        '';
-        foreach (selectResponseByStatusIdQuestionFilterByLike(0, $id_question) as $rf) {
+       <tbody>';
+        foreach (selectResponseByStatusIdQuestionByDate($status, $id_question) as $rf) {
 
             echo '
             <tr>
@@ -165,11 +198,13 @@ case "repdeleted":
 
 </tbody>
 </table>
+</div>
 
 </div>
 </body>
+
 <script src="../../js/activeMenu.js"></script>
-<script src="../../js/filtreReponse.js"></script>
+<script src="../../js/reponseForum.js"></script>
 
 </html>
 
