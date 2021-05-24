@@ -27,11 +27,9 @@ $(document).ready(function() {
                         checked,
                         //Retourne les données
                     }, function (data) {
-                        let parsedDatas;
-                        parsedDatas = JSON.parse(data);
+                        let parsedDatas = JSON.parse(data);
                         console.log(parsedDatas);
-                        let str;
-                        str += '<table id="forumQuestionsTable" class="table striped table-border mt-2" data-role="table" data-show-search="false"' +
+                        let str = '<table id="forumQuestionsTable" class="table striped table-border mt-2" data-role="table" data-show-search="false"' +
                             '            data-show-table-info="false" data-show-rows-steps="false" data-pagination-short-mode="true" ' +
                             '            data-show-pagination="true" data-rows="2">' +
                             '            <thead>' +
