@@ -84,13 +84,6 @@ function deleteLikeByIdPersonneIdReponse($idPersonne, $idReponse)
     $deleteLike->execute();
 }
 
-function deleteReponseBySecuCode($secuCode)
-{
-    $deleteReponse = $GLOBALS['db']->prepare('DELETE FROM reponse_forum WHERE secu = :secu');
-    $deleteReponse->bindParam(':secu', $secuCode);
-    $deleteReponse->execute();
-}
-
 //Mis à jour V2.1
 // Delete d'une question en fonction
 function deleteQuestionByIdQuestion($idQuestion)
@@ -99,4 +92,11 @@ function deleteQuestionByIdQuestion($idQuestion)
     $deleteQuestion->bindParam(':idq', $idQuestion);
     $deleteQuestion->execute();
 
+}
+
+function deleteReponseBySecuCode($secuCode)
+{
+    $deleteReponse = $GLOBALS['db']->prepare('DELETE FROM reponse_forum WHERE secu = :secu');
+    $deleteReponse->bindParam(':secu', $secuCode);
+    $deleteReponse->execute();
 }

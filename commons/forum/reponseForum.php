@@ -67,6 +67,7 @@ case "repdeleted":
                     foreach (selectPersonnePromoByIdQuestion($qf['id_question']) as $p) {
                         echo '<i><span class="fg-crimson">' . $p['nom'] . ' ' . $p['prenom'] . ' ' . $p['promo'] . '</span></i>';
                     }?>
+
                 </div>
                     <form action="insertResponse.php" method="post">
                         <input type="hidden" value="<?php echo $id_question?>" name="idQuestion">
