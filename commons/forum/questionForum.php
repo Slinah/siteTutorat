@@ -18,7 +18,28 @@ include_once '../../bases/head.php';
 ?>
 
 <body>
-<?php include_once '../../bases/menu.php'; ?>
+<?php include_once '../../bases/menu.php';
+switch ($_GET["forum"]) {
+
+case "error":
+echo '<script type="text/javascript">
+    Metro.dialog.create({
+        title: "Erreur de création.",
+        content: "<div>Vous n\'avez pas bien renseigné les champs.</div>",
+        closeButton: true
+    });
+</script>';
+break;
+
+case "questDelete":
+echo '<script>Metro.toast.create("Votre question a bien été supprimée", null, null, "success");</script>';
+break;
+
+case "questSend":
+echo '<script>Metro.toast.create("Votre question a bien été envoyée", null, null, "success");</script>';
+break;
+}
+?>
 
 <div class="container">
 
@@ -78,7 +99,7 @@ include_once '../../bases/head.php';
         echo '
         <table id="forumQuestionsTable" class="table striped table-border mt-2" data-role="table" data-show-search="false"
             data-show-table-info="false" data-show-rows-steps="false" data-pagination-short-mode="true" 
-            data-show-pagination="true" data-rows="2">
+            data-show-pagination="true" data-rows="5">
             <thead>
                 <tr>
                     <th>Intitule</th>

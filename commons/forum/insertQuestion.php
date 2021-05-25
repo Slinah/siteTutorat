@@ -37,7 +37,7 @@ if (isset($userTkn) && $userTkn != null) {
         insertQuestion($idQuestion, $titreQuestion, $descriptionQuestion, $_SESSION['id_personne'], $idMatiere, $localDate, $idPromo);
         $tkn = substr(base_convert(sha1(uniqid(mt_rand())), 16, 36), 0, 32);
         updateToken($tkn, $_SESSION['id_personne']);
-        header("location: questionForum.php");
+        header("location: questionForum.php?forum=questSend");
     } else {
         header("location: questionForum.php?newq=already");
     }

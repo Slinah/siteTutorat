@@ -30,6 +30,11 @@ case "error":
         });
         </script>';
     break;
+
+case "questDelete":
+    echo '<script>Metro.toast.create("Votre question a bien été supprimée", null, null, "success");</script>';
+    break;
+
 case "upvoted":
     echo '<script>Metro.toast.create("Vous avez voté pour la réponse", null, null, "success");</script>';
     break;
@@ -67,10 +72,16 @@ case "repdeleted":
                         <input type="hidden" value="<?php echo $id_question?>" name="idQuestion">
                         <textarea data-role="textarea" placeholder="Votre réponse" name="message"></textarea>
                         <button class="button success" onclick="location.href = 'insertResponse.php';"> Répondre</button>
+                        <?php if($_SESSION['role']==1){
+                            echo
+                        "<button type='button' class='button alert' onclick='location.href=`deleteQuestion.php?question=$id_question`'>
+                            <span class='mif-cross'></span> Supprimer</button>";
+                        } ?>
                     </form>
               </div><br>
 <?php
     }
+    echo '<h3>Liste des réponses : </h3>';
     echo '
 <table class="table"
        data-role="table"

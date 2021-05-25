@@ -17,9 +17,9 @@ $(document).ready(function() {
                 alert("questions filtrées par matière => OK")
             }else{
                 checked=0;
-                alert("blablabla")
+                alert("filtre inactif")
             }
-                //Ajax permettant de récupérer les questions postées correspondant à la matière sélectionnée
+                //Permet de récupérer les questions postées correspondant à la matière sélectionnée
                 $.post(
                     './forumRequests/getFilterQuestion.php',
                     {// Récupération de la valeur de l'input que l'on fait passer à questionForum.php
@@ -31,7 +31,7 @@ $(document).ready(function() {
                         console.log(parsedDatas);
                         let str = '<table id="forumQuestionsTable" class="table striped table-border mt-2" data-role="table" data-show-search="false"' +
                             '            data-show-table-info="false" data-show-rows-steps="false" data-pagination-short-mode="true" ' +
-                            '            data-show-pagination="true" data-rows="2">' +
+                            '            data-show-pagination="true" data-rows="5">' +
                             '            <thead>' +
                             '                <tr>' +
                             '                    <th>Intitule</th>' +

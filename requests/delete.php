@@ -90,3 +90,13 @@ function deleteReponseBySecuCode($secuCode)
     $deleteReponse->bindParam(':secu', $secuCode);
     $deleteReponse->execute();
 }
+
+//Mis à jour V2.1
+// Delete d'une question en fonction
+function deleteQuestionByIdQuestion($idQuestion)
+{
+    $deleteQuestion = $GLOBALS['db']->prepare('DELETE FROM question_forum WHERE id_question = :idq');
+    $deleteQuestion->bindParam(':idq', $idQuestion);
+    $deleteQuestion->execute();
+
+}

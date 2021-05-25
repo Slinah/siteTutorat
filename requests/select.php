@@ -648,7 +648,7 @@ function selectPersonneByIdPersonne($idPersonne)
                 WHERE id_personne = :idp');
     $personne->bindParam(':idp', $idPersonne);
     $personne->execute();
-    $per = $personne->fetchAll();
+    $per = $personne->fetch();
     return $per;
 }
 
@@ -960,7 +960,7 @@ function selectClasses()
 // Sélection de l'école
 function selectEcole()
 {
-    $ecoles = $GLOBALS['db']->prepare('SELECT id_ecole, intitule FROM ecole');
+    $ecoles = $GLOBALS['db']->prepare("SELECT id_ecole, intitule FROM ecole WHERE intitule != 'IFAG'");
     $ecoles->execute();
     $ecole = $ecoles->fetchAll();
     return $ecole;
