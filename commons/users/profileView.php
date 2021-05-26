@@ -14,6 +14,23 @@ if (!isset($_SESSION["role"])) {
 
 <?php
 include_once '../../bases/head.php';
+
+switch ($_GET["users"]) {
+
+case "error":
+echo '<script type="text/javascript">
+    Metro.dialog.create({
+        title: "Erreur de modification.",
+        content: "<div>Vous n\'avez pas bien renseigné les champs.</div>",
+        closeButton: true
+    });
+</script>';
+break;
+
+case "updateProfil":
+echo '<script>Metro.toast.create("Votre modification a bien été appliquée", null, null, "success");</script>';
+break;
+}
 ?>
 
 <body>
@@ -22,7 +39,7 @@ include_once '../../bases/head.php';
         <div class="row">
             <h3>Récap du compte</h3><br><br>
             <?php
-            foreach (selectPersonneByIdPersonne($_SESSION['id_personne']) as $p) {
+            $personne = selectPersonneByIdPersonne($_SESSION['id_personne']);
                 ?>
                 <table id="recapCompte" class= "table table-border cell-border">
                     <thead>
@@ -38,16 +55,15 @@ include_once '../../bases/head.php';
                     <tbody>
                     <?php
                     '<tr>';
-                        echo '<td>'. $p['nom'] . '</td>';
-                        echo '<td>'. $p['prenom'] . '</td>';
-                        echo '<td>'. $p['mail'] . '</td>';
-                        echo '<td>'. $p['ecole'] . '</td>';
-                        echo '<td>'. $p['promo'] . '</td>';
-                        echo '<td>'. $p['classe'] . '</td>';
+                        echo '<td>'. $personne['nom'] . '</td>';
+                        echo '<td>'. $personne['prenom'] . '</td>';
+                        echo '<td>'. $personne['mail'] . '</td>';
+                        echo '<td>'. $personne['ecole'] . '</td>';
+                        echo '<td>'. $personne['promo'] . '</td>';
+                        echo '<td>'. $personne['classe'] . '</td>';
                     '</tr>';
                     ?>
             <?php
-            }
             echo '</tbody></table>';
             ?>
                     <div data-role="accordion"
@@ -59,28 +75,31 @@ include_once '../../bases/head.php';
         <div class="heading">Tu veux modifier tes infos de compte?</div>
         <div class="content">
             <div class="modifInfoCompte">Remplis les champs des infos que tu veux modifier et ensuite click sur la flêche pour appliquer la ou les modification(s).</div>
-            <form action="insertQuestion.php" method="post">
+            <form action="updateProfilUser.php" method="post">
                 <div class="card"><div class="card-header">
-                        <input data-role="input" name="mail" data-prepend="Mail"><button class="button light place-right" onclick="location.href = 'insertQuestion.php';">
+                        <input data-role="input" name="mail" data-prepend="Mail" value="<?php echo $personne['mail'] ?>"><button class="button light place-right" onclick="location.href = 'insertQuestion.php';">
                             <span class="mif-near-me mif-2x"></span></button><br/>
                         <select name="ecole" data-role="select" data-filter="false" data-prepend="Le nom de ton école : ">
                             <?php
                             foreach (selectEcole() as $ecole) {
-                                echo '<option value="' . $ecole['id_ecole'] . '">' . $ecole['intitule'] . '</option>';
+                                $ecoleSelected = $ecole['intitule'] == $personne['ecole'] ? ' selected="selected"' : '';
+                                echo '<option value="' . $ecole['id_ecole'] . '" ' . $ecoleSelected . '>' . $ecole['intitule'] . '</option>';
                             }
                             ?>
                         </select><br>
-                        <select name="promo" data-role="select" data-filter="false" data-prepend="Ta nouvelle promo : ">
+                        <select id="promo" name="promo" data-role="select" data-filter="false" data-prepend="Ta nouvelle promo : ">
                             <?php
                             foreach (selectPromos() as $promo) {
-                                echo '<option value="' . $promo['id_promo'] . '">' . $promo['promo'] . '</option>';
+                                $promoSelected = $promo['promo'] == $personne['promo'] ? ' selected="selected"' : '';
+                                echo '<option value="' . $promo['id_promo'] . '" ' . $promoSelected . '>' . $promo['promo'] . '</option>';
                             }
                             ?>
                         </select><br>
-                        <select name="classe" data-role="select" data-filter="false" data-prepend="Ta nouvelle classe : "><br>
+                        <select id="classByPromo" name="classe" data-role="select" data-filter="false" data-prepend="Ta nouvelle classe : "><br>
                             <?php
                             foreach (selectClasses() as $classe){
-                                echo '<option value="' . $classe['id_classe'] . '">' . $classe['intitule'] . '</option>';
+                                $classeSelected = $classe['intitule'] == $personne['classe'] ? ' selected="selected"' : '';
+                                echo '<option value="' . $classe['id_classe'] . '" ' . $classeSelected . '>' . $classe['intitule'] . '</option>';
                             }
                             ?>
                             </select><br>
@@ -102,6 +121,7 @@ include_once '../../bases/head.php';
     </div>
 </body>
 <script src="../js/activeMenu.js"></script>
+<script src="../../js/modifyProfilByUser.js"></script>
 
 </html>
 
