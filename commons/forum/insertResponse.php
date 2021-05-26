@@ -31,14 +31,11 @@ if (isset($userTkn) && $userTkn != null) {
         return $string;
     }
     $id_reponse = strtoupper(UUID::v4());
-    if (selectIdReponseByMessage($messageReponse) == "none") {
-        insertReponse($id_reponse, $messageReponse, $_SESSION['id_personne'], $idQuestion, secuStg());
-        $tkn = substr(base_convert(sha1(uniqid(mt_rand())), 16, 36), 0, 32);
-        updateToken($tkn, $_SESSION['id_personne']);
-        header("location: ../views/home.php?callback=forum");
-    } else {
-        header("location: reponseForum.php?id_question=$idQuestion&forum=already");
-    }
+    insertReponse($id_reponse, $messageReponse, $_SESSION['id_personne'], $idQuestion, secuStg());
+    $tkn = substr(base_convert(sha1(uniqid(mt_rand())), 16, 36), 0, 32);
+    updateToken($tkn, $_SESSION['id_personne']);
+    header("location: reponseForum.php?id_question=$idQuestion&forum=repsend");
+
 } else {
     echo 'Bien essayé';
 }

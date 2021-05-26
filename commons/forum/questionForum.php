@@ -110,7 +110,7 @@ switch ($_GET["forum"]) {
             </thead>
         <tbody>';
 
-        foreach (selectQuestionByStatus(1) as $qf) {
+        foreach (selectQuestionByStatus(2) as $qf) {
             echo '<tr>
                     <td><a href="reponseForum.php?id_question=' . $qf ['id_question'] . '&forum=unset" class = "question">'.$qf['titre'].'</a></td>
                     <td>'.$qf['description'].'</td>

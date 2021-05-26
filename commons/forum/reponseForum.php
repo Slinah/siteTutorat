@@ -16,7 +16,7 @@ if (!isset($_SESSION["role"])) {
 include_once '../../bases/head.php';
 ?>
 
-<body>
+<div>
 <?php include_once '../../bases/menu.php'; ?>
 <?php
 switch ($_GET["forum"]) {
@@ -24,12 +24,17 @@ switch ($_GET["forum"]) {
 case "error":
     echo '<script type="text/javascript">
         Metro.dialog.create({
-            title: "Erreur de création.",
-            content: "<div>Vos informations de créations de cours sont incorrectes.</div>",
+            title: "Erreur d\'envoi.",
+            content: "<div>Vous n\'avez pas renseigné votre réponse. </div>",
             closeButton: true
         });
         </script>';
     break;
+
+case "repsend":
+    echo '<script>Metro.toast.create("Votre réponse est maintenant publiée", null, null, "success");</script>';
+    break;
+
 case "upvoted":
     echo '<script>Metro.toast.create("Vous avez voté pour la réponse", null, null, "success");</script>';
     break;
@@ -39,7 +44,23 @@ case "deleted":
     break;
 
 case "repdeleted":
-    echo '<script>Metro.toast.create("La réponse à été supprimée avec succès.", null, null, "success");</script>';
+    echo '<script>Metro.toast.create("La réponse a été supprimée avec succès.", null, null, "success");</script>';
+    break;
+
+case "block":
+    echo '<script>Metro.toast.create("Les réponses ont bien été bloquées.", null, null, "success");</script>';
+    break;
+
+case "unblock":
+    echo '<script>Metro.toast.create("Les réponses ont bien été débloquées.", null, null, "success");</script>';
+    break;
+
+case "topicClosed":
+    echo '<script>Metro.toast.create("Le sujet a bien été clos pour cette question.", null, null, "success");</script>';
+    break;
+
+case "topicUnclosed":
+    echo '<script>Metro.toast.create("Le sujet a bien été ré-ouvert pour cette question.", null, null, "success");</script>';
     break;
 }
 ?>
@@ -63,56 +84,78 @@ case "repdeleted":
                         echo '<i><span class="fg-crimson">' . $p['nom'] . ' ' . $p['prenom'] . ' ' . $p['promo'] . '</span></i>';
                     }?>
                 </div>
+
                     <form action="insertResponse.php" method="post">
                         <input id="idQuestion" type="hidden" value="<?php echo $id_question?>" name="idQuestion">
                         <?php
                         if ($qf['status']==1) {
                             echo ' <textarea readonly data-role="textarea" data-cls-textarea="ribbed-red fg-white border bd-amber" placeholder="Votre réponse" name="message">Les réponses sont bloquées pour cette question</textarea>
-                        <div class="grid">
-                            <div class="row">
-                                <div class="cell">';
+                        ';
+                            if ($_SESSION['role'] == 1) {
+                                echo
+                                    '<button type="button" class="button alert" onclick="location . href = `deleteQuestion.php?question='. $id_question .'`"> <span class="mif - cross"></span> Supprimer</button>';
+                            }
+                        } else if ($qf['status']==2) {
+                            echo ' <textarea readonly data-role="textarea" data-cls-textarea="ribbed-green fg-white border bd-amber" placeholder="Votre réponse" name="message">Sujet résolu</textarea>';
+                            if ($_SESSION['role'] == 1) {
+                                echo
+                                    '<button type="button" class="button alert" onclick="location . href = `deleteQuestion.php?question='. $id_question .'`"> <span class="mif - cross"></span> Supprimer</button>';
+                            }
                         } else {
                             echo ' <textarea data-role="textarea" placeholder="Votre réponse" name="message"></textarea>
-                         <div class="grid">
-                            <div class="row">
-                                <div class="cell">
-                                    <button class="button success" onclick="location.href = `insertResponse.php`;"> Répondre</button>';
+    
+                                   <button class="button success" onclick="location.href = `insertResponse.php`;"> Répondre</button>';
+                            if ($_SESSION['role'] == 1) {
+                                echo
+                                    '<button type="button" class="button alert" onclick="location . href = `deleteQuestion.php?question='. $id_question .'`"> <span class="mif - cross"></span> Supprimer</button>';
+                            }
                         }?>
 
                     </form>
                     <?php
                     if ($_SESSION["role"] == 1) {
-                        if ($qf['status']==1){
+                        if ($qf['status']==2){
+                            echo " 
+                        <button class='button success' onclick='Metro.dialog.open(`#unblock" . $qf['secu'] . "`)'><span class='mif-cross'></span> Ré-ouvrir le sujet </button>
+                        <div id='unblock" . $qf['secu'] . "' class='dialog success' data-role='dialog'>
+                                <div class='dialog-title'>Voulez-vous vraiment ré-ouvrir <br> le sujet ?</div>
+                                <div class='dialog-actions'>
+                                    <button class='button js-dialog-close'><span class='mif-keyboard-return'></span>Retour</button>
+                                    <button class='button' onclick='location.href = `updateQuestionStatus.php?id_question=" . $qf['id_question'] . "&forum=topicUnclosed`;'><span class='mif-cross'></span> Ré-ouvrir le sujet</button>
+                                </div>
+                              </div>";
+
+                        }else if ($qf['status']==1) {
                             echo " 
                         <button class='button bg-crimson fg-white' onclick='Metro.dialog.open(`#" . $qf['secu'] . "`)'><span class='mif-cross'></span> Débloquer </button>
-                        </div>
-                        </div>
-                        </div>";
+                        <div id='" . $qf['secu'] . "' class='dialog warning' data-role='dialog'>
+                                <div class='dialog-title'>Voulez-vous vraiment débloquer les <br> réponses ?</div>
+                                <div class='dialog-actions'>
+                                    <button class='button js-dialog-close'><span class='mif-keyboard-return'></span>Retour</button>
+                                    <button class='button' onclick='location.href = `updateQuestionStatus.php?id_question=" . $qf['id_question'] . "&forum=unblock`;'><span class='mif-cross'></span> Débloquer les réponses</button>
+                                </div>
+                              </div>";
                         }else{
                             echo " 
+                        <button class='button success' onclick='Metro.dialog.open(`#block" . $qf['secu'] . "`)'><span class='mif-cross'></span> Clore le sujet </button>
+                        <div id='block" . $qf['secu'] . "' class='dialog success' data-role='dialog'>
+                                <div class='dialog-title'>Voulez-vous vraiment clore <br> le sujet ?</div>
+                                <div class='dialog-actions'>
+                                    <button class='button js-dialog-close'><span class='mif-keyboard-return'></span>Retour</button>
+                                    <button class='button' onclick='location.href = `updateQuestionStatus.php?id_question=" . $qf['id_question'] . "&forum=topicClosed`;'><span class='mif-cross'></span> Clore le sujet </button>
+                                </div>
+                              </div>";
+                            echo " 
                         <button class='button bg-crimson fg-white' onclick='Metro.dialog.open(`#" . $qf['secu'] . "`)'><span class='mif-cross'></span> Bloquer</button>
-                        </div>
-                        </div>
-                        </div>";
-                        }
-                        if ($qf['status']==1) {
-                            echo '<div id="' . $qf['secu'] . '" class="dialog warning" data-role="dialog">
-                                <div class="dialog-title">Voulez-vous vraiment débloquer les <br> réponses ?</div>
-                                <div class="dialog-actions">
-                                    <button class="button js-dialog-close"><span class="mif-keyboard-return"></span>Retour</button>
-                                    <button class="button" onclick="location.href = `reponseForum.php?id_question=' . $qf['id_question'] . '&forum=deblock`;"><span class="mif-cross"></span> Bloquer les réponses</button>
+                        <div id='" . $qf['secu'] . "' class='dialog alert' data-role='dialog'>
+                                <div class='dialog-title'>Voulez-vous vraiment bloquer les <br> réponses ?</div>
+                                <div class='dialog-actions'>
+                                    <button class='button js-dialog-close'><span class='mif-keyboard-return'></span>Retour</button>
+                                    <button class='button' onclick='location.href = `updateQuestionStatus.php?id_question=" . $qf['id_question'] . "&forum=block`;'><span class='mif-cross'></span> Bloquer les réponses</button>
                                 </div>
-                              </div>';
-                              }else{
-                            echo '
-                              <div id="' . $qf['secu'] . '" class="dialog alert" data-role="dialog">
-                                <div class="dialog-title">Voulez-vous vraiment bloquer les réponses ?</div>
-                                <div class="dialog-actions">
-                                    <button class="button js-dialog-close"><span class="mif-keyboard-return"></span>Retour</button>
-                                    <button class="button" onclick="location.href = `reponseForum.php?id_question=' . $qf['id_question'] . '&forum=block`;"><span class="mif-cross"></span> Bloquer les réponses</button>
-                                </div>
-                              </div>';
+                              </div>";
                         }
+
                     } else {
                     echo " ";
                     }?>

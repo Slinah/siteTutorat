@@ -403,7 +403,15 @@ function selectCountPersonnePropositionByIdPersonneIdProposition($idPersonne, $i
 // Return les cours clos par tuteurs et le nombres d'heures dispensées
 function selectTuteurCoursClosHeures()
 {
-    $tuteurHeure = $GLOBALS['db']->prepare('SELECT p.id_personne AS id_personne, p.nom AS nom, p.prenom AS prenom, po.intitule AS promo, SUM(c.duree) AS duree FROM personne p INNER JOIN classe cl ON p.id_classe=cl.id_classe INNER JOIN promo po ON cl.id_promo=po.id_promo INNER JOIN personne_cours pc ON p.id_personne=pc.id_personne INNER JOIN cours c ON pc.id_cours=c.id_cours WHERE c.status=1 AND pc.rang_personne=1 GROUP BY p.id_personne, p.nom, p.prenom, po.intitule ORDER BY SUM(c.duree) DESC');
+    $tuteurHeure = $GLOBALS['db']->prepare('SELECT p.id_personne AS id_personne, p.nom AS nom, p.prenom AS prenom, po.intitule AS promo, SUM(c.duree) AS duree 
+                                            FROM personne p 
+                                            INNER JOIN classe cl ON p.id_classe=cl.id_classe 
+                                            INNER JOIN promo po ON cl.id_promo=po.id_promo 
+                                            INNER JOIN personne_cours pc ON p.id_personne=pc.id_personne 
+                                            INNER JOIN cours c ON pc.id_cours=c.id_cours 
+                                            WHERE c.status=1 AND pc.rang_personne=1 
+                                            GROUP BY p.id_personne, p.nom, p.prenom, promo 
+                                            ORDER BY SUM(c.duree) DESC');
     $tuteurHeure->execute();
     $tutHeure = $tuteurHeure->fetchAll();
     return $tutHeure;
@@ -631,7 +639,7 @@ function verifExistMail($mailPersonne)
 // Check s'il y a plus d'un cours pour une promo sélectionnée
 function selectCountCoursByPromo($promo)
 {
-    $countCours = $GLOBALS['db']->prepare('SELECT COUNT(*) FROM cours c JOIN promo p ON c.id_promo=p.id_promo WHERE p.promo = :promo AND c.status = 1');
+    $countCours = $GLOBALS['db']->prepare('SELECT COUNT(*) FROM cours c JOIN promo p ON c.id_promo=p.id_promo WHERE p.intitule = :promo AND c.status = 1');
     $countCours->bindParam(":promo", $promo);
     $countCours->execute();
     $count = $countCours->fetchAll();
@@ -816,12 +824,11 @@ function selectResponseByStatusIdQuestionByDate($valueStatusResponse,$id_questio
 
 //Mise à jour V2.1
 // Sélection des réponses ayant un status particulier et filtrées par likes
-function selectResponseByStatusIdQuestionFilterByLike($valueStatusResponse,$id_question){
+function selectResponseByStatusIdQuestionFilterByLike($id_question){
     $reponses = $GLOBALS['db']->prepare('SELECT COUNT(v.id), rf.id_reponse AS id_reponse, rf.id_personne AS id_personne, 
                                                rf.message_reponse AS message, rf.id_question AS id_question, rf.status AS status, 
                                                rf.date AS date, rf.secu AS secu FROM question_forum qf JOIN reponse_forum rf ON rf.id_question=qf.id_question 
-                                            JOIN vote v ON rf.id_reponse=v.id_reponse GROUP BY rf.id_reponse ORDER BY 1 DESC');
-    $reponses->bindParam(":status", $valueStatusResponse);
+                                            JOIN vote v ON rf.id_reponse=v.id_reponse WHERE qf.id_question=:idq GROUP BY rf.id_reponse ORDER BY 1 DESC');
     $reponses->bindParam(":idq", $id_question);
     $reponses->execute();
     $reponse = $reponses->fetchAll();

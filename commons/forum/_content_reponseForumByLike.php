@@ -11,6 +11,7 @@ $check = $_REQUEST['check'];
 ?>
 <!DOCTYPE html>
 <html>
+<p><?php $id_question ?></p>
 <table class="table"
        data-role="table"
        data-rows="4"
@@ -32,7 +33,7 @@ $check = $_REQUEST['check'];
        </tr>
        </thead>
        <tbody>';
-        foreach (selectResponseByStatusIdQuestionFilterByLike($valueStatusResponse, $id_question) as $rf) {
+        foreach (selectResponseByStatusIdQuestionFilterByLike($id_question) as $rf) {
 
             echo '
             <tr>

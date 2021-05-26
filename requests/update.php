@@ -107,3 +107,13 @@ function updatePassPersonneByMail($mail, $pass)
     $passPersonne->bindParam(':mail', $mail);
     $passPersonne->execute();
 }
+
+// Mis a jour V2.1
+// Met à jour le status d'une question bloqué(1), sujet-clos (2) ou débloqué et non-clos (0)
+function updateStatusQuestion($idQuestion, $status)
+{
+    $updateQuestion =  $GLOBALS['db']->prepare('UPDATE question_forum SET status = :status WHERE id_question = :idq');
+    $updateQuestion->bindParam(":idq", $idQuestion);
+    $updateQuestion->bindParam(":status", $status);
+    $updateQuestion->execute();
+}
