@@ -640,7 +640,8 @@ function selectPersonneByIdPersonne($idPersonne)
 {
     $personne = $GLOBALS['db']->prepare('
                 SELECT p.prenom AS prenom, p.nom AS nom, p.password AS mdp, p.mail AS mail, 
-                       pro.intitule AS promo, e.intitule AS ecole, c.intitule AS classe 
+                       pro.intitule AS promo, e.intitule AS ecole, c.intitule AS classe, 
+                       e.id_ecole AS id_ecole, pro.id_promo AS id_promo
                 FROM personne p
                 JOIN classe c ON p.id_classe=c.id_classe 
                 JOIN promo pro ON pro.id_promo=c.id_promo 
@@ -946,7 +947,7 @@ function selectCountResponseByIdQuestion($idQuestion)
     return $nbResponse;
 }
 
-// Mise à jour V2.1
+// Mis à jour V2.1
 // Sélection des classes
 function selectClasses()
 {
@@ -956,7 +957,7 @@ function selectClasses()
     return $classe;
 }
 
-// Mise à jour V2.1
+// Mis à jour V2.1
 // Sélection de l'école
 function selectEcole()
 {
@@ -964,4 +965,36 @@ function selectEcole()
     $ecoles->execute();
     $ecole = $ecoles->fetchAll();
     return $ecole;
+}
+
+// Mis à jour V2.1
+// Sélection de la promo par rapport à l'école
+function selectPromoBySchoolsId($schoolId)
+{
+    $promoBySchools = $GLOBALS['db']->prepare(
+                                    "SELECT p.id_promo AS id_promo, p.intitule AS promo
+                                     FROM promo p
+                                     INNER JOIN  ecole ON p.id_ecole = ecole.id_ecole
+                                     WHERE ecole.id_ecole = :schoolId
+                                     ORDER BY p.fake_id ASC");
+    $promoBySchools->bindParam(':schoolId', $schoolId);
+    $promoBySchools->execute();
+    $promoBySchool = $promoBySchools->fetchAll();
+    return $promoBySchool;
+}
+
+// Mis à jour V2.1
+// Sélection de la classe par rapport à la promo
+function selectClassByPromo($idPromo)
+{
+    $classByPromos = $GLOBALS['db']->prepare(
+                                    "SELECT c.id_classe AS id_classe, c.intitule AS classe
+                                     FROM classe c
+                                     INNER JOIN  promo ON c.id_promo = promo.id_promo
+                                     WHERE promo.id_promo = :idp
+                                     ORDER BY c.fake_id ASC");
+    $classByPromos->bindParam(':idp', $idPromo);
+    $classByPromos->execute();
+    $classByPromo = $classByPromos->fetchAll();
+    return $classByPromo;
 }

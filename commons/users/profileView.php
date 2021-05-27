@@ -71,7 +71,7 @@ break;
                          data-show-active="true"
                          data-on-frame-open="console.log('frame was opened!', arguments[0])"
                          data-on-frame-close="console.log('frame was closed!', arguments[0])">
-    <div class="frame">
+    <div class="frame active">
         <div class="heading">Tu veux modifier tes infos de compte?</div>
         <div class="content">
             <div class="modifInfoCompte">Remplis les champs des infos que tu veux modifier et ensuite click sur la flêche pour appliquer la ou les modification(s).</div>
@@ -79,7 +79,7 @@ break;
                 <div class="card"><div class="card-header">
                         <input data-role="input" name="mail" data-prepend="Mail" value="<?php echo $personne['mail'] ?>"><button class="button light place-right" onclick="location.href = 'insertQuestion.php';">
                             <span class="mif-near-me mif-2x"></span></button><br/>
-                        <select name="ecole" data-role="select" data-filter="false" data-prepend="Le nom de ton école : ">
+                        <select id="ecole" name="ecole" data-role="select" data-filter="false" data-prepend="Le nom de ton école : ">
                             <?php
                             foreach (selectEcole() as $ecole) {
                                 $ecoleSelected = $ecole['intitule'] == $personne['ecole'] ? ' selected="selected"' : '';
@@ -87,22 +87,24 @@ break;
                             }
                             ?>
                         </select><br>
-                        <select id="promo" name="promo" data-role="select" data-filter="false" data-prepend="Ta nouvelle promo : ">
+                        <div id="divPromo">
+                            <select id="promo" name="promo" data-role="select" data-filter="false" data-prepend="Ta nouvelle promo : ">
                             <?php
-                            foreach (selectPromos() as $promo) {
-                                $promoSelected = $promo['promo'] == $personne['promo'] ? ' selected="selected"' : '';
-                                echo '<option value="' . $promo['id_promo'] . '" ' . $promoSelected . '>' . $promo['promo'] . '</option>';
+                            foreach (selectPromoBySchoolsId($personne['id_ecole'])as $promos) {
+                                $promoSelected = $promos['promo'] == $personne['promo'] ? ' selected="selected"' : '';
+                                echo '<option value="' . $promos['id_promo'] . '" ' . $promoSelected . '>' . $promos['promo'] . '</option>';
+                           }
+                            ?>
+                            </select></div><br>
+                        <div id="divClasses">
+                        <select id="classByPromo" name="classe" data-role="select" data-filter="false" data-prepend="Ta nouvelle classe : ">
+                            <?php
+                            foreach (selectClassByPromo($personne['id_promo']) as $classe){
+                                $classeSelected = $classe['classe'] == $personne['classe'] ? ' selected="selected"' : '';
+                                echo '<option value="' . $classe['id_classe'] . '" ' . $classeSelected . '>' . $classe['classe'] . '</option>';
                             }
                             ?>
-                        </select><br>
-                        <select id="classByPromo" name="classe" data-role="select" data-filter="false" data-prepend="Ta nouvelle classe : "><br>
-                            <?php
-                            foreach (selectClasses() as $classe){
-                                $classeSelected = $classe['intitule'] == $personne['classe'] ? ' selected="selected"' : '';
-                                echo '<option value="' . $classe['id_classe'] . '" ' . $classeSelected . '>' . $classe['intitule'] . '</option>';
-                            }
-                            ?>
-                            </select><br>
+                        </select></div><br>
                         <input type="password" data-role="input" name="password" placeholder="Mot de passe actuel"
                                data-prepend="Mot de passe" data-reveal-button-icon="<span class='mif-lamp mif-2x'></span>"><button class="button light place-right" onclick="location.href = 'insertQuestion.php';">
                             <span class="mif-near-me mif-2x"></span></button><br/>
@@ -120,7 +122,7 @@ break;
         </div>
     </div>
 </body>
-<script src="../js/activeMenu.js"></script>
+<script src="../../js/activeMenu.js"></script>
 <script src="../../js/modifyProfilByUser.js"></script>
 
 </html>

@@ -45,7 +45,7 @@ function updateCoursMdf($newIntitule, $newDate, $newMatiere, $idCours, $newPromo
 
 
 // Mis a jour V2.0
-// Fermeture d'un cours aporès sa réalisation
+// Fermeture d'un cours après sa réalisation
 function updateCoursClose($courseComment, $nbParticipants, $nbHeure, $idCours)
 {
     $updateCours =  $GLOBALS['db']->prepare('UPDATE cours SET commentaires = :comm, nbParticipants = :part, duree = :time, status = 1 WHERE id_cours = :idc');
@@ -57,7 +57,7 @@ function updateCoursClose($courseComment, $nbParticipants, $nbHeure, $idCours)
 }
 
 // Mis a jour V2.0
-// Met a jours un cours ou le cours est annulé
+// Met a jour un cours où le cours est annulé
 function updateCoursCancel($raison, $idCours)
 {
     $updateCours =  $GLOBALS['db']->prepare('UPDATE cours SET commentaires = :comm, status = 2 WHERE id_cours = :idc');
@@ -106,4 +106,30 @@ function updatePassPersonneByMail($mail, $pass)
     $passPersonne->bindParam(':mdp', $pass);
     $passPersonne->bindParam(':mail', $mail);
     $passPersonne->execute();
+}
+
+// Mis a jour V2.1
+// Modification du profil utilisateur
+//TODO : Utiliser ce qu'il y a au-dessus pour modifier les nouvelles données de l'utilisateur
+function updateProfilUser($newMail, $newEcole, $newPromo,$newClasse, $idPersonne, $newPassword)
+{
+    if ($newMail != '') {
+        $updateMail = $GLOBALS['db']->prepare('UPDATE personne SET mail = :mail WHERE id_personne = :idp');
+        $updateMail->bindParam(":idp", $idPersonne);
+        $updateMail->bindParam(":mail", $newMail);
+        $updateMail->execute();
+    }
+    //TODO : Faire verif ecole et promo
+    if ($newClasse != ''){
+        $updateClasse = $GLOBALS['db']->prepare('UPDATE personne SET id_classe = :idcl WHERE id_personne = :idp');
+        $updateClasse->bindParam(":idp", $idPersonne);
+        $updateClasse->bindParam(":idcl", $newClasse);
+        $updateClasse->execute();
+    }
+    if ($newPassword != ''){
+        $updatePassword = $GLOBALS['db']->prepare('UPDATE personne SET password = :pas WHERE id_personne = :idp');
+        $updatePassword->bindParam(":idp", $idPersonne);
+        $updatePassword->bindParam(":pas", $newPassword);
+        $updatePassword->execute();
+    }
 }
