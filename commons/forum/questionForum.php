@@ -51,7 +51,7 @@ break;
          data-show-active="true"
          data-on-frame-open="console.log('frame was opened!', arguments[0])"
          data-on-frame-close="console.log('frame was closed!', arguments[0])">
-    <div class="frame">
+    <div class="frame active">
         <div class="heading">Tu ne trouves pas de réponse à ta question? Vas-y balances ta question!</div>
         <div class="content">
             <div class="p-2">Petit conseil : Dans un premier temps, regardes si ta question n'a pas encore été posée... ;)</div>
@@ -73,8 +73,6 @@ break;
                             ?>
                         </select>
                         </label>
-                        <br><button class="button success" onclick="location.href = 'insertQuestion.php';">
-                    <span class="mif-checkmark"></span>Créer une question</button>
             </form>
         </div>
         </div>
