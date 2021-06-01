@@ -15,14 +15,10 @@ function checkAndUpdatePassword($personne, $tkn)
     $confirmPassword = htmlentities($_POST['confirmPassword']);
 
     if($oldPassword != '' || $newPassword != '' || $confirmPassword != '' ){
-        // gere le cas où un des champs password ne sont pas rempli
         if (isEmptyPasswordFields($oldPassword, $newPassword, $confirmPassword)
             //gère le cas où le mot de passe existe déjà
             || password_verify($oldPassword, $personne['mdp'])
-            //gère le cas où le mot de passe confirmé est différent du mot de passe renseigné
-            || isPasswordAreDifferent($confirmPassword, $newPassword)
-            //gère si le mot de passe d'origine est égal au nouveau mot de passe
-            //ou si le mot de passe d'origine est égal au mot de passe confirmé
+            || arePasswordDifferent($confirmPassword, $newPassword)
             || isSamePassword($oldPassword, $newPassword, $confirmPassword)){
             header('location: profileView.php?users=passError');
             exit;
@@ -41,6 +37,8 @@ function checkAndUpdatePassword($personne, $tkn)
  * @param $confirmPassword
  * @return bool
  */
+//gère si le mot de passe d'origine est égal au nouveau mot de passe
+//ou si le mot de passe d'origine est égal au mot de passe confirmé
 function isSamePassword($oldPassword, $newPassword, $confirmPassword)
 {
     return (($oldPassword == $newPassword) || ($oldPassword == $confirmPassword));
@@ -51,7 +49,8 @@ function isSamePassword($oldPassword, $newPassword, $confirmPassword)
  * @param $newPassword
  * @return bool
  */
-function isPasswordAreDifferent($confirmPassword, $newPassword)
+//gère le cas où le mot de passe confirmé est différent du mot de passe renseigné
+function arePasswordDifferent($confirmPassword, $newPassword)
 {
     return ($confirmPassword != $newPassword);
 }
@@ -62,6 +61,7 @@ function isPasswordAreDifferent($confirmPassword, $newPassword)
  * @param $confirmPassword
  * @return bool
  */
+// gere le cas où un des champs password ne sont pas rempli
 function isEmptyPasswordFields($oldPassword, $newPassword, $confirmPassword)
 {
     return $oldPassword == '' || $newPassword == '' || $confirmPassword == '';
