@@ -25,8 +25,6 @@ function checkAndUpdatePassword($personne, $tkn)
         }else {
             updatePassword(password_hash($newPassword, PASSWORD_BCRYPT), $personne['id']);
             updateToken($tkn, $personne['id']);
-            var_dump($newPassword);
-            die();
         }
     }
 }
