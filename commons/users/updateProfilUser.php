@@ -5,8 +5,10 @@ require_once '../../requests/update.php';
 
 $userTkn = selectTokenByIdPersonne($_SESSION['id_personne']);
 /**
- * @param $personne
- * @param $tkn
+ * Check si le formulaire est renseigné de façon sécurisée et correctement
+ *
+ * @param $personne array informations de l'utilisateur en base de donnees
+ * @param $tkn string token de securite sur roles
  */
 function checkAndUpdatePassword($personne, $tkn)
 {
@@ -30,44 +32,51 @@ function checkAndUpdatePassword($personne, $tkn)
 }
 
 /**
- * @param $oldPassword
- * @param $newPassword
- * @param $confirmPassword
- * @return bool
+ * gère si le mot de passe d'origine est égal au nouveau mot de passe
+ * ou si le mot de passe d'origine est égal au mot de passe confirmé
+ *
+ * @param $oldPassword string l'ancien mot de passe
+ * @param $newPassword string le nouveau mot de passe
+ * @param $confirmPassword string confirmation du nouveau mot de passe
+ * @return bool true si les deux mots de passes sont identiques
  */
-//gère si le mot de passe d'origine est égal au nouveau mot de passe
-//ou si le mot de passe d'origine est égal au mot de passe confirmé
+
 function isSamePassword($oldPassword, $newPassword, $confirmPassword)
 {
     return (($oldPassword == $newPassword) || ($oldPassword == $confirmPassword));
 }
 
 /**
- * @param $confirmPassword
- * @param $newPassword
- * @return bool
+ * gère le cas où le mot de passe confirmé est différent du mot de passe renseigné
+ *
+ * @param $confirmPassword string confirmation du nouveau mot de passe
+ * @param $newPassword string le nouveau mot de passe
+ * @return bool true si les deux mots de passes sont différents
  */
-//gère le cas où le mot de passe confirmé est différent du mot de passe renseigné
+
 function arePasswordDifferent($confirmPassword, $newPassword)
 {
     return ($confirmPassword != $newPassword);
 }
 
 /**
- * @param $oldPassword
- * @param $newPassword
- * @param $confirmPassword
- * @return bool
+ * gère le cas où un des champs password ne sont pas rempli
+ *
+ * @param $oldPassword string l'ancien mot de passe
+ * @param $newPassword string le nouveau mot de passe
+ * @param $confirmPassword string confirmation du nouveau mot de passe
+ * @return bool true si un des mots de passe est vide
  */
-// gere le cas où un des champs password ne sont pas rempli
 function isEmptyPasswordFields($oldPassword, $newPassword, $confirmPassword)
 {
     return $oldPassword == '' || $newPassword == '' || $confirmPassword == '';
 }
 
 /**
- * @param $personne
- * @param $tkn
+ * Modification de la classe de l'utilisateur en base de données
+ *
+ * @param $personne array informations de l'utilisateur en base de donnees
+ * @param $tkn string token de securite sur roles
  */
 function updateClasse($personne, $tkn)
 {
@@ -85,8 +94,10 @@ function updateClasse($personne, $tkn)
 }
 
 /**
- * @param $personne
- * @param $tkn
+ * Modification du mail de l'utilisateur en base de données
+ *
+ * @param $personne array informations de l'utilisateur en base de donnees
+ * @param $tkn string token de securite sur roles
  */
 function updateMail($personne, $tkn)
 {
