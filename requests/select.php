@@ -491,14 +491,30 @@ function selectParticipantsMatiereByIdPromo($idPromo)
 
 // Mis à jour V2.1
 // Return le nombre de participants par mois par id de promo
-function selectPartMoisByIdPromo($idPromo)
+function selectPartMoisByFakeIdPromo($fakeidPromo)
 {
-    $partMois = $GLOBALS['db']->prepare('SELECT SUM(c.nbParticipants) AS participants, MONTH(c.date) AS mois FROM cours c INNER JOIN promo p ON c.id_promo=p.id_promo WHERE c.status=1 AND p.id_promo=:idp GROUP BY MONTH(c.date) ORDER BY MONTH(c.date)');
-    $partMois->bindParam(':idp', $idPromo);
+    $partMois = $GLOBALS['db']->prepare('SELECT SUM(c.nbParticipants) AS participants, MONTH(c.date) AS mois 
+                                         FROM cours c JOIN promo p on p.id_promo = c.id_promo
+                                         WHERE c.status=1 AND p.fake_id=:idfp AND date BETWEEN CONCAT(YEAR(NOW())-1,"-10-01") AND CONCAT(YEAR(NOW()),"-",MONTH(NOW()),"-",DAY(NOW()))
+                                         GROUP BY MONTH(c.date) ORDER BY MONTH(c.date)');
+    $partMois->bindParam(':idfp', $fakeidPromo);
     $partMois->execute();
     $part = $partMois->fetchAll();
     return $part;
 }
+
+function selectPartMoisByFakeIdPromoLastYear($fakeidPromo)
+{
+    $partMois = $GLOBALS['db']->prepare('SELECT SUM(c.nbParticipants) AS participants, MONTH(c.date) AS mois 
+                                         FROM cours c JOIN promo p on p.id_promo = c.id_promo
+                                         WHERE c.status=1 AND p.fake_id=:idfp AND date BETWEEN CONCAT(YEAR(NOW())-2,"-10-01") AND CONCAT(YEAR(NOW())-1,"-09-30")
+                                         GROUP BY MONTH(c.date) ORDER BY MONTH(c.date)');
+    $partMois->bindParam(':idfp', $fakeidPromo);
+    $partMois->execute();
+    $part = $partMois->fetchAll();
+    return $part;
+}
+
 
 // Mis à jour V2.1
 // Return les logs
@@ -639,6 +655,7 @@ function verifExistMail($mailPersonne)
 // Check s'il y a plus d'un cours pour une promo sélectionnée
 function selectCountCoursByPromo($promo)
 {
+    //$countCours = $GLOBALS['db']->prepare('SELECT COUNT(*) FROM cours c JOIN cours_promo cp on c.id_cours = cp.id_cours JOIN promo p on p.id_promo = cp.id_promo WHERE p.intitule = :promo AND c.status = 1');
     $countCours = $GLOBALS['db']->prepare('SELECT COUNT(*) FROM cours c JOIN promo p ON c.id_promo=p.id_promo WHERE p.intitule = :promo AND c.status = 1');
     $countCours->bindParam(":promo", $promo);
     $countCours->execute();
@@ -655,7 +672,13 @@ function selectCountCoursByPromo($promo)
 // Select le nb de participants a un cours
 function selectInscritParticipantsCours($promo)
 {
-    $inscPart = $GLOBALS['db']->prepare('SELECT DATE_FORMAT(c.date, "%d %M %Y") AS date, m.intitule AS matiere, c.nbParticipants AS participants, p.intitule AS niveau FROM cours c JOIN matiere m ON c.id_matiere=m.id_matiere JOIN promo p ON c.id_promo=p.id_promo WHERE p.id_promo=:idp AND c.status > 0 ORDER BY c.date ASC');
+    $inscPart = $GLOBALS['db']->prepare('SELECT DATE_FORMAT(c.date, "%d %M %Y") AS dateux, 
+                                         m.intitule AS matiere, c.nbParticipants AS participants, 
+                                         p.intitule AS niveau, COUNT(pi.id_personne) AS inscrits
+                                         FROM cours c JOIN matiere m ON c.id_matiere=m.id_matiere 
+                                         JOIN promo p ON c.id_promo=p.id_promo
+                                         JOIN personne_cours pi ON c.id_cours = pi.id_cours
+                                         WHERE p.id_promo=:promo AND c.status > 0 ORDER BY dateux ASC');
     $inscPart->bindParam(":promo", $promo);
     $inscPart->execute();
     $insc = $inscPart->fetchAll();
