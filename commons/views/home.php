@@ -64,7 +64,7 @@ include_once '../../bases/head.php';
                 <span class="mif-sunrise"></span> En t'inscrivant à un cours, tu t'engages à venir à ce cours (Tu peux t'en désinscrire, et prévenir le tuteur, pour qu'il ne se retrouve pas seul au cours).<br><br>
                 <span class="mif-sunrise"></span> En tant que tuteur, tu t'engages à venir au cours que tu as proposé (Tu peux l'annuler, puis prévenir sur le discord que le cours n'aura pas lieu).<br><br>
                 <span class="mif-sunrise"></span> Quand tu viens à un cours, essaye de rester calme (C'est jamais plaisant pour un tuteur de voir que des gens volontaires ne l'écoutent pas).<br><br>
-                <span class="mif-sunrise"></span> Quand tu postes une question ou une réponse, fais attention à bien être respectueux. On a pas tous le même niveau, le forum est là pour apporter son aide, pas pour juger (Un peu d'humanité dans ce monde de bête ;) ).
+                <span class="mif-sunrise"></span> Quand tu postes une question ou une réponse, fais attention à bien être respectueux. On a pas tous le même niveau, le forum est là pour apporter son aide, pas pour juger (Un peu d'humanité dans ce monde de bête <span class="mif-swarm ani-bounce fg-amber"></span> ).
             </div>
         </div>
     </div><br><br>

@@ -43,7 +43,7 @@ switch ($_GET["users"]) {
             $(document).ready(function(){
                 Metro.dialog.create({
                     title: "Erreur d email",
-                    content: "<div>Cette adresse mail n est pas valide.</div>",
+                    content: "<div>Cette adresse mail n\'est pas valide.</div>",
                     closeButton: true
                 });
             });
