@@ -36,31 +36,39 @@
     <div class="row">
         <div class="cell-4 offset-1">
             <div id="globalPart"></div>
+            <!--            Graphique du nombre d'heures de participation des tuteurs -->
             <div id="globalChartParticipationDiv"><canvas id="globalChartParticipation" width="100" height="100"></canvas></div>
         </div>
         <div class="cell-4 offset-2">
             <div id="globalMat"></div>
+            <!--            Graphique du nombre d'heures données des matières-->
             <div id="globalChartMatiereDiv"><canvas id="globalChartMatiere" width="100" height="100"></canvas></div>
         </div>
     </div>
+    <div class="grid">
     <div class="row">
-        <div class="cell-5">
+        <div class="cell-4 offset-1">
             <div id="heuresM"></div>
+            <!--            Graphique représentant le nombre d'heures de tutorats par matières -->
             <div id="heureMatDiv"><canvas id="heuresMat" width="100" height="100"></canvas></div>
         </div>
-        <div class="cell-5 offset-2">
+        <div class="cell-4 offset-2">
             <div id="partM"></div>
+            <!--            Graphique représentant l'évolution du nombre de participants par mois -->
             <div id="partMoisDiv"><canvas id="partMois" width="100" height="100"></canvas></div>
         </div>
     </div>
     <div class="row">
-        <div class="cell-5">
+        <div class="cell-4 offset-1">
             <div id="partI"></div>
+            <!--            Graphique représentant le nombre de participants par rapport au nombre d'inscrits-->
             <div id="partInscDiv"><canvas id="partInsc" width="100" height="100"></canvas></div>
         </div>
-        <div class="cell-5 offset-2">
+        <div class="cell-4 offset-2">
             <div id="partP"></div>
+            <!--            Diagramme représentant le nombre de partipants par matière -->
             <div id="partPercentDiv"><canvas id="partPercent" width="100" height="100"></canvas></div>
         </div>
+    </div>
     </div>
 </body>

@@ -1,15 +1,115 @@
-// faire un function save a appelé une fois le graph fait
-// faire une fonction restore
+//fonction qui gère les graphiques globaux
+function graphGlobaux(){
+    // on effacent les textes des graphiques si on a choisit une promo particulière
+    $('#heuresM').text('');
+    $('#partM').text('');
+    $('#partI').text('');
+    $('#partP').text('');
+    //inscrit le titre au dessus des 2 graphiques globaux
+    $('#globalPart').text('Graphique du nombre d\'heures de participation des tuteurs');
+    $('#globalMat').text('Graphique du nombre d\'heures données des matières');
 
-function saveGraph(chart) {
-    chart.save();
-    return chart
+    // Graphique du nombre d'heures données des matières
+    // création des tableaux (sommes des matières, sommes d'heures, sommes des couleurs et bordures)
+    let arrayMatiereSum = new Array;
+    let arrayHeureSum = new Array;
+    let arrayColorSum = new Array;
+    let arrayBorderColorSum = new Array();
+    // appel de la page qui va faire la requête
+    $.post("chartRequests/getGlobalChartMat.php",
+        function (tabInfos) {
+        //on récupère les infos de la requête et on les push dans les différents tableaux
+            var allJson = JSON.parse(tabInfos);
+            for (i = 0; i < allJson.length; i++) {
+                //ajoute les matières et les durées une part une avec la boucle
+                arrayMatiereSum.push(allJson[i]['matiere']);
+                arrayHeureSum.push(allJson[i]['duree']);
+                //ajoute les infos sur la couleur (aléatoire) + bordure
+                arrayColorSum.push('rgba(' + Math.floor(Math.random() * 256) + ', ' + Math.floor(Math.random() * 256) + ', ' + Math.floor(Math.random() * 256) + ', 0.2)');
+                arrayBorderColorSum.push('rgba(0, 0, 0)');
+            }
+        }).done(function () {
+        // on attend que l'autre fonction soit terminée
+        // retourne un context de dessin en 2D dans la div globalChartMatiere
+        var ctxhparmatiere = document.getElementById('globalChartMatiere').getContext('2d');
+        //Création du Graphique à partir des différents tableaux
+        var myChart = new Chart(ctxhparmatiere, {
+            type: 'horizontalBar',
+            data: {
+                labels: arrayMatiereSum,
+                datasets: [{
+                    label: 'Somme Heures/Matières (Global)',
+                    data: arrayHeureSum,
+                    backgroundColor: arrayColorSum,
+                    borderColor: arrayBorderColorSum,
+                    borderWidth: 0.2
+                }]
+            },
+            options: {
+                scales: {
+                    xAxes: [{
+                        ticks: {
+                            beginAtZero: true,
+                            stepSize: 1
+                        }
+                    }]
+                }
+            }
+        });
+
+    })
+
+    // Graphique du nombre d'heures de participation des tuteurs
+    //création de tableaux pour les Tuteurs, Heures, couleurs aléatoires et bordures
+    let arrayTuteurPart = new Array;
+    let arrayHeurePart = new Array;
+    let arrayColorPart = new Array;
+    let arrayBorderColorPart = new Array();
+    $.post("chartRequests/getGlobalChartPart.php",
+        function (tabInfos) {
+            //on récupère les infos de la requête et on les push dans les différents tableaux
+            var allJson = JSON.parse(tabInfos);
+            for (i = 0; i < allJson.length; i++) {
+                arrayTuteurPart.push(allJson[i]['prenom'] + ' ' + allJson[i]['nom'] + ' (' + allJson[i]['promo'] + ')');
+                arrayHeurePart.push(allJson[i]['duree']);
+                arrayColorPart.push('rgba(' + Math.floor(Math.random() * 256) + ', ' + Math.floor(Math.random() * 256) + ', ' + Math.floor(Math.random() * 256) + ', 0.2)');
+                arrayBorderColorPart.push('rgba(0, 0, 0)');
+            }
+        }).done(function () {
+        // on attend que l'autre fonction soit terminée
+        // retourne un context de dessin en 2D dans la div globalChartParticipation
+        var ctxhpartuteurs = document.getElementById('globalChartParticipation').getContext('2d');
+        //Création du Graphique à partir des différents tableaux
+        var myChart = new Chart(ctxhpartuteurs, {
+            type: 'bar',
+            data: {
+                labels: arrayTuteurPart,
+                datasets: [{
+                    label: 'Participation (en heures)',
+                    data: arrayHeurePart,
+                    backgroundColor: arrayColorPart,
+                    borderColor: arrayBorderColorPart,
+                    borderWidth: 0.2
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true,
+                            stepSize: 1
+                        }
+                    }]
+                }
+            }
+        });
+    })
+
 }
 
-
-//fonction pour le graphique qui affiche le pourcentage de participants par matière ??
+//fonction pour le Diagramme représentant le nombre de partipants par matière
 function partPercent(promo) {
-    //création des tableaux de matières et de pourcentage
+    //création des tableaux de matières, du nombre de participants, couleurs aléatoires et bordures
     let arrayMatPie = new Array;
     let arrayPercentPie = new Array;
     let arrayColorPie = new Array;
@@ -18,16 +118,19 @@ function partPercent(promo) {
         // récupération/envoie de idpromo
         idPromo: promo
     }, function (tabInfos) {
+        //on récupère les infos de la requête et on les push dans les différents tableaux
         var allJson = JSON.parse(tabInfos);
         for (i = 0; i < allJson.length; i++) {
-            // ajoute les matieres et les partipants
             arrayMatPie.push(allJson[i]['matiere']);
             arrayPercentPie.push(allJson[i]['participants']);
             arrayColorPie.push('rgba(' + Math.floor(Math.random() * 256) + ', ' + Math.floor(Math.random() * 256) + ', ' + Math.floor(Math.random() * 256) + ', 0.2)');
             arrayBorderColorPie.push('rgba(0, 0, 0)');
         }
     }).done(function () {
+        // on attend que l'autre fonction soit terminée
+        // retourne un context de dessin en 2D dans la div globalChartParticipation
         var ctxpercentparmat = document.getElementById('partPercent').getContext('2d');
+        //Création du Graphique à partir des différents tableaux
         var myChart = new Chart(ctxpercentparmat, {
             type: 'pie',
             data: {
@@ -51,18 +154,18 @@ function partPercent(promo) {
                 }
             }
         });
-        saveGraph(ctxpercentparmat);
     })
 }
 
-//fonction pour le graph du nombre de participants inscrits ??
+//fonction pour le graphique du nombre de participants par rapport au nombre d'inscrits
 function partInsc(promo) {
-    // création des
+    //création des tableaux d'Inscrits, du nombre de participants, de dates et des mois
     let arrayInsc = new Array;
     let arrayPart = new Array;
     let arrayDate = new Array;
     let arrayMois = new Array("Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre");
     $.post("chartRequests/getPartInsc.php", {
+        // récupération/envoie de idpromo
         idPromo: promo
     }, function (arrayJSON) {
         var jsonPartInsc = JSON.parse(arrayJSON);
@@ -73,25 +176,27 @@ function partInsc(promo) {
             } else {
                 arrayPart.push(jsonPartInsc[i]['participants']);
             }
-            let dt = new Date(jsonPartInsc[i]['date']);
+            let dt = new Date(jsonPartInsc[i]['datee']);
             arrayDate.push(jsonPartInsc[i]['matiere'] + ' (' + dt.getDate() + ' ' + arrayMois[dt.getMonth()] + ')');
         }
     }).done(function () {
         var chartInsc = document.getElementById("partInsc");
-
+        console.log(arrayDate)
 
         var inscritData = {
             label: 'Inscrits',
             data: arrayInsc,
-            backgroundColor: 'rgba(0, 99, 132, 0.6)',
-            borderWidth: 0
+            backgroundColor: 'rgba(' + Math.floor(Math.random() * 256) + ', ' + Math.floor(Math.random() * 256) + ', ' + Math.floor(Math.random() * 256) + ', 0.2)' ,
+            borderWidth: 0.2,
+            borderColor: 'rgba(0, 0, 0)',
         };
 
         var participantData = {
             label: 'Participants',
             data: arrayPart,
-            backgroundColor: 'rgba(99, 132, 0, 0.6)',
-            borderWidth: 0
+            backgroundColor: 'rgba(' + Math.floor(Math.random() * 256) + ', ' + Math.floor(Math.random() * 256) + ', ' + Math.floor(Math.random() * 256) + ', 0.2)',
+            borderWidth: 0.2,
+            borderColor: 'rgba(0, 0, 0)',
         };
 
         var peopleData = {
@@ -153,9 +258,6 @@ function partMois(promo) {
             }
 
     }).done(function () {
-        console.log(arrayMoisLine)
-        console.log(arrayRecap)
-        console.log(arrayPartLine)
         var b = document.getElementById('partMois').getContext('2d');
 
         var recapData = {
@@ -222,6 +324,8 @@ function heuresMat(promo) {
         }
     }).done(function () {
         var c = document.getElementById('heuresMat').getContext('2d');
+        console.log(arrayMatBar)
+        console.log(arrayHeureBar)
         var myChart = new Chart(c, {
             type: 'bar',
             data: {
@@ -254,141 +358,17 @@ function callJs(promo) {
     // on vérifie si une promo a été choisie
     // si non :
     if (promo === 0) {
-        // on vide les textes ? (des div en bas de la page)
-        $('#heuresM').text('');
-        $('#partM').text('');
-        $('#partI').text('');
-        $('#partP').text('');
-        //si on a changé de choix et que l'on a déjà fait une sauvegarde, on restaure les canvas
-        // $('#heureMatDiv').text('');
-        //$('#heureMat').restore();
-        // $('#partMoisDiv').text('');
-       // $('#partMois').restore();
-        // $('#partInscDiv').text('');
-       // $('#partInsc').restore();
-        // $('#partPercentDiv').text('');
-        //$('#partPercent').restore();
-
-        //(inscrit le titre au dessus des 2 graphiques globaux)
-        $('#globalPart').text('Graphique du nombre d\'heures de participation des tuteurs');
-        $('#globalMat').text('Graphique du nombre d\'heures données des matières');
-        // création des tableaux (sommes des matières, sommes d'heures, sommes des couleurs et bordures
-        let arrayMatiereSum = new Array;
-        let arrayHeureSum = new Array;
-        let arrayColorSum = new Array;
-        let arrayBorderColorSum = new Array();
-        // appel de la page qui va faire la requête
-        $.post("chartRequests/getGlobalChartMat.php",
-            //envoie des informations
-            function (tabInfos) {
-                var allJson = JSON.parse(tabInfos);
-                for (i = 0; i < allJson.length; i++) {
-                    //ajoute les matières et les durées une part une avec la boucle
-                    arrayMatiereSum.push(allJson[i]['matiere']);
-                    arrayHeureSum.push(allJson[i]['duree']);
-                    //ajoute les infos sur la couleur (aléatoire) + bordure
-                    arrayColorSum.push('rgba(' + Math.floor(Math.random() * 256) + ', ' + Math.floor(Math.random() * 256) + ', ' + Math.floor(Math.random() * 256) + ', 0.2)');
-                    arrayBorderColorSum.push('rgba(0, 0, 0)');
-                }
-            }).done(function () {
-                // on attend que l'autre fonction soit terminée
-                // retourne un context de dessin en 2D dans la div globalChartMatiere
-                var ctxhparmatiere = document.getElementById('globalChartMatiere').getContext('2d');
-                var myChart = new Chart(ctxhparmatiere, {
-                    type: 'horizontalBar',
-                    data: {
-                        labels: arrayMatiereSum,
-                        datasets: [{
-                            label: 'Somme Heures/Matières (Global)',
-                            data: arrayHeureSum,
-                            backgroundColor: arrayColorSum,
-                            borderColor: arrayBorderColorSum,
-                            borderWidth: 0.2
-                        }]
-                    },
-                    options: {
-                        scales: {
-                            xAxes: [{
-                                ticks: {
-                                    beginAtZero: true,
-                                    stepSize: 1
-                                }
-                            }]
-                        }
-                    }
-                });
-                saveGraph(ctxhparmatiere);
-            })
-        //création de tableaux pour le graph des heures par tuteurs
-        let arrayTuteurPart = new Array;
-        let arrayHeurePart = new Array;
-        let arrayColorPart = new Array;
-        let arrayBorderColorPart = new Array();
-        $.post("chartRequests/getGlobalChartPart.php",
-            function (tabInfos) {
-                var allJson = JSON.parse(tabInfos);
-                for (i = 0; i < allJson.length; i++) {
-                    arrayTuteurPart.push(allJson[i]['prenom'] + ' ' + allJson[i]['nom'] + ' (' + allJson[i]['promo'] + ')');
-                    arrayHeurePart.push(allJson[i]['duree']);
-                    arrayColorPart.push('rgba(' + Math.floor(Math.random() * 256) + ', ' + Math.floor(Math.random() * 256) + ', ' + Math.floor(Math.random() * 256) + ', 0.2)');
-                    arrayBorderColorPart.push('rgba(0, 0, 0)');
-                }
-            }).done(function () {
-                var ctxhpartuteurs = document.getElementById('globalChartParticipation').getContext('2d');
-                var myChart = new Chart(ctxhpartuteurs, {
-                    type: 'bar',
-                    data: {
-                        labels: arrayTuteurPart,
-                        datasets: [{
-                            label: 'Participation (en heures)',
-                            data: arrayHeurePart,
-                            backgroundColor: arrayColorPart,
-                            borderColor: arrayBorderColorPart,
-                            borderWidth: 0.2
-                        }]
-                    },
-                    options: {
-                        scales: {
-                            yAxes: [{
-                                ticks: {
-                                    beginAtZero: true,
-                                    stepSize: 1
-                                }
-                            }]
-                        }
-                    }
-                });
-                saveGraph(ctxhpartuteurs);
-            })
+        graphGlobaux();
     } else {
-
         //si la promo a été choisie
         //effacer ce qu'il y a de noté dans les div des graph globaux sur les h/tuteurs et h/matieres
         $('#globalMat').text('');
         $('#globalPart').text('');
-        $('#globalChartMatiereDiv').text('');
-        $('#globalChartParticipationDiv').text('');
         //on insère le titres des autres graph
-        $('#heuresM').text('Heures de tutorats par matières');
-        $('#partM').text('Participants par mois');
-        $('#partI').text('Nombre de participants par rapport au nombre d\'inscrits');
-        $('#partP').text('Nombre de participants par matières');
-
-        //on restaure les graph s'ils ont déjà été lancés
-
-        // $('#heureMatDiv').text('');
-        // $('#heuresMat').restore();
-        // document.getElementById('#heuresMat').getContext('2d').restore();
-        // // $('#partMoisDiv').text('');
-        // // $('#partMois').restore();
-        // document.getElementById('#partMois').getContext('2d').restore();
-        // // $('#partInscDiv').text('');
-        // // $('#partInsc').restore();
-        // document.getElementById('#partInsc').getContext('2d').restore();
-        // // $('#partPercentDiv').text('');
-        // // $('#partPercent').restore();
-        // document.getElementById('#partPercent').getContext('2d').restore();
-        // //on appelle les fonctions qui s'occupent de ces graph et on leur passe la promo choisie
+        $('#heuresM').text('Graphique représentant le nombre d\'heures de tutorats par matières');
+        $('#partM').text('Graphique représentant l\'évolution du nombre de participants par mois');
+        $('#partI').text('Graphique représentant le nombre de participants par rapport au nombre d\'inscrits');
+        $('#partP').text('Diagramme représentant le nombre de partipants par matière ');
         heuresMat(promo);
         partMois(promo);
         partInsc(promo);
