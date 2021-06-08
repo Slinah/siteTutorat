@@ -73,6 +73,9 @@ break;
                             ?>
                         </select>
                         </label>
+                        <br><button class="button success" onclick="location.href = 'insertQuestion.php';">
+                            <span class="mif-checkmark"></span>
+                            Créer une question</button>
             </form>
         </div>
         </div>
