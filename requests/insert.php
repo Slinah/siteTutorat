@@ -130,7 +130,7 @@ function insertQuestion($idQuestion, $titreQuestion, $descriptionQuestion, $idPe
     $question->bindParam(":idm", $idMatiere);
     $question->execute();
 }
-// Mis a jour V2.0
+// Mis a jour V2.1
 // Insertion d'une réponse
 function insertReponse($idReponse, $messageReponse, $idPersonne, $idQuestion, $secuCode)
 {
@@ -143,7 +143,7 @@ function insertReponse($idReponse, $messageReponse, $idPersonne, $idQuestion, $s
     $reponse->execute();
 }
 
-// Mis a jour V2.0
+// Mis a jour V2.1
 // Insertion du lien personnne reponse (Like)
 function insertPersonneLike($idPersonne, $idReponse)
 {

@@ -15,7 +15,7 @@ if (!isset ($_REQUEST['check']) ) {
 }
 ?>
 <!DOCTYPE html>
-<html>
+
 <table class="table"
        data-role="table"
        data-rows="4"

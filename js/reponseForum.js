@@ -1,14 +1,12 @@
 $(document).ready(function(){
     $("#filterReponse").click(function(){
-        var thisCheck = $(this);
-        let truc = 2;
+        let thisCheck = $(this);
         if (thisCheck.is (':checked'))
         {
             $.post(
                 './_content_reponseForumByLike.php', {
                     // Récupération des valeur id_question pour le select pour afficher la réponse
                     idQuestion : $("#idQuestion").val(),
-                    truc
                 },
 
                 function(){

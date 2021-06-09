@@ -11,7 +11,6 @@ $check = $_REQUEST['check'];
 ?>
 <!DOCTYPE html>
 <html>
-<p><?php $id_question ?></p>
 <table class="table"
        data-role="table"
        data-rows="4"
