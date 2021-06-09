@@ -2,8 +2,8 @@
 require_once '../requests/select.php';
 
 function getPromoChartPartMois(){
-    $idPromo = $_REQUEST['idPromo'];
-    $json = json_encode(selectPartMoisByIdPromo($idPromo));
+    $fakeidPromo = $_REQUEST['fakeidPromo'];
+    $json = json_encode(selectPartMoisByFakeIdPromoLastYear($fakeidPromo));
     echo $json;
 }
 

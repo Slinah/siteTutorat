@@ -403,7 +403,15 @@ function selectCountPersonnePropositionByIdPersonneIdProposition($idPersonne, $i
 // Return les cours clos par tuteurs et le nombres d'heures dispensées
 function selectTuteurCoursClosHeures()
 {
-    $tuteurHeure = $GLOBALS['db']->prepare('SELECT p.id_personne AS id_personne, p.nom AS nom, p.prenom AS prenom, po.intitule AS promo, SUM(c.duree) AS duree FROM personne p INNER JOIN classe cl ON p.id_classe=cl.id_classe INNER JOIN promo po ON cl.id_promo=po.id_promo INNER JOIN personne_cours pc ON p.id_personne=pc.id_personne INNER JOIN cours c ON pc.id_cours=c.id_cours WHERE c.status=1 AND pc.rang_personne=1 GROUP BY p.id_personne, p.nom, p.prenom, po.intitule ORDER BY SUM(c.duree) DESC');
+    $tuteurHeure = $GLOBALS['db']->prepare('SELECT p.id_personne AS id_personne, p.nom AS nom, p.prenom AS prenom, po.intitule AS promo, SUM(c.duree) AS duree 
+                                            FROM personne p 
+                                            INNER JOIN classe cl ON p.id_classe=cl.id_classe 
+                                            INNER JOIN promo po ON cl.id_promo=po.id_promo 
+                                            INNER JOIN personne_cours pc ON p.id_personne=pc.id_personne 
+                                            INNER JOIN cours c ON pc.id_cours=c.id_cours 
+                                            WHERE c.status=1 AND pc.rang_personne=1 
+                                            GROUP BY p.id_personne, p.nom, p.prenom, promo 
+                                            ORDER BY SUM(c.duree) DESC');
     $tuteurHeure->execute();
     $tutHeure = $tuteurHeure->fetchAll();
     return $tutHeure;
@@ -461,10 +469,10 @@ function selectHeuresTotal()
 
 // Mise à jour V2.1
 // Return le nombre d'heures par matière par id de promo
-function selectMatieresHeuresByIdPromo($idPromo)
+function selectMatieresHeuresByFakeIdPromo($FakeidPromo)
 {
-    $heureMatiere = $GLOBALS['db']->prepare('SELECT SUM(c.duree) AS duree, m.intitule AS matiere FROM cours c INNER JOIN matiere m ON c.id_matiere=m.id_matiere INNER JOIN promo p ON c.id_promo=p.id_promo WHERE c.status=1 AND p.id_promo=:idp GROUP BY m.intitule ORDER BY SUM(c.duree) DESC');
-    $heureMatiere->bindParam(':idp', $idPromo);
+    $heureMatiere = $GLOBALS['db']->prepare('SELECT SUM(c.duree) AS duree, m.intitule AS matiere FROM cours c INNER JOIN matiere m ON c.id_matiere=m.id_matiere INNER JOIN promo p ON c.id_promo=p.id_promo WHERE c.status=1 AND p.fake_id=:idfp GROUP BY m.intitule ORDER BY SUM(c.duree) DESC');
+    $heureMatiere->bindParam(':idfp', $FakeidPromo);
     $heureMatiere->execute();
     $heure = $heureMatiere->fetchAll();
     return $heure;
@@ -472,10 +480,10 @@ function selectMatieresHeuresByIdPromo($idPromo)
 
 // Mise à jour V2.1
 // Return le nombre de participants par matière par id de promo
-function selectParticipantsMatiereByIdPromo($idPromo)
+function selectParticipantsMatiereByFakeIdPromo($fakeIdPromo)
 {
-    $nbParticipant = $GLOBALS['db']->prepare('SELECT m.intitule AS matiere, SUM(c.nbParticipants) AS participants FROM cours c INNER JOIN matiere m ON c.id_matiere=m.id_matiere INNER JOIN promo p ON c.id_promo=p.id_promo WHERE c.status=1 AND p.id_promo=:idp GROUP BY m.intitule');
-    $nbParticipant->bindParam(':idp', $idPromo);
+    $nbParticipant = $GLOBALS['db']->prepare('SELECT m.intitule AS matiere, SUM(c.nbParticipants) AS participants FROM cours c INNER JOIN matiere m ON c.id_matiere=m.id_matiere INNER JOIN promo p ON c.id_promo=p.id_promo WHERE c.status=1 AND p.fake_id=:idfp GROUP BY m.intitule');
+    $nbParticipant->bindParam(':idfp', $fakeIdPromo);
     $nbParticipant->execute();
     $nbPart = $nbParticipant->fetchAll();
     return $nbPart;
@@ -483,10 +491,25 @@ function selectParticipantsMatiereByIdPromo($idPromo)
 
 // Mise à jour V2.1
 // Return le nombre de participants par mois par id de promo
-function selectPartMoisByIdPromo($idPromo)
+function selectPartMoisByFakeIdPromoThisYear($fakeidPromo)
 {
-    $partMois = $GLOBALS['db']->prepare('SELECT SUM(c.nbParticipants) AS participants, MONTH(c.date) AS mois FROM cours c INNER JOIN promo p ON c.id_promo=p.id_promo WHERE c.status=1 AND p.id_promo=:idp GROUP BY MONTH(c.date) ORDER BY MONTH(c.date)');
-    $partMois->bindParam(':idp', $idPromo);
+    $partMois = $GLOBALS['db']->prepare('SELECT SUM(c.nbParticipants) AS participants, MONTH(c.date) AS mois 
+                                         FROM cours c JOIN promo p on p.id_promo = c.id_promo
+                                         WHERE c.status=1 AND p.fake_id=:idfp AND date BETWEEN CONCAT(YEAR(NOW())-1,"-10-01") AND CONCAT(YEAR(NOW()),"-",MONTH(NOW()),"-",DAY(NOW()))
+                                         GROUP BY MONTH(c.date) ORDER BY MONTH(c.date)');
+    $partMois->bindParam(':idfp', $fakeidPromo);
+    $partMois->execute();
+    $part = $partMois->fetchAll();
+    return $part;
+}
+
+function selectPartMoisByFakeIdPromoLastYear($fakeidPromo)
+{
+    $partMois = $GLOBALS['db']->prepare('SELECT SUM(c.nbParticipants) AS participants, MONTH(c.date) AS mois 
+                                         FROM cours c JOIN promo p on p.id_promo = c.id_promo
+                                         WHERE c.status=1 AND p.fake_id=:idfp AND date BETWEEN CONCAT(YEAR(NOW())-2,"-10-01") AND CONCAT(YEAR(NOW())-1,"-09-30")
+                                         GROUP BY MONTH(c.date) ORDER BY MONTH(c.date)');
+    $partMois->bindParam(':idfp', $fakeidPromo);
     $partMois->execute();
     $part = $partMois->fetchAll();
     return $part;
@@ -673,7 +696,7 @@ function verifExistMail($mailPersonne)
 // Check s'il y a plus d'un cours pour une promo sélectionnée
 function selectCountCoursByPromo($promo)
 {
-    $countCours = $GLOBALS['db']->prepare('SELECT COUNT(*) FROM cours c JOIN promo p ON c.id_promo=p.id_promo WHERE p.promo = :promo AND c.status = 1');
+    $countCours = $GLOBALS['db']->prepare('SELECT COUNT(*) FROM cours c JOIN promo p ON c.id_promo=p.id_promo WHERE p.fake_id = :promo AND c.status = 1');
     $countCours->bindParam(":promo", $promo);
     $countCours->execute();
     $count = $countCours->fetchAll();
@@ -686,11 +709,18 @@ function selectCountCoursByPromo($promo)
 }
 
 // Mis a jour V2.1
-// Select le nb de participants a un cours
-function selectInscritParticipantsCours($promo)
+// Select le nb de participants et nombre d'inscrits a un cours selon la promo
+function selectInscritParticipantsCours($fakeIdPromo)
 {
-    $inscPart = $GLOBALS['db']->prepare('SELECT DATE_FORMAT(c.date, "%d %M %Y") AS date, m.intitule AS matiere, c.nbParticipants AS participants, p.intitule AS niveau FROM cours c JOIN matiere m ON c.id_matiere=m.id_matiere JOIN promo p ON c.id_promo=p.id_promo WHERE p.id_promo=:idp AND c.status > 0 ORDER BY c.date ASC');
-    $inscPart->bindParam(":promo", $promo);
+    $inscPart = $GLOBALS['db']->prepare('SELECT DATE_FORMAT(c.date, "%d %M %Y") AS datee, 
+                                         m.intitule AS matiere, c.nbParticipants AS participants, 
+                                         p.intitule AS niveau, COUNT(pi.id_personne) AS inscrits
+                                         FROM personne_cours pi JOIN cours c ON c.id_cours = pi.id_cours JOIN matiere m ON c.id_matiere=m.id_matiere 
+                                         JOIN promo p ON c.id_promo=p.id_promo
+                                         WHERE p.fake_id=:idfp AND c.status > 0 AND date BETWEEN CONCAT(YEAR(NOW())-1,"-09-01") AND CONCAT(YEAR(NOW()),"-",MONTH(NOW()),"-",DAY(NOW()))
+                                         GROUP BY c.id_cours ORDER BY datee ASC');
+
+    $inscPart->bindParam(":idfp", $fakeIdPromo);
     $inscPart->execute();
     $insc = $inscPart->fetchAll();
     return $insc;
@@ -739,14 +769,14 @@ function selectNomById($idPersonne){
 //Mise à jour V2.1
 // Sélection des questions ayant un status particulier
 function selectQuestionByStatus($valueStatusQuestion){
-    $questions = $GLOBALS['db']->prepare('
-                 SELECT qf.id_question AS id_question, p.prenom AS prenom, p.nom AS nom, 
-                        qf.titre AS titre, qf.description AS description, qf.status AS status, 
-                        qf.date AS date, qf.secu AS secu, m.intitule AS matiere                 FROM question_forum qf 
-                 JOIN matiere m ON m.id_matiere=qf.id_matiere 
-                 JOIN personne p ON p.id_personne=qf.id_personne
-                 WHERE qf.status = :status
-                 ORDER BY date DESC');
+    $questions = $GLOBALS['db']->prepare('SELECT qf.id_question AS id_question, p.prenom AS prenom, p.nom AS nom, 
+                                          qf.titre AS titre, qf.description AS description, qf.status AS status, 
+                                          qf.date AS date, qf.secu AS secu, m.intitule AS matiere
+                                          FROM question_forum qf 
+                                          JOIN matiere m ON m.id_matiere=qf.id_matiere 
+                                          JOIN personne p ON p.id_personne=qf.id_personne
+                                          WHERE qf.status <= :status
+                                          ORDER BY date DESC');
     $questions->bindParam(":status", $valueStatusQuestion);
     $questions->execute();
     $question = $questions->fetchAll();
@@ -756,14 +786,12 @@ function selectQuestionByStatus($valueStatusQuestion){
 //Mise à jour V2.1
 // Sélection des questions ayant le status 0
 function selectQuestionStatus(){
-    $question_forum = $GLOBALS['db']->prepare('
-                      SELECT qf.id_question AS id_question, qf.id_personne AS id_personne, 
-                      qf.titre AS titre, qf.description AS description, qf.status AS status, 
-                      qf.date AS date, qf.secu AS secu, m.intitule AS matiere
-                      FROM question_forum qf 
-                      JOIN matiere m ON m.id_matiere=qf.id_matiere  
-                      WHERE qf.status = 0
-                      ORDER BY date DESC');
+    $question_forum = $GLOBALS['db']->prepare('SELECT qf.id_question AS id_question, qf.id_personne AS id_personne, 
+                                               qf.titre AS titre, qf.description AS description, qf.status AS status, 
+                                               qf.date AS date, qf.secu AS secu, m.intitule AS matiere
+                                               FROM question_forum qf JOIN matiere m ON m.id_matiere=qf.id_matiere  
+                                               WHERE qf.status BETWEEN 0 AND 2
+                                               ORDER BY date DESC');
     $question_forum->execute();
     $questions = $question_forum->fetchAll();
         if (empty($questions)) {
@@ -849,16 +877,27 @@ function selectQuestionById($id_question){
 }
 
 //Mise à jour V2.1
-// Sélection des réponses ayant un status particulier
-function selectResponseByStatusIdQuestion($valueStatusResponse,$id_question){
-    $reponses = $GLOBALS['db']->prepare('
-                SELECT rf.id_reponse AS id_reponse, rf.id_personne AS id_personne, 
-                       rf.message_reponse AS message, rf.id_question AS id_question, rf.status AS status, 
-                       rf.date AS date, rf.secu AS secu
-                FROM reponse_forum rf JOIN question_forum qf ON qf.id_question=rf.id_question
-                WHERE rf.status = :status AND rf.id_question= :idq 
-                ORDER BY date DESC');
+// Sélection des réponses ayant un status particulier et filtré par date
+function selectResponseByStatusIdQuestionByDate($valueStatusResponse,$id_question){
+    $reponses = $GLOBALS['db']->prepare('SELECT rf.id_reponse AS id_reponse, rf.id_personne AS id_personne, 
+                                               rf.message_reponse AS message, rf.id_question AS id_question, rf.status AS status, 
+                                               rf.date AS date, rf.secu AS secu
+                                               FROM reponse_forum rf JOIN question_forum qf ON qf.id_question=rf.id_question
+                                               WHERE rf.status = :status AND rf.id_question= :idq ORDER BY date DESC');
     $reponses->bindParam(":status", $valueStatusResponse);
+    $reponses->bindParam(":idq", $id_question);
+    $reponses->execute();
+    $reponse = $reponses->fetchAll();
+    return $reponse;
+}
+
+//Mise à jour V2.1
+// Sélection des réponses ayant un status particulier et filtrées par likes
+function selectResponseByStatusIdQuestionFilterByLike($id_question){
+    $reponses = $GLOBALS['db']->prepare('SELECT COUNT(v.id), rf.id_reponse AS id_reponse, rf.id_personne AS id_personne, 
+                                               rf.message_reponse AS message, rf.id_question AS id_question, rf.status AS status, 
+                                               rf.date AS date, rf.secu AS secu FROM question_forum qf JOIN reponse_forum rf ON rf.id_question=qf.id_question 
+                                            JOIN vote v ON rf.id_reponse=v.id_reponse WHERE qf.id_question=:idq GROUP BY rf.id_reponse ORDER BY 1 DESC');
     $reponses->bindParam(":idq", $id_question);
     $reponses->execute();
     $reponse = $reponses->fetchAll();
@@ -892,19 +931,6 @@ function selectPersonnePromoByIdReponse($idReponse){
     $repondant->execute();
     $personneRepondant = $repondant->fetchAll();
     return $personneRepondant;
-}
-
-function selectIdReponseByMessage($message){
-    $idReponse = $GLOBALS['db']->prepare('SELECT id_reponse FROM reponse_forum WHERE message_reponse = :mess AND status = 0');
-    $idReponse->bindParam(":mess", $message);
-    $idReponse->execute();
-    $reponse = $idReponse->fetchAll();
-    if (empty($reponse)) {
-        $reponse = "none";
-    } else {
-        $reponse = $reponse[0][0];
-    }
-    return $reponse;
 }
 
 // Mise à jour V2.1

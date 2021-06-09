@@ -112,7 +112,8 @@ break;
                 </tr>
             </thead>
         <tbody>';
-        foreach (selectQuestionByStatus(0) as $qf) {
+
+        foreach (selectQuestionByStatus(2) as $qf) {
             echo '<tr>
                     <td><a href="reponseForum.php?id_question=' . $qf ['id_question'] . '&forum=unset" class = "question">'.$qf['titre'].'</td>
                     <td>'.$qf['description'].'</td>

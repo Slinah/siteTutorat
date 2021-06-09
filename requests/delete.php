@@ -84,6 +84,7 @@ function deleteLikeByIdPersonneIdReponse($idPersonne, $idReponse)
     $deleteLike->execute();
 }
 
+
 //Mis à jour V2.1
 // Delete d'une question en fonction de son id
 function deleteQuestionByIdQuestion($idQuestion)
@@ -94,6 +95,8 @@ function deleteQuestionByIdQuestion($idQuestion)
 
 }
 
+// Mise à jour V2.1
+// Delete une réponse par le code de Sécurité
 function deleteReponseBySecuCode($secuCode)
 {
     $deleteReponse = $GLOBALS['db']->prepare('DELETE FROM reponse_forum WHERE secu = :secu');
