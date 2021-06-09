@@ -85,7 +85,7 @@ function deleteLikeByIdPersonneIdReponse($idPersonne, $idReponse)
 }
 
 //Mis à jour V2.1
-// Delete d'une question en fonction
+// Delete d'une question en fonction de son id
 function deleteQuestionByIdQuestion($idQuestion)
 {
     $deleteQuestion = $GLOBALS['db']->prepare('DELETE FROM question_forum WHERE id_question = :idq');

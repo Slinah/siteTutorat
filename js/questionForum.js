@@ -28,7 +28,6 @@ $(document).ready(function() {
                         //Retourne les données
                     }, function (data) {
                         let parsedDatas = JSON.parse(data);
-                        console.log(parsedDatas);
                         let str = '<table id="forumQuestionsTable" class="table striped table-border mt-2" data-role="table" data-show-search="false"' +
                             '            data-show-table-info="false" data-show-rows-steps="false" data-pagination-short-mode="true" ' +
                             '            data-show-pagination="true" data-rows="5">' +
