@@ -119,15 +119,16 @@ function insertLogProposition($idProposition, $time)
 
 //Mise à jour V2.1
 // Insertion d'une question
-function insertQuestion($idQuestion, $titreQuestion, $descriptionQuestion, $idPersonne, $idMatiere){
+function insertQuestion($idQuestion, $titreQuestion, $descriptionQuestion, $idPersonne, $idMatiere, $secuCode){
     $question = $GLOBALS['db']->prepare('INSERT INTO question_forum(id_question, titre, description, 
-                                         id_personne, id_matiere, date) 
-                                         VALUES (:idq, :titre, :desc, :idp, :idm, NOW())');
+                                         id_personne, id_matiere, date, secu) 
+                                         VALUES (:idq, :titre, :desc, :idp, :idm, NOW(), :secuCode )');
     $question->bindParam(":idq", $idQuestion);
     $question->bindParam(":titre", $titreQuestion);
     $question->bindParam(":desc", $descriptionQuestion);
     $question->bindParam(":idp", $idPersonne);
     $question->bindParam(":idm", $idMatiere);
+    $question->bindParam(":secuCode", $secuCode);
     $question->execute();
 }
 // Mis a jour V2.1
