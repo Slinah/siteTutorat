@@ -67,7 +67,13 @@ include_once '../../bases/head.php';
                 <span class="mif-sunrise"></span> Quand tu postes une question ou une réponse, fais attention à bien être respectueux. On a pas tous le même niveau, le forum est là pour apporter son aide, pas pour juger (Un peu d'humanité dans ce monde de bête <span class="mif-swarm ani-bounce fg-amber"></span> ).
             </div>
         </div>
+
     </div><br><br>
+
+    <div class="description">
+        <h1> <a href="legalNotice.php"> Mentions Légales</a></h1>
+    </div>
+
     <!-- <h5>Patchnotes</h5>
     <div class="remark info">
         <div class="spanpatch">
