@@ -108,6 +108,7 @@ function updatePassPersonneByMail($mail, $pass)
     $passPersonne->execute();
 }
 
+
 // Mise à jour V2.1
 // Modification du mail de l'utilisateur
 function updateMailUser($newMail, $idPersonne)
@@ -149,4 +150,12 @@ function updateStatusQuestion($idQuestion, $status)
     $updateQuestion->bindParam(":idq", $idQuestion);
     $updateQuestion->bindParam(":status", $status);
     $updateQuestion->execute();
+}
+
+// V2.1
+// Valide une matière
+function updateMatter($matiere){
+    $updateVal = $GLOBALS['db']->prepare('UPDATE matiere SET validationAdmin = 1 WHERE id_matiere = :idm');
+    $updateVal->bindParam(':idm', $matiere);
+    $updateVal->execute();
 }

@@ -1014,3 +1014,16 @@ function selectClassByPromo($idPromo)
     $classByPromo = $classByPromos->fetchAll();
     return $classByPromo;
 }
+
+// V2.1 
+// Vérifie si des matières existes
+function verifExistMatiereByVal($bool)
+{
+    $matiere = $GLOBALS['db']->prepare('SELECT COUNT(*) FROM matiere WHERE validationAdmin = :bool');
+    $matiere->bindParam(':bool', $bool);
+    $matiere->execute();
+    $mat = $matiere->fetchAll();
+    $mat = $mat[0][0];
+    return $mat;
+}
+
