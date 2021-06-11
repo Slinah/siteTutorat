@@ -5,7 +5,9 @@
         if (isset($_SESSION)) {
             echo '<li id="proposeCourse"><a href="../../commons/proposals/proposeCourse.php?proposal=unset">Proposer</a></li>
             <li id="courses"><a href="../../commons/views/courses.php?course=unset">S\'inscrire à un cours</a></li>
-            <li id="newCourse"><a href="../../commons/courses/newCourse.php?newc=unset">Donner un cours</a></li>';
+            <li id="newCourse"><a href="../../commons/courses/newCourse.php?newc=unset">Donner un cours</a></li>
+            <li id="forum"><a href="../../commons/forum/questionForum.php?forum=unset">Forum</a></li>';
+
             if ($_SESSION["role"] == 1) {
                 // echo '<li id="admin"><a href="../../admin/pannel/administration.php?action=none">Pannel admin</a></li>';
                 echo '<li>
@@ -17,18 +19,7 @@
                     <li><a href="../../admin/pannel/managementSchool.php">Gestion ECOLE</a></li>
                 </ul>
             </li>';
-                echo '<li>
-                <a href="#" class="dropdown-toggle">Stats</a>
-                <ul class="d-menu" data-role="dropdown">
-                    <li><a href="../../admin/charts/globalCharts.php">STATS Global</a></li>
-                    <li><a href="../../admin/charts/chartsB1.php">STATS B1</a></li>
-                    <li><a href="../../admin/charts/chartsB2.php">STATS B2</a></li>
-                    <li><a href="../../admin/charts/chartsB3.php">STATS B3</a></li>
-                    <li><a href="../../admin/charts/chartsI1.php">STATS I1</a></li>
-                    <li><a href="../../admin/charts/chartsI2.php">STATS I2</a></li>
-                    <li><a href="../../admin/charts/chartsWis1.php">STATS WIS 1</a></li>
-                </ul>
-            </li>';
+                echo '<li><a href="../../admin/charts/statistics.php">Statistiques</a></li>';
             }
             echo '<li>
                 <a href="#" class="dropdown-toggle">' . selectPrenomById($_SESSION['id_personne']) . ' ' . selectNomById($_SESSION['id_personne']) . '</a>

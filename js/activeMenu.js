@@ -5,6 +5,7 @@ nom = nom.substr(0, nom.lastIndexOf("."));
 nom = nom.replace(new RegExp("(%20|_|-)", "g"), "");
 
 $('#' + nom).addClass('active');
+console.log(nom);
 
 switch (nom) {
     case 'editCourse':
@@ -17,6 +18,10 @@ switch (nom) {
 
     case 'globalCharts':
         $('#stats').addClass('active');
+        break;
+
+    case 'forum':
+        $('#forum').addClass('active');
         break;
 
     case 'chartsB1':
