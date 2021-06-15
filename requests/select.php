@@ -771,7 +771,8 @@ function selectNomById($idPersonne){
 function selectQuestionByStatus($valueStatusQuestion){
     $questions = $GLOBALS['db']->prepare('SELECT qf.id_question AS id_question, p.prenom AS prenom, p.nom AS nom, 
                                           qf.titre AS titre, qf.description AS description, qf.status AS status, 
-                                          qf.date AS date, qf.secu AS secu, m.intitule AS matiere
+                                          qf.date AS date, qf.secu AS secu, m.intitule AS matiere,
+                                            (SELECT count(*) FROM reponse_forum rf WHERE rf.id_question = qf.id_question) as nbReponses
                                           FROM question_forum qf 
                                           JOIN matiere m ON m.id_matiere=qf.id_matiere 
                                           JOIN personne p ON p.id_personne=qf.id_personne
