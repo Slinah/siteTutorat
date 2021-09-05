@@ -1,18 +1,17 @@
 <?php
 session_start();
-require_once '../../requests/delete.php';
-require_once '../../requests/select.php';
 require_once '../../requests/update.php';
+require_once '../../requests/select.php';
 
 $userTkn = selectTokenByIdPersonne($_SESSION['id_personne']);
 if (isset($userTkn) && $userTkn != null) {
-    $idMatiere = $_GET['mat'];
+    $idMatter = $_GET['matter'];
 
-    deleteMatiere($idMatiere);
+    updateMatter($idMatter);
 
     $tkn = substr(base_convert(sha1(uniqid(mt_rand())), 16, 36), 0, 32);
     updateToken($tkn, $_SESSION['id_personne']);
-    header('location: managementMatiere.php?action=suppressedMat');
+    header('location: managementMatiere.php?action=validate');
 } else {
     echo 'Bien essayé';
 }

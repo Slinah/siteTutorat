@@ -34,7 +34,7 @@ if (isset($userTkn) && $userTkn != null) {
         updateCoursClose($courseComment, $nbInscrits, $nbParticipants, $nbHeure, $idCours);
         updateToken($tkn, $_SESSION['id_personne']);
 
-        header('location: administration.php?course=closed');
+        header('location: managementCourse.php?course=closed');
     } else {
         header('location: closeCourseAdmin.php?course=' . selectSecuByIdCours($idCours) . '&error=unset&usr=' . $_GET['usr']);
     }

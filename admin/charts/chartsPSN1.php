@@ -17,27 +17,27 @@ if (!isset($_SESSION["role"]) || $_SESSION["role"] != 1) {
 <body>
     <?php include_once '../../bases/menu.php'; ?>
     <div class="container">
-        <h3>Graphiques Globaux WIS 1 2019-2020</h3>
+        <h3>Graphiques Globaux PSN1 2019-2020</h3>
 
         <?php
-        if (selectCountCoursByPromo('WIS 1') != 0) {
+        if (selectCountCoursByPromo('PSN1') != 0) {
             echo '<div class="row">
                     <div class="cell-5">
-                        Heures de tutorats par matières (WIS 1)
+                        Heures de tutorats par matières (PSN1)
                         <div><canvas id="heuresMat" width="100" height="100"></canvas></div>
                     </div>
                     <div class="cell-5 offset-2">
-                        Participants par mois (WIS 1)
+                        Participants par mois (PSN1)
                         <div><canvas id="partMois" width="100" height="100"></canvas></div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="cell-5">
-                        Nombre de participants par rapport au nombre d\'inscrits (WIS 1)
+                        Nombre de participants par rapport au nombre d\'inscrits (PSN1)
                         <div><canvas id="partInsc" width="100" height="100"></canvas></div>
                     </div>
                     <div class="cell-5 offset-2">
-                        Nombre de participants par matières (WIS 1)
+                        Nombre de participants par matières (PSN1)
                         <div><canvas id="partPercent" width="100" height="100"></canvas></div>
                     </div>
                 </div>';

@@ -107,3 +107,11 @@ function updatePassPersonneByMail($mail, $pass)
     $passPersonne->bindParam(':mail', $mail);
     $passPersonne->execute();
 }
+
+// V2.1
+// Valide une matière
+function updateMatter($matiere){
+    $updateVal = $GLOBALS['db']->prepare('UPDATE matiere SET validationAdmin = 1 WHERE id_matiere = :idm');
+    $updateVal->bindParam(':idm', $matiere);
+    $updateVal->execute();
+}

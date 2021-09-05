@@ -26,7 +26,7 @@ include_once '../../bases/head.php';
             echo '<br><input name="date" data-role="datepicker" data-year="false" data-value="' . $c['date'] . '">';
             echo '<br><select name="matiere" data-role="select" data-filter="false" data-prepend="Matière">';
             echo '<option value="' . $c['id_matiere'] . '">' . $c['matiere'] . '</option>';
-            foreach (selectMatieres() as $matieres) {
+            foreach (selectMatieresByValidation(1) as $matieres) {
                 if ($c['id_matiere'] != $matieres['id_matiere'] && $c['matiere'] != $matieres['intitule']) {
                     echo '<option value="' . $matieres['id_matiere'] . '">' . $matieres['intitule'] . '</option>';
                 } else {

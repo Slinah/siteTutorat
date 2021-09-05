@@ -77,7 +77,7 @@ include_once '../../bases/head.php';
             <br><input name="heure" data-role="timepicker" data-seconds="false">
             <br><select name="matiere" data-role="select" data-filter="false" data-prepend="Matière">
                 <?php
-                foreach (selectMatieres() as $matieres) {
+                foreach (selectMatieresByValidation(1) as $matieres) {
                     echo '<option value="' . $matieres['id_matiere'] . '">' . $matieres['intitule'] . '</option>';
                 }
                 ?>
