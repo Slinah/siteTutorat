@@ -116,3 +116,40 @@ function insertLogProposition($idProposition, $time)
     $logProposition->bindParam(':time', $time);
     $logProposition->execute();
 }
+
+//Mise à jour V2.1
+// Insertion d'une question
+function insertQuestion($idQuestion, $titreQuestion, $descriptionQuestion, $idPersonne, $idMatiere, $secuCode){
+    $question = $GLOBALS['db']->prepare('INSERT INTO question_forum(id_question, titre, description, 
+                                         id_personne, id_matiere, date, secu) 
+                                         VALUES (:idq, :titre, :desc, :idp, :idm, NOW(), :secuCode )');
+    $question->bindParam(":idq", $idQuestion);
+    $question->bindParam(":titre", $titreQuestion);
+    $question->bindParam(":desc", $descriptionQuestion);
+    $question->bindParam(":idp", $idPersonne);
+    $question->bindParam(":idm", $idMatiere);
+    $question->bindParam(":secuCode", $secuCode);
+    $question->execute();
+}
+// Mis a jour V2.1
+// Insertion d'une réponse
+function insertReponse($idReponse, $messageReponse, $idPersonne, $idQuestion, $secuCode)
+{
+    $reponse = $GLOBALS['db']->prepare('INSERT INTO reponse_forum(id_reponse, message_reponse, id_personne, id_question, date, secu) VALUES (:idr, :mess, :idp, :idq, NOW(), :secuCode )');
+    $reponse->bindParam(":idr", $idReponse);
+    $reponse->bindParam(":mess", $messageReponse);
+    $reponse->bindParam(":idp", $idPersonne);
+    $reponse->bindParam(":idq", $idQuestion);
+    $reponse->bindParam(":secuCode", $secuCode);
+    $reponse->execute();
+}
+
+// Mis a jour V2.1
+// Insertion du lien personnne reponse (Like)
+function insertPersonneLike($idPersonne, $idReponse)
+{
+    $vote = $GLOBALS['db']->prepare('INSERT INTO vote(id_personne, id_reponse) VALUES (:idp, :idr)');
+    $vote->bindParam(":idp", $idPersonne);
+    $vote->bindParam(':idr', $idReponse);
+    $vote->execute();
+}

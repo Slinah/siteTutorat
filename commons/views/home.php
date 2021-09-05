@@ -51,16 +51,29 @@ include_once '../../bases/head.php';
                             <div class="p-2">L'onglet "Donner un cours", permet de créer un cours proposé par les autres étudiants (Attention, si vous avez proposer un cours, vous ne pouvez pas en être le tuteur), ou créer un autre cours.</div>
                         </div>
                     </div>
+                    <div class="frame">
+                        <div class="heading"><i>Forum</i></div>
+                        <div class="content">
+                            <div class="p-2">L'onglet "Forum", permet de poser une question sur un cours que vous avez mal compris.<br><br>Cet onglet vous permet également de répondre à une question et de voter pour une réponse qui vous aura aidé.</div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class='cell-4 offset-2'><b>Les quelques règles</b><br><br>
                 <span class="mif-sunrise"></span> Le tutorat est donné bénévolement en dehors des heures de cours.<br><br>
                 <span class="mif-sunrise"></span> En t'inscrivant à un cours, tu t'engages à venir à ce cours (Tu peux t'en désinscrire, et prévenir le tuteur, pour qu'il ne se retrouve pas seul au cours).<br><br>
                 <span class="mif-sunrise"></span> En tant que tuteur, tu t'engages à venir au cours que tu as proposé (Tu peux l'annuler, puis prévenir sur le discord que le cours n'aura pas lieu).<br><br>
-                <span class="mif-sunrise"></span> Quand tu viens à un cours, essaye de rester calme (C'est jamais plaisant pour un tuteur de voir que des gens volontaires ne l'écoutent pas).
+                <span class="mif-sunrise"></span> Quand tu viens à un cours, essaye de rester calme (C'est jamais plaisant pour un tuteur de voir que des gens volontaires ne l'écoutent pas).<br><br>
+                <span class="mif-sunrise"></span> Quand tu postes une question ou une réponse, fais attention à bien être respectueux. On a pas tous le même niveau, le forum est là pour apporter son aide, pas pour juger (Un peu d'humanité dans ce monde de bête <span class="mif-swarm ani-bounce fg-amber"></span> ).
             </div>
         </div>
+
     </div><br><br>
+
+    <div class="description">
+        <h1> <a href="legalNotice.php"> Mentions Légales</a></h1>
+    </div>
+
     <!-- <h5>Patchnotes</h5>
     <div class="remark info">
         <div class="spanpatch">

@@ -73,3 +73,33 @@ function deletePropositionWithNullMatiere(){
         $deleteProposition->execute();
     }
 }
+
+// Mise à jour V2.1
+// Delete d'un vote/Like sur une réponse par la personne
+function deleteLikeByIdPersonneIdReponse($idPersonne, $idReponse)
+{
+    $deleteLike = $GLOBALS['db']->prepare('DELETE FROM vote WHERE id_personne = :idp AND id_reponse= :idr');
+    $deleteLike->bindParam(':idp', $idPersonne);
+    $deleteLike->bindParam(':idr', $idReponse);
+    $deleteLike->execute();
+}
+
+
+//Mis à jour V2.1
+// Delete d'une question en fonction de son id
+function deleteQuestionByIdQuestion($idQuestion)
+{
+    $deleteQuestion = $GLOBALS['db']->prepare('DELETE FROM question_forum WHERE id_question = :idq');
+    $deleteQuestion->bindParam(':idq', $idQuestion);
+    $deleteQuestion->execute();
+
+}
+
+// Mise à jour V2.1
+// Delete une réponse par le code de Sécurité
+function deleteReponseBySecuCode($secuCode)
+{
+    $deleteReponse = $GLOBALS['db']->prepare('DELETE FROM reponse_forum WHERE secu = :secu');
+    $deleteReponse->bindParam(':secu', $secuCode);
+    $deleteReponse->execute();
+}
