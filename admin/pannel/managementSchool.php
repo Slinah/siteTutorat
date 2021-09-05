@@ -53,7 +53,7 @@ if (!isset($_SESSION["role"]) || $_SESSION["role"] != 1) {
     }
 
     let arraySchool = ['EPSI', 'WIS', 'IFAG'];
-    let arrayPromo = ['B1', 'B2', 'B3', 'I1', 'I2', 'Wis1', 'Wis2', 'Wis3']
+    let arrayPromo = ['PSN1', 'B2', 'B3', 'I1', 'I2', 'Wis1', 'Wis2', 'Wis3']
     arraySchool.forEach(elementS => {
         arrayPromo.forEach(elementP => {
             for (let i = 0; i < 100; i++) {

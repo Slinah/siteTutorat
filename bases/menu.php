@@ -21,12 +21,11 @@
                 <a href="#" class="dropdown-toggle">Stats</a>
                 <ul class="d-menu" data-role="dropdown">
                     <li><a href="../../admin/charts/globalCharts.php">STATS Global</a></li>
-                    <li><a href="../../admin/charts/chartsB1.php">STATS B1</a></li>
+                    <li><a href="../../admin/charts/chartsPSN1.php">STATS PSN1</a></li>
                     <li><a href="../../admin/charts/chartsB2.php">STATS B2</a></li>
                     <li><a href="../../admin/charts/chartsB3.php">STATS B3</a></li>
                     <li><a href="../../admin/charts/chartsI1.php">STATS I1</a></li>
                     <li><a href="../../admin/charts/chartsI2.php">STATS I2</a></li>
-                    <li><a href="../../admin/charts/chartsWis1.php">STATS WIS 1</a></li>
                 </ul>
             </li>';
             }
