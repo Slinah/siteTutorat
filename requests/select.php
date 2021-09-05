@@ -766,8 +766,6 @@ function selectNomById($idPersonne){
     return $nom[0][0];
 }
 
-<<<<<<< HEAD
-=======
 //Mise à jour V2.1
 // Sélection des questions ayant un status particulier
 function selectQuestionByStatus($valueStatusQuestion){
@@ -1018,7 +1016,6 @@ function selectClassByPromo($idPromo)
     return $classByPromo;
 }
 
->>>>>>> 8ef2074882030d468e0882879e4dbe25cd3a3bef
 // V2.1 
 // Vérifie si des matières existes
 function verifExistMatiereByVal($bool)
@@ -1031,23 +1028,3 @@ function verifExistMatiereByVal($bool)
     return $mat;
 }
 
-<<<<<<< HEAD
-// V2.1
-// Return les écoles de la base
-function selectEcoles(){
-    $ecoles = $GLOBALS['db']->prepare('SELECT * FROM ecole ORDER BY intitule');
-    $ecoles->execute();
-    $ec =$ecoles->fetchAll();
-    return $ec;
-}
-
-// V2.1
-// Return les promos de la base en fonction de leur école
-function selectPromosByIdEcole($idEcole){
-    $promos = $GLOBALS['db']->prepare('SELECT * FROM promo WHERE id_ecole = :ide ORDER BY fake_id');
-    $promos->bindParam(':ide', $idEcole);
-    $promos->execute();
-    return $promos->fetchAll();
-}
-=======
->>>>>>> 8ef2074882030d468e0882879e4dbe25cd3a3bef
