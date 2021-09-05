@@ -35,6 +35,7 @@
                 <ul class="d-menu" data-role="dropdown">
                     <li><a href="../../commons/users/profileView.php">Mon compte</a></li>
                     <li><a href="../../commons/users/coursView.php">Visu des cours</a></li>
+                    <li><a href="../../commons/users/calculator.php">Calcul de moyenne</a></li>
                     <li class="divider"></li>
                     <li><a href="../../connexion/deco.php">Déconnexion</a></li>
                 </ul>
