@@ -72,10 +72,10 @@ include_once '../requests/select.php';
             <div class="form-group"><input data-role="input" name="pwd" placeholder="*********" data-prepend="Mot de passe" type="password" required></div>
             <div class="form-group"><input data-role="input" name="pwd-conf" placeholder="*********" data-prepend="Confirmation" type="password" required></div>
             <div class="form-group"><select name="classe" data-role="select" data-filter="false" data-prepend="Classe">
-                    <optgroup label="Première année EPSI">
+                    <optgroup label="Première année EPSI-WIS">
                         <?php
-                        foreach (selectClassesPromoEcoles("B1", "EPSI") as $classe) {
-                            echo '<option value="' . $classe['id_classe'] . '">B1 ' . $classe['classe'] . '</option>';
+                        foreach (selectClassesPromoEcoles("PSN1", "EPSI") as $classe) {
+                            echo '<option value="' . $classe['id_classe'] . '">PSN1 ' . $classe['classe'] . '</option>';
                         }
                         ?>
                     </optgroup>
@@ -107,13 +107,13 @@ include_once '../requests/select.php';
                         }
                         ?>
                     </optgroup>
-                    <optgroup label="Première année WIS">
+                    <!-- <optgroup label="Première année WIS">
                         <?php
                         foreach (selectClassesPromoEcoles("Wis1", "WIS") as $classe) {
                             echo '<option value="' . $classe['id_classe'] . '">WIS 1 ' . $classe['classe'] . '</option>';
                         }
                         ?>
-                    </optgroup>
+                    </optgroup> -->
                     <optgroup label="Deuxième année WIS">
                         <?php
                         foreach (selectClassesPromoEcoles("Wis2", "WIS") as $classe) {

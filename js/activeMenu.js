@@ -19,10 +19,10 @@ switch (nom) {
         $('#stats').addClass('active');
         break;
 
-    case 'chartsB1':
+    case 'chartsPSN1':
         $('#stats').addClass('active');
         idPromo = 1;
-        nomPromo = 'B1';
+        nomPromo = 'PSN1';
         break;
 
     case 'chartsB2':
