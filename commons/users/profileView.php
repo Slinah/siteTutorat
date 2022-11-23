@@ -99,10 +99,8 @@ switch ($_GET["users"]) {
             echo '</tbody></table>';
             ?>
                     <div data-role="accordion"
-                         data-one-frame="false"
-                         data-show-active="true"
-                         data-on-frame-open="console.log('frame was opened!', arguments[0])"
-                         data-on-frame-close="console.log('frame was closed!', arguments[0])">
+                         data-one-frame="true"
+                         data-show-active="true">
     <div class="frame active">
         <div class="heading">Tu veux modifier tes infos de compte?</div>
         <div class="content">

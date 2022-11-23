@@ -943,8 +943,10 @@ function verifExistPersonneVote($idPersonne, $idReponse)
     $verifLike->bindParam(':idr', $idReponse);
     $verifLike->execute();
     $verif = $verifLike->fetchAll();
-    $verif = $verif[0][0];
-    return $verif;
+    if (empty($verif)) {
+        $verif = '0';
+    }
+    return $verif[0][0];
 }
 
 // Mise à jour V2.1
@@ -955,8 +957,10 @@ function selectCountVoteByIdReponse($idReponse)
     $vote->bindParam(':idr', $idReponse);
     $vote->execute();
     $votes = $vote->fetchAll();
-    $votes = $votes[0][0];
-    return $votes;
+    if(empty($votes)) {
+        $votes = '0';
+    }
+    return $votes[0][0];
 }
 
 // Mise à jour V2.1

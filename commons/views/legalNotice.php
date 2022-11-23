@@ -41,7 +41,7 @@ include_once '../../bases/head.php';
                                 modernes comme Safari, Firefox, Google Chrome, etc… <br>
                                 ScratchOverflow met en œuvre tous les moyens dont elle dispose, pour assurer une information fiable et une mise à jour fiable de ses sites internet.<br>
                                 Toutefois, des erreurs ou omissions peuvent survenir. L’internaute devra donc s’assurer de l’exactitude
-                                des informations auprès de cedric.menanteau@epsi.fr, et signaler toutes modifications du site qu’il jugerait utile.
+                                des informations auprès de Haylyx#5459, et signaler toutes modifications du site qu’il jugerait utile.
                                 ScrathOverflow n’est en aucun cas responsable de l’utilisation faite de ces informations, et de tout préjudice direct ou indirect pouvant en découler.
                         </div>
                     </div>
@@ -51,7 +51,7 @@ include_once '../../bases/head.php';
                     <div class="content">
                         <div class="p-2">Les informations contenues sur ce site sont aussi précises que possible et le site remis à jour à différentes périodes de l’année,
                             mais peut toutefois contenir des inexactitudes ou des omissions. Si vous constatez une lacune, erreur ou ce qui parait être un dysfonctionnement,
-                            merci de bien vouloir le signaler par email, à l’adresse cedric.menanteau@epsi.fr, en décrivant le problème de la manière la plus précise possible
+                            merci de bien vouloir le signaler sur Discord à Haylyx#5459, en décrivant le problème de la manière la plus précise possible
                             (page posant problème, type d’ordinateur et de navigateur utilisé, …). <br>
                             Tout contenu téléchargé se fait aux risques et périls de l’utilisateur et sous sa seule responsabilité.<br>
                             En conséquence, ne saurait être tenu responsable d’un quelconque dommage subi par l’ordinateur de l’utilisateur ou d’une quelconque perte de données consécutives au téléchargement. <br>
@@ -60,14 +60,14 @@ include_once '../../bases/head.php';
                             ne sauraient engager la responsabilité de ScratchOverflow.</div>
                     </div>
                 </div>
-                <div class="frame">
+                <!-- <div class="frame">
                     <div class="heading"><span class="mif-file-empty mif-lg fg-crimson"></span> <i> Déclaration à la CNIL</i></div>
                     <div class="content">
                         <div class="p-2">Conformément à la loi 78-17 du 6 janvier 1978 (modifiée par la loi 2004-801 du 6 août 2004 relative à la protection des personnes
                             physiques à l’égard des traitements de données à caractère personnel) relative à l’informatique, aux fichiers et aux libertés,
                             ce site a fait l’objet d’une déclaration en cours auprès de la Commission nationale de l’informatique et des libertés (www.cnil.fr).</div>
                     </div>
-                </div>
+                </div> -->
                 <div class="frame">
                     <div class="heading"><span class="mif-justice mif-lg fg-crimson"></span><i> Litiges </i></div>
                     <div class="content">

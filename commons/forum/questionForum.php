@@ -47,10 +47,8 @@ break;
         <h1><img src="../../medias/scratchOverflow.png" alt=""></h1>
     </div>
     <div data-role="accordion"
-         data-one-frame="false"
-         data-show-active="true"
-         data-on-frame-open="console.log('frame was opened!', arguments[0])"
-         data-on-frame-close="console.log('frame was closed!', arguments[0])">
+         data-one-frame="true"
+         data-show-active="true">
     <div class="frame active">
         <div class="heading">Tu ne trouves pas de réponse à ta question? Vas-y balances ta question!</div>
         <div class="content">
@@ -91,7 +89,7 @@ break;
             }
             ?>
         </select>
-        <input type="checkbox" id ="filterQuestion" data-role="switch" data-caption="Apply filter"/>
+        <input type="checkbox" id ="filterQuestion" data-role="switch" data-caption="Appliquer le filtre" data-material="true"/>
     </p>
 </form>
 <div id="resultat">

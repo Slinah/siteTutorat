@@ -40,9 +40,9 @@ case "questDelete":
     echo '<script>Metro.toast.create("Votre question a bien été supprimée", null, null, "success");</script>';
     break;
 
-case "upvoted":
-    echo '<script>Metro.toast.create("Vous avez voté pour la réponse", null, null, "success");</script>';
-    break;
+// case "upvoted":
+//     echo '<script>Metro.toast.create("Vous avez voté pour la réponse", null, null, "success");</script>';
+//     break;
 
 case "deleted":
     echo '<script>Metro.toast.create("Vous avez supprimé votre vote avec succès.", null, null, "success");</script>';
@@ -172,7 +172,7 @@ case "topicUnclosed":
 <div class="grid">
     <div class="row">
         <div class="cell"><h3>Liste des réponses :</h3></div>
-        <div class="cell-2"><input id="filterReponse" type="checkbox" data-role="checkbox" data-caption="filtrer par Likes"></div>
+        <!-- <div class="cell-2"><input id="filterReponse" type="checkbox" data-role="checkbox" data-caption="filtrer par Likes"></div> -->
     </div>
 </div>
 

@@ -14,10 +14,10 @@ $(document).ready(function() {
             let checked;
             if (thisCheck.is(':checked')) {
                 checked=1;
-                alert("questions filtrées par matière => OK")
+                //alert("questions filtrées par matière => OK")
             }else{
                 checked=0;
-                alert("filtre inactif")
+                //alert("filtre inactif")
             }
                 //Permet de récupérer les questions postées correspondant à la matière sélectionnée
                 $.post(
